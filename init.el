@@ -39,6 +39,7 @@
 		      better-defaults
 		      smooth-scrolling
 		      evil
+		      undo-tree
 		      avy
 		      ivy
 		      counsel
@@ -72,9 +73,12 @@
 (load-theme 'gruvbox t)
 
 ;;evil
+(require 'evil)
+(require 'undo-tree)
 (evil-mode 1)
 
 ;;avy/ivy/counsel/swiper
+(require 'counsel)
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "%d/%d ")
@@ -91,14 +95,27 @@
 ;;(global-set-key (kbd "C-h l") 'counsel-find-library)
 ;;(global-set-key (kbd "C-h S") 'counsel-info-lookup-symbol)
 ;;(global-set-key (kbd "C-h u") 'counsel-unicode-char)
-;;(global-set-key (kbd "C-c f") 'counsel-git)
+(global-set-key (kbd "C-c o") 'counsel-recentf)
+(global-set-key (kbd "C-c f") 'counsel-git)
+(global-set-key (kbd "C-c g") 'counsel-rg)
 ;;(global-set-key (kbd "C-c g") 'counsel-git-grep)
-;;(global-set-key (kbd "C-c r") 'counsel-rg)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
-;;gtags
+;counsel gtags
+(require 'counsel-gtags)
+(add-hook 'c-mode-hook 'counsel-gtags-mode)
+(add-hook 'c++-mode-hook 'counsel-gtags-mode)
+
+(with-eval-after-load 'counsel-gtags
+  (define-key counsel-gtags-mode-map (kbd "C-c d") 'counsel-gtags-find-definition)
+  (define-key counsel-gtags-mode-map (kbd "C-c r") 'counsel-gtags-find-reference)
+  (define-key counsel-gtags-mode-map (kbd "C-c t") 'counsel-gtags-find-symbol)
+  (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
+  )
 
 ;;rg
+(require 'rg)
+(rg-enable-default-bindings)
 
 ;;projectile
 (projectile-mode +1)
