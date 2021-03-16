@@ -95,10 +95,10 @@
 ;;(global-set-key (kbd "C-h l") 'counsel-find-library)
 ;;(global-set-key (kbd "C-h S") 'counsel-info-lookup-symbol)
 ;;(global-set-key (kbd "C-h u") 'counsel-unicode-char)
-(global-set-key (kbd "C-c o") 'counsel-recentf)
-(global-set-key (kbd "C-c f") 'counsel-git)
-(global-set-key (kbd "C-c g") 'counsel-rg)
-;;(global-set-key (kbd "C-c g") 'counsel-git-grep)
+(global-set-key (kbd "M-p o") 'counsel-recentf)
+(global-set-key (kbd "M-p f") 'counsel-git)
+(global-set-key (kbd "M-p g") 'counsel-rg)
+;;(global-set-key (kbd "M-p g") 'counsel-git-grep)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
 ;counsel gtags
@@ -107,9 +107,9 @@
 (add-hook 'c++-mode-hook 'counsel-gtags-mode)
 
 (with-eval-after-load 'counsel-gtags
-  (define-key counsel-gtags-mode-map (kbd "C-c d") 'counsel-gtags-find-definition)
-  (define-key counsel-gtags-mode-map (kbd "C-c r") 'counsel-gtags-find-reference)
-  (define-key counsel-gtags-mode-map (kbd "C-c t") 'counsel-gtags-find-symbol)
+  (define-key counsel-gtags-mode-map (kbd "M-p d") 'counsel-gtags-find-definition)
+  (define-key counsel-gtags-mode-map (kbd "M-p r") 'counsel-gtags-find-reference)
+  (define-key counsel-gtags-mode-map (kbd "M-p s") 'counsel-gtags-find-symbol)
   (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
   )
 
@@ -120,7 +120,7 @@
 ;;projectile
 (projectile-mode +1)
 ;;(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map) ;; mac os
-(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "M-p p") 'projectile-command-map)
 
 ;;company
 ;;(global-company-mode 1)
