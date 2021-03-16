@@ -1,9 +1,3 @@
-;;(let ((normal-gc-cons-threshold (* 20 1024 1024))
-;;      (init-gc-cons-threshold (* 128 1024 1024)))
-;;  (setq gc-cons-threshold init-gc-cons-threshold)
-;;  (add-hook 'emacs-startup-hook
-;;            (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
-
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
@@ -48,10 +42,9 @@
 		      avy
 		      ivy
 		      counsel
+		      counsel-gtags
 		      swiper
-		      ;; ripgrep
-		      ;; fzf
-		      ;; gtags
+		      rg
 		      projectile
 		      ;; company
 		      which-key
@@ -76,16 +69,15 @@
 (require 'use-package)
 
 ;;theme
-(require 'gruvbox-theme)
 (load-theme 'gruvbox t)
 
 ;;evil
-(require 'evil)
 (evil-mode 1)
 
 ;;avy/ivy/counsel/swiper
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "%d/%d ")
 (setq enable-recursive-minibuffers t)
 ;; enable this if you want `swiper' to use it
 ;; (setq search-default-mode #'char-fold-to-regexp)
@@ -104,11 +96,9 @@
 ;;(global-set-key (kbd "C-c r") 'counsel-rg)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
-;;ripgrep
-
-;;fzf
-
 ;;gtags
+
+;;rg
 
 ;;projectile
 (projectile-mode +1)
