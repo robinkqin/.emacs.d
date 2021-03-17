@@ -39,6 +39,7 @@
 		      better-defaults
 		      smooth-scrolling
 		      evil
+		      evil-leader
 		      undo-tree
 		      avy
 		      ivy
@@ -74,8 +75,12 @@
 
 ;;evil
 (require 'evil)
+(require 'evil-leader)
 (require 'undo-tree)
 (evil-mode 1)
+(global-evil-leader-mode)
+(evil-leader/set-leader "SPC")
+(setq evil-leader/in-all-states 1)
 
 ;;avy/ivy/counsel/swiper
 (require 'counsel)
@@ -95,11 +100,15 @@
 ;;(global-set-key (kbd "C-h l") 'counsel-find-library)
 ;;(global-set-key (kbd "C-h S") 'counsel-info-lookup-symbol)
 ;;(global-set-key (kbd "C-h u") 'counsel-unicode-char)
-(global-set-key (kbd "M-p o") 'counsel-recentf)
-(global-set-key (kbd "M-p f") 'counsel-git)
-(global-set-key (kbd "M-p g") 'counsel-rg)
+;;(global-set-key (kbd "M-p o") 'counsel-recentf)
+;;(global-set-key (kbd "M-p f") 'counsel-git)
+;;(global-set-key (kbd "M-p g") 'counsel-rg)
 ;;(global-set-key (kbd "M-p g") 'counsel-git-grep)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+;;(evil-leader/set-key "e" 'find-file)
+(evil-leader/set-key "o" 'counsel-recentf)
+(evil-leader/set-key "f" 'counsel-git)
+(evil-leader/set-key "g" 'counsel-rg)
 
 ;counsel gtags
 (require 'counsel-gtags)
@@ -107,10 +116,14 @@
 (add-hook 'c++-mode-hook 'counsel-gtags-mode)
 
 (with-eval-after-load 'counsel-gtags
-  (define-key counsel-gtags-mode-map (kbd "M-p d") 'counsel-gtags-find-definition)
-  (define-key counsel-gtags-mode-map (kbd "M-p r") 'counsel-gtags-find-reference)
-  (define-key counsel-gtags-mode-map (kbd "M-p s") 'counsel-gtags-find-symbol)
-  (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
+  ;;(define-key counsel-gtags-mode-map (kbd "M-p d") 'counsel-gtags-find-definition)
+  ;;(define-key counsel-gtags-mode-map (kbd "M-p r") 'counsel-gtags-find-reference)
+  ;;(define-key counsel-gtags-mode-map (kbd "M-p s") 'counsel-gtags-find-symbol)
+  ;;(define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
+  (evil-leader/set-key "d" 'counsel-gtags-find-definition)
+  (evil-leader/set-key "r" 'counsel-gtags-find-reference)
+  (evil-leader/set-key "s" 'counsel-gtags-find-symbol)
+  (evil-leader/set-key "," 'counsel-gtags-go-backward)
   )
 
 ;;rg
@@ -120,7 +133,8 @@
 ;;projectile
 (projectile-mode +1)
 ;;(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map) ;; mac os
-(define-key projectile-mode-map (kbd "M-p p") 'projectile-command-map)
+;;(define-key projectile-mode-map (kbd "M-p p") 'projectile-command-map)
+(evil-leader/set-key "p" 'projectile-command-map)
 
 ;;company
 ;;(global-company-mode 1)
