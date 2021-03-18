@@ -90,41 +90,16 @@
 (setq enable-recursive-minibuffers t)
 ;; enable this if you want `swiper' to use it
 ;; (setq search-default-mode #'char-fold-to-regexp)
-(global-set-key "\C-s" 'swiper)
+(global-set-key (kbd "C-s") 'swiper)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-;;(global-set-key (kbd "C-c C-r") 'ivy-resume)
-;;(global-set-key (kbd "C-h f") 'counsel-describe-function)
-;;(global-set-key (kbd "C-h v") 'counsel-describe-variable)
-;;(global-set-key (kbd "C-h o") 'counsel-describe-symbol)
-;;(global-set-key (kbd "C-h l") 'counsel-find-library)
-;;(global-set-key (kbd "C-h S") 'counsel-info-lookup-symbol)
-;;(global-set-key (kbd "C-h u") 'counsel-unicode-char)
-;;(global-set-key (kbd "M-p o") 'counsel-recentf)
-;;(global-set-key (kbd "M-p f") 'counsel-git)
-;;(global-set-key (kbd "M-p g") 'counsel-rg)
-;;(global-set-key (kbd "M-p g") 'counsel-git-grep)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
-;;(evil-leader/set-key "e" 'find-file)
-(evil-leader/set-key "o" 'counsel-recentf)
-(evil-leader/set-key "f" 'counsel-git)
-(evil-leader/set-key "g" 'counsel-rg)
 
 ;counsel gtags
 (require 'counsel-gtags)
 (add-hook 'c-mode-hook 'counsel-gtags-mode)
 (add-hook 'c++-mode-hook 'counsel-gtags-mode)
-
-(with-eval-after-load 'counsel-gtags
-  ;;(define-key counsel-gtags-mode-map (kbd "M-p d") 'counsel-gtags-find-definition)
-  ;;(define-key counsel-gtags-mode-map (kbd "M-p r") 'counsel-gtags-find-reference)
-  ;;(define-key counsel-gtags-mode-map (kbd "M-p s") 'counsel-gtags-find-symbol)
-  ;;(define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
-  (evil-leader/set-key "d" 'counsel-gtags-find-definition)
-  (evil-leader/set-key "r" 'counsel-gtags-find-reference)
-  (evil-leader/set-key "s" 'counsel-gtags-find-symbol)
-  (evil-leader/set-key "," 'counsel-gtags-go-backward)
-  )
 
 ;;rg
 (require 'rg)
@@ -132,12 +107,60 @@
 
 ;;projectile
 (projectile-mode +1)
-;;(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map) ;; mac os
-;;(define-key projectile-mode-map (kbd "M-p p") 'projectile-command-map)
-(evil-leader/set-key "p" 'projectile-command-map)
 
 ;;company
 ;;(global-company-mode 1)
+
+(evil-leader/set-key
+  "/" 'swiper
+  "SPC" 'counsel-M-x
+
+  "j" 'evil-scroll-page-down
+  "k" 'evil-scroll-page-up
+  "i" 'evil-jump-forward
+  "o" 'evil-jump-backward
+
+  "p" 'projectile-command-map
+
+  "hf" 'counsel-describe-function
+  "hv" 'counsel-describe-variable
+  "hs" 'counsel-describe-symbol
+  "hk" 'describe-key
+
+  "bb" 'counsel-switch-buffer
+  "bd" 'kill-buffer
+
+  "xf" 'counsel-find-file
+  "ff" 'counsel-git
+  "fm" 'counsel-recentf
+  "fs" 'save-buffer
+
+  "fe" 'counsel-rg
+  ;;"fa" 'counsel-rg
+  ;;"fo" 'counsel-rg
+  ;;"fp" 'counsel-rg
+  ;;"fn" 'counsel-rg
+
+  "ge" 'counsel-git-grep
+  "gd" 'counsel-git-dwim
+  "gc" 'counsel-gtags-create-tags
+  "gu" 'counsel-gtags-update-tags
+  "gg" 'counsel-gtags-find-definition
+  "gr" 'counsel-gtags-find-reference
+  "gs" 'counsel-gtags-find-symbol
+  "go" 'counsel-gtags-go-backward
+  "gi" 'counsel-gtags-go-forward
+
+  "ww" 'other-window
+  "wo" 'delete-other-windows
+  "wc" 'evil-window-delete
+  "wv" 'evil-window-vsplit
+  "ws" 'evil-window-split
+  "wh" 'evil-window-left
+  "wl" 'evil-window-right
+  "wj" 'evil-window-down
+  "wk" 'evil-window-up
+  )
 
 ;;which-key
 (require 'which-key)
