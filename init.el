@@ -1,10 +1,8 @@
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode -1)
+;; -*- lexical-binding: t -*-
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
 (setq inhibit-splash-screen 1)
-
-(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
-(fset 'yes-or-no-p 'y-or-n-p)
 (setq initial-frame-alist (quote ((fullscreen . maximized))))
 
 ;; (setq url-proxy-services
@@ -34,23 +32,23 @@
 (global-set-key (kbd "<f2>") 'open-init-file)
 
 (defvar my/packages '(
-		      use-package
-		      gruvbox-theme
-		      better-defaults
-		      smooth-scrolling
-		      evil
-		      evil-leader
-		      undo-tree
-		      avy
-		      ivy
-		      counsel
-		      counsel-gtags
-		      swiper
-		      rg
-		      projectile
-		      ;; company
-		      which-key
-		      ))
+                      use-package
+                      gruvbox-theme
+                      better-defaults
+                      smooth-scrolling
+                      rainbow-delimiters
+                      evil
+                      evil-leader
+                      undo-tree
+                      avy
+                      ivy
+                      counsel
+                      counsel-gtags
+                      swiper
+                      rg
+                      projectile
+                      ;; company
+                      which-key))
 
 (setq package-selected-packages my/packages)
 
@@ -70,24 +68,37 @@
 ;;use-package
 (require 'use-package)
 
+(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
+(fset 'yes-or-no-p 'y-or-n-p)
+(global-auto-revert-mode 1)
+(display-time-mode 1)
+(desktop-save-mode 1)
+(setq make-backup-files nil)
+(setq-default tab-width 4 indent-tabs-mode nil)
+(setq-default c-basic-offset 4 c-default-style "bsd")
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
 ;;theme
-(load-theme 'gruvbox t)
+(load-theme 'gruvbox 1)
+
+(require 'rainbow-delimiters)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
 ;;evil
 (require 'evil)
 (require 'evil-leader)
 (require 'undo-tree)
 (evil-mode 1)
+(setq evil-leader/in-all-states 1)
 (global-evil-leader-mode)
 (evil-leader/set-leader "SPC")
-(setq evil-leader/in-all-states 1)
 
 ;;avy/ivy/counsel/swiper
 (require 'counsel)
 (ivy-mode 1)
-(setq ivy-use-virtual-buffers t)
+(setq ivy-use-virtual-buffers 1)
 (setq ivy-count-format "%d/%d ")
-(setq enable-recursive-minibuffers t)
+(setq enable-recursive-minibuffers 1)
 ;; enable this if you want `swiper' to use it
 ;; (setq search-default-mode #'char-fold-to-regexp)
 (global-set-key (kbd "C-s") 'swiper)
@@ -106,10 +117,27 @@
 (rg-enable-default-bindings)
 
 ;;projectile
-(projectile-mode +1)
+(projectile-mode 1)
 
 ;;company
 ;;(global-company-mode 1)
+
+;;https://www.emacswiki.org/emacs/EvilZH
+;;(setq evil-motion-state-modes
+;;      (append evil-emacs-state-modes evil-motion-state-modes))
+;;(setq evil-emacs-state-modes nil)
+
+;;(define-key evil-normal-state-map ";;" 'evil-force-normal-state)
+;;(define-key evil-visual-state-map ";;" 'evil-change-to-previous-state)
+;;(define-key evil-insert-state-map ";;" 'evil-normal-state)
+;;(define-key evil-replace-state-map ";;" 'evil-normal-state)
+
+;;(define-key evil-normal-state-map "c" nil)
+;;(define-key evil-motion-state-map "cu" 'universal-argument)
+;;(define-key key-translation-map (kbd "ch") (kbd "C-h"))
+;;(define-key key-translation-map (kbd "cx") (kbd "C-x"))
+
+(define-key evil-normal-state-map (kbd "ff") 'counsel-find-file)
 
 (evil-leader/set-key
   "/" 'swiper
