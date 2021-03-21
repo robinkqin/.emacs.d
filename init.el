@@ -64,6 +64,7 @@
                       swiper
                       rg
                       projectile
+                      magit
                       ;; company
                       which-key
                       keyfreq))
