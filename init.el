@@ -148,10 +148,11 @@
 ;;(define-key evil-normal-state-map (kbd "ff") 'counsel-find-file)
 
 (evil-leader/set-key
-  "/" 'swiper
+  "/" 'swiper-isearch-thing-at-point
+  ";" 'swiper-all-thing-at-point
   "SPC" 'counsel-M-x
 
-  ;; c l n t u v x y z ' , .
+  ;; c l n t u v x y z ' .
   "a" 'avy-goto-char-2
   "b" 'counsel-switch-buffer
   "d" 'kill-current-buffer
@@ -165,7 +166,7 @@
   "p" 'projectile-command-map
   "r" 'counsel-recentf
   "s" 'counsel-rg
-  ";" 'rg
+  "," 'rg
 
   "qq" 'save-buffers-kill-terminal
 
