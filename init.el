@@ -35,12 +35,10 @@
                          ("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
                          ("org" . "http://mirrors.ustc.edu.cn/elpa/org/")))
 
+(require 'cl)
 (require 'package)
 (package-initialize)
 ;;(package-refresh-contents)
-
-;;Common Lisp Extension
-(require 'cl)
 
 (defun open-init-file()
   (interactive)
@@ -65,7 +63,9 @@
                       rg
                       projectile
                       magit
-                      ;; company
+                      company
+                      company-ctags
+                      ;; yasnippet
                       which-key
                       keyfreq))
 
@@ -139,15 +139,13 @@
 (projectile-mode 1)
 
 ;;company
-;;(Global-Company-Mode 1)
+(add-hook 'after-init-hook 'global-company-mode)
 
-(global-set-key (kbd "M-p") 'keyboard-quit)
-
-(define-key evil-normal-state-map "\M-n" 'evil-force-normal-state)
-(define-key evil-visual-state-map "\M-n" 'evil-change-to-previous-state)
-(define-key evil-insert-state-map "\M-n" 'evil-normal-state)
-(define-key evil-replace-state-map "\M-n" 'evil-normal-state)
-;;(define-key evil-normal-state-map (kbd "ff") 'counsel-find-file)
+;;company-ctags
+;;find . -name "*.[ch]" | ctags -e -L -
+;;(setq company-ctags-extra-tags-files '("$HOME/TAGS" "/usr/include/TAGS"))
+(with-eval-after-load 'company
+  (company-ctags-auto-setup))
 
 (evil-leader/set-key
   "/" 'swiper-isearch-thing-at-point
@@ -169,6 +167,8 @@
   "r" 'counsel-recentf
   "s" 'counsel-rg
   "," 'rg
+
+  "v" 'magit
 
   "qq" 'save-buffers-kill-terminal
 
