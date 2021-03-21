@@ -32,7 +32,7 @@
 ;;                         (base64-encode-string "USERNAME:PASSWORD")))))
 
 (setq package-archives '(("melpa" . "http://mirrors.ustc.edu.cn/elpa/melpa/")
-			 ("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
+                         ("gnu" . "http://mirrors.ustc.edu.cn/elpa/gnu/")
                          ("org" . "http://mirrors.ustc.edu.cn/elpa/org/")))
 
 (require 'package)
@@ -65,7 +65,8 @@
                       rg
                       projectile
                       ;; company
-                      which-key))
+                      which-key
+                      keyfreq))
 
 (setq package-selected-packages my/packages)
 
@@ -206,3 +207,13 @@
 ;;which-key
 (require 'which-key)
 (which-key-mode 1)
+
+(require 'keyfreq)
+(keyfreq-mode 1)
+(keyfreq-autosave-mode 1)
+(setq keyfreq-excluded-commands
+      '(self-insert-command
+        forward-char
+        backward-char
+        previous-line
+        next-line))
