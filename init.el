@@ -1,9 +1,21 @@
 ;; -*- lexical-binding: t -*-
+
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (setq inhibit-splash-screen 1)
 (setq initial-frame-alist (quote ((fullscreen . maximized))))
+
+(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
+(fset 'yes-or-no-p 'y-or-n-p)
+(display-time-mode 1)
+(desktop-save-mode 1)
+(global-auto-revert-mode 1)
+(setq make-backup-files nil)
+
+(setq-default tab-width 4 indent-tabs-mode nil)
+(setq-default c-basic-offset 4 c-default-style "bsd")
+(define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;; (setq url-proxy-services
 ;;       '(("no_proxy" . "^\\(localhost\\|10.*\\)")
@@ -64,19 +76,8 @@
        (when (not (package-installed-p pkg))
 	 (package-install pkg))))
 
-
 ;;use-package
 (require 'use-package)
-
-(add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
-(fset 'yes-or-no-p 'y-or-n-p)
-(global-auto-revert-mode 1)
-(display-time-mode 1)
-(desktop-save-mode 1)
-(setq make-backup-files nil)
-(setq-default tab-width 4 indent-tabs-mode nil)
-(setq-default c-basic-offset 4 c-default-style "bsd")
-(define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;;theme
 (load-theme 'gruvbox 1)
@@ -120,64 +121,52 @@
 (projectile-mode 1)
 
 ;;company
-;;(global-company-mode 1)
+;;(Global-Company-Mode 1)
 
-;;https://www.emacswiki.org/emacs/EvilZH
-;;(setq evil-motion-state-modes
-;;      (append evil-emacs-state-modes evil-motion-state-modes))
-;;(setq evil-emacs-state-modes nil)
+(global-set-key (kbd "M-p") 'keyboard-quit)
 
-;;(define-key evil-normal-state-map ";;" 'evil-force-normal-state)
-;;(define-key evil-visual-state-map ";;" 'evil-change-to-previous-state)
-;;(define-key evil-insert-state-map ";;" 'evil-normal-state)
-;;(define-key evil-replace-state-map ";;" 'evil-normal-state)
-
-;;(define-key evil-normal-state-map "c" nil)
-;;(define-key evil-motion-state-map "cu" 'universal-argument)
-;;(define-key key-translation-map (kbd "ch") (kbd "C-h"))
-;;(define-key key-translation-map (kbd "cx") (kbd "C-x"))
-
-(define-key evil-normal-state-map (kbd "ff") 'counsel-find-file)
+(define-key evil-normal-state-map "\M-n" 'evil-force-normal-state)
+(define-key evil-visual-state-map "\M-n" 'evil-change-to-previous-state)
+(define-key evil-insert-state-map "\M-n" 'evil-normal-state)
+(define-key evil-replace-state-map "\M-n" 'evil-normal-state)
+;;(define-key evil-normal-state-map (kbd "ff") 'counsel-find-file)
 
 (evil-leader/set-key
   "/" 'swiper
   "SPC" 'counsel-M-x
 
-  "j" 'evil-scroll-page-down
-  "k" 'evil-scroll-page-up
+  ;; c l n t u v x y z ' , .
+  "a" 'avy-goto-char-2
+  "b" 'counsel-switch-buffer
+  "d" 'kill-current-buffer
+  "e" 'counsel-find-file
+
   "i" 'evil-jump-forward
   "o" 'evil-jump-backward
+  "j" 'evil-scroll-page-down
+  "k" 'evil-scroll-page-up
 
   "p" 'projectile-command-map
+  "r" 'counsel-recentf
+  "s" 'counsel-rg
+  ";" 'rg
 
-  "hf" 'counsel-describe-function
-  "hv" 'counsel-describe-variable
-  "hs" 'counsel-describe-symbol
-  "hk" 'describe-key
+  "qq" 'save-buffers-kill-terminal
 
-  "bb" 'counsel-switch-buffer
-  "bd" 'kill-buffer
-
-  "xf" 'counsel-find-file
   "ff" 'counsel-git
-  "fm" 'counsel-recentf
   "fs" 'save-buffer
+  "fe" 'counsel-git-grep
 
-  "fe" 'counsel-rg
-  ;;"fa" 'counsel-rg
-  ;;"fo" 'counsel-rg
-  ;;"fp" 'counsel-rg
-  ;;"fn" 'counsel-rg
-
-  "ge" 'counsel-git-grep
   "gd" 'counsel-git-dwim
-  "gc" 'counsel-gtags-create-tags
-  "gu" 'counsel-gtags-update-tags
   "gg" 'counsel-gtags-find-definition
   "gr" 'counsel-gtags-find-reference
   "gs" 'counsel-gtags-find-symbol
-  "go" 'counsel-gtags-go-backward
-  "gi" 'counsel-gtags-go-forward
+  "gt" 'counsel-gtags-create-tags
+  "gu" 'counsel-gtags-update-tags
+
+  "mm" 'highlight-symbol-at-point
+  "mr" 'highlight-regexp
+  "mu" 'unhighlight-regexp
 
   "ww" 'other-window
   "wo" 'delete-other-windows
@@ -188,6 +177,11 @@
   "wl" 'evil-window-right
   "wj" 'evil-window-down
   "wk" 'evil-window-up
+
+  "hf" 'counsel-describe-function
+  "hv" 'counsel-describe-variable
+  "hs" 'counsel-describe-symbol
+  "hk" 'describe-key
   )
 
 ;;which-key
