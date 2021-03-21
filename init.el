@@ -3,15 +3,19 @@
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
+(setq inhibit-startup-message t)
 (setq inhibit-splash-screen 1)
+(setq ring-bell-function 'ignore)
 (setq initial-frame-alist (quote ((fullscreen . maximized))))
 
 (add-hook 'emacs-lisp-mode-hook 'show-paren-mode)
 (fset 'yes-or-no-p 'y-or-n-p)
 (display-time-mode 1)
 (desktop-save-mode 1)
+(save-place-mode 1)
 (global-auto-revert-mode 1)
 (setq make-backup-files nil)
+(setq auto-save-default nil)
 
 (setq-default tab-width 4 indent-tabs-mode nil)
 (setq-default c-basic-offset 4 c-default-style "bsd")
@@ -49,6 +53,7 @@
                       better-defaults
                       smooth-scrolling
                       rainbow-delimiters
+                      super-save
                       evil
                       evil-leader
                       undo-tree
@@ -78,17 +83,28 @@
 
 ;;use-package
 (require 'use-package)
+(require 'better-defaults)
 
 ;;theme
 (load-theme 'gruvbox 1)
 
+(super-save-mode 1)
+(setq super-save-idle-duration 3)
+(setq super-save-auto-save-when-idle t)
+
 (require 'rainbow-delimiters)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+
+(require 'smooth-scrolling)
+(smooth-scrolling-mode 1)
+(setq smooth-scroll-margin 3)
+
+(require 'undo-tree)
+(global-undo-tree-mode)
 
 ;;evil
 (require 'evil)
 (require 'evil-leader)
-(require 'undo-tree)
 (evil-mode 1)
 (setq evil-leader/in-all-states 1)
 (global-evil-leader-mode)
@@ -182,6 +198,8 @@
   "hv" 'counsel-describe-variable
   "hs" 'counsel-describe-symbol
   "hk" 'describe-key
+  "hm" 'describe-mode
+  "hi" 'info
   )
 
 ;;which-key
