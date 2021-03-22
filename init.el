@@ -58,6 +58,7 @@
                       avy
                       ivy
                       counsel
+                      counsel-etags
                       counsel-gtags
                       swiper
                       rg
@@ -126,6 +127,16 @@
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
+;;etags
+(require 'counsel-etags)
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (add-hook 'after-save-hook
+                      'counsel-etags-virtual-update-tags 'append 'local)))
+(setq counsel-etags-update-interval 60)
+(push "build" counsel-etags-ignore-directories)
+;;(global-set-key (kbd "C-]") 'counsel-etags-find-tag-at-point)
+
 ;counsel gtags
 (require 'counsel-gtags)
 (add-hook 'c-mode-hook 'counsel-gtags-mode)
@@ -176,8 +187,10 @@
   "fs" 'save-buffer
   "fe" 'counsel-git-grep
 
-  "gd" 'counsel-git-dwim
-  "gg" 'counsel-gtags-find-definition
+  "gg" 'counsel-etags-find-tag-at-point
+
+  "gd" 'counsel-gtags-dwim
+  "gt" 'counsel-gtags-find-definition
   "gr" 'counsel-gtags-find-reference
   "gs" 'counsel-gtags-find-symbol
   "gt" 'counsel-gtags-create-tags
