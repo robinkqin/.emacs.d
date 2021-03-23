@@ -199,6 +199,8 @@
   "fe" 'counsel-git-grep
 
   "fd" 'counsel-etags-find-tag-at-point
+  "fg" 'counsel-etags-list-tag-in-current-file
+  "ft" 'counsel-etags-list-tag
 
   "gg" 'counsel-gtags-dwim
   "gd" 'counsel-gtags-find-definition
@@ -233,6 +235,8 @@
   )
 
 (global-git-gutter-mode 1)
+(custom-set-variables
+ '(git-gutter:update-interval 2))
 
 ;;which-key
 (require 'which-key)
