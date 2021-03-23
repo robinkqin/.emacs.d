@@ -64,6 +64,7 @@
                       rg
                       projectile
                       magit
+                      git-gutter
                       company
                       company-ctags
                       ;; yasnippet
@@ -92,7 +93,7 @@
 (load-theme 'gruvbox 1)
 
 (super-save-mode 1)
-(setq super-save-idle-duration 3)
+(setq super-save-idle-duration 1)
 (setq super-save-auto-save-when-idle t)
 
 (require 'rainbow-delimiters)
@@ -134,8 +135,18 @@
             (add-hook 'after-save-hook
                       'counsel-etags-virtual-update-tags 'append 'local)))
 (setq counsel-etags-update-interval 60)
-(push "build" counsel-etags-ignore-directories)
-;;(global-set-key (kbd "C-]") 'counsel-etags-find-tag-at-point)
+(with-eval-after-load 'counsel-etags
+  ;; counsel-etags-ignore-directories does NOT support wildcast
+  (push "build" counsel-etags-ignore-directories)
+  (push "build_clang" counsel-etags-ignore-directories)
+  ;; counsel-etags-ignore-filenames supports wildcast
+  (push "GPATH" counsel-etags-ignore-filenames)
+  (push "GTAGS" counsel-etags-ignore-filenames)
+  (push "GRTAGS" counsel-etags-ignore-filenames)
+  (push "TAGS" counsel-etags-ignore-filenames)
+  (push ".projectile" counsel-etags-ignore-filenames)
+  (push "*.json" counsel-etags-ignore-filenames))
+;;(setq counsel-etags-extra-tags-files '("/usr/include/TAGS" "/usr/local/include/TAGS"))
 
 ;counsel gtags
 (require 'counsel-gtags)
@@ -187,10 +198,10 @@
   "fs" 'save-buffer
   "fe" 'counsel-git-grep
 
-  "gg" 'counsel-etags-find-tag-at-point
+  "fd" 'counsel-etags-find-tag-at-point
 
-  "gd" 'counsel-gtags-dwim
-  "gt" 'counsel-gtags-find-definition
+  "gg" 'counsel-gtags-dwim
+  "gd" 'counsel-gtags-find-definition
   "gr" 'counsel-gtags-find-reference
   "gs" 'counsel-gtags-find-symbol
   "gt" 'counsel-gtags-create-tags
@@ -210,6 +221,9 @@
   "wj" 'evil-window-down
   "wk" 'evil-window-up
 
+  "]]" 'git-gutter:next-hunk
+  "[[" 'git-gutter:previous-hunk
+
   "hf" 'counsel-describe-function
   "hv" 'counsel-describe-variable
   "hs" 'counsel-describe-symbol
@@ -217,6 +231,8 @@
   "hm" 'describe-mode
   "hi" 'info
   )
+
+(global-git-gutter-mode 1)
 
 ;;which-key
 (require 'which-key)
