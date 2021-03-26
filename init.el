@@ -128,6 +128,14 @@
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
+(defun my-escape ()
+  (interactive)
+  (evil-force-normal-state)
+  (minibuffer-keyboard-quit)
+  (keyboard-quit))
+
+(global-set-key (kbd "M-[") 'my-escape)
+
 ;;etags
 (require 'counsel-etags)
 (add-hook 'prog-mode-hook
