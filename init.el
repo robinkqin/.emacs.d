@@ -135,6 +135,7 @@
   (keyboard-quit))
 
 (global-set-key (kbd "M-[") 'my-escape)
+(global-set-key (kbd "M-]") 'my-escape)
 
 ;;etags
 (require 'counsel-etags)
@@ -189,6 +190,14 @@
   (interactive)
   (counsel-gtags-find-symbol (thing-at-point 'symbol)))
 
+(defun my-git-grep ()
+  (interactive)
+  (counsel-git-grep (thing-at-point 'symbol)))
+
+(defun my-rg ()
+  (interactive)
+  (counsel-rg (thing-at-point 'symbol)))
+
 (evil-leader/set-key
   "/" 'swiper-isearch-thing-at-point
   ";" 'swiper-all-thing-at-point
@@ -207,7 +216,7 @@
 
   "p" 'projectile-command-map
   "r" 'counsel-recentf
-  "s" 'counsel-rg
+  "s" 'my-rg
   "," 'rg
 
   "v" 'magit
@@ -215,18 +224,17 @@
   "qq" 'save-buffers-kill-terminal
 
   "ff" 'counsel-git
-  "fs" 'save-buffer
-  "fe" 'counsel-git-grep
+  "fg" 'my-git-grep
 
-  "fd" 'counsel-etags-find-tag-at-point
-  "fg" 'counsel-etags-list-tag-in-current-file
-  "ft" 'counsel-etags-list-tag
+  "fd" 'my-gtags-find-definition
+  "fr" 'my-gtags-find-reference
+  "fs" 'my-gtags-find-symbol
 
-  "gg" 'counsel-gtags-dwim
-  "gd" 'my-gtags-find-definition
-  "gr" 'my-gtags-find-reference
-  "gs" 'my-gtags-find-symbol
-  "gt" 'counsel-gtags-create-tags
+  "fw" 'counsel-etags-list-tag
+  "fa" 'counsel-etags-list-tag-in-current-file
+  "gg" 'counsel-etags-find-tag-at-point
+
+  "gc" 'counsel-gtags-create-tags
   "gu" 'counsel-gtags-update-tags
 
   "mm" 'highlight-symbol-at-point
