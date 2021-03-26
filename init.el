@@ -169,6 +169,18 @@
 (with-eval-after-load 'company
   (company-ctags-auto-setup))
 
+(defun my-gtags-find-definition ()
+  (interactive)
+  (counsel-gtags-find-definition (thing-at-point 'symbol)))
+
+(defun my-gtags-find-reference ()
+  (interactive)
+  (counsel-gtags-find-reference (thing-at-point 'symbol)))
+
+(defun my-gtags-find-symbol ()
+  (interactive)
+  (counsel-gtags-find-symbol (thing-at-point 'symbol)))
+
 (evil-leader/set-key
   "/" 'swiper-isearch-thing-at-point
   ";" 'swiper-all-thing-at-point
@@ -203,9 +215,9 @@
   "ft" 'counsel-etags-list-tag
 
   "gg" 'counsel-gtags-dwim
-  "gd" 'counsel-gtags-find-definition
-  "gr" 'counsel-gtags-find-reference
-  "gs" 'counsel-gtags-find-symbol
+  "gd" 'my-gtags-find-definition
+  "gr" 'my-gtags-find-reference
+  "gs" 'my-gtags-find-symbol
   "gt" 'counsel-gtags-create-tags
   "gu" 'counsel-gtags-update-tags
 
