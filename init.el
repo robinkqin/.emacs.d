@@ -224,14 +224,14 @@
   "qq" 'save-buffers-kill-terminal
 
   "ff" 'counsel-git
-  "fg" 'my-git-grep
+  "fe" 'my-git-grep
 
   "fd" 'my-gtags-find-definition
-  "fr" 'my-gtags-find-reference
+  "fa" 'my-gtags-find-reference
   "fs" 'my-gtags-find-symbol
 
-  "fw" 'counsel-etags-list-tag
-  "fa" 'counsel-etags-list-tag-in-current-file
+  "ft" 'counsel-etags-list-tag
+  "fg" 'counsel-etags-list-tag-in-current-file
   "gg" 'counsel-etags-find-tag-at-point
 
   "gc" 'counsel-gtags-create-tags
