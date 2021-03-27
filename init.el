@@ -134,7 +134,8 @@
   (minibuffer-keyboard-quit)
   (keyboard-quit))
 
-(global-set-key (kbd "M-[") 'my-escape)
+(global-set-key (kbd "M-p") 'evil-force-normal-state)
+(global-set-key (kbd "M-[") 'minibuffer-keyboard-quit)
 (global-set-key (kbd "M-]") 'my-escape)
 
 ;;etags
@@ -257,6 +258,8 @@
   "hf" 'counsel-describe-function
   "hv" 'counsel-describe-variable
   "hs" 'counsel-describe-symbol
+  "hr" 'info-emacs-manual
+  "hb" 'describe-bindings
   "hk" 'describe-key
   "hm" 'describe-mode
   "hi" 'info
