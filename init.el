@@ -126,7 +126,6 @@
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
-(define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
 (defun my-escape ()
   (interactive)
@@ -136,7 +135,8 @@
 
 (global-set-key (kbd "M-p") 'evil-force-normal-state)
 (global-set-key (kbd "M-[") 'minibuffer-keyboard-quit)
-(global-set-key (kbd "M-]") 'my-escape)
+;;;;(global-set-key (kbd "M-]") 'my-escape)
+;;;;(define-key key-translation-map (kbd "M-]") (kbd "C-g"))
 
 ;;etags
 (require 'counsel-etags)
