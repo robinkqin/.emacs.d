@@ -1,5 +1,10 @@
 ;; -*- lexical-binding: t -*-
 
+;;#cat /usr/share/X11/xkb/rules/base.lst  | grep ctrl
+;;#setxkbmap -option ctrl:swapcaps
+;;#setxkbmap -option ctrl:nocaps
+;;setxkbmap -option ctrl:swap_lalt_lctl
+
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
@@ -127,15 +132,8 @@
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
 (global-set-key (kbd "C-c C-r") 'ivy-resume)
 
-(defun my-escape ()
-  (interactive)
-  (evil-force-normal-state)
-  (minibuffer-keyboard-quit)
-  (keyboard-quit))
-
-(global-set-key (kbd "M-p") 'evil-force-normal-state)
-(global-set-key (kbd "M-[") 'minibuffer-keyboard-quit)
-;;;;(global-set-key (kbd "M-]") 'my-escape)
+;;(global-set-key (kbd "M-p") 'evil-force-normal-state)
+;;(global-set-key (kbd "M-[") 'minibuffer-keyboard-quit)
 ;;;;(define-key key-translation-map (kbd "M-]") (kbd "C-g"))
 
 ;;etags
