@@ -97,6 +97,11 @@
 ;;theme
 (load-theme 'gruvbox 1)
 
+(prefer-coding-system 'utf-8)
+(setenv "LANG" "en_US.UTF-8")
+(setenv "LC_ALL" "en_US.UTF-8")
+(setenv "LC_CTYPE" "en_US.UTF-8")
+
 (super-save-mode 1)
 (setq super-save-idle-duration 1)
 (setq super-save-auto-save-when-idle t)
