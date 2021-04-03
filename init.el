@@ -285,3 +285,5 @@
         backward-char
         previous-line
         next-line))
+
+;;sshfs remotehost:/remote/directory/ ~/local/directory -o reconnect -C
