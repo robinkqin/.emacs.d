@@ -72,7 +72,7 @@
                       git-gutter
                       company
                       company-ctags
-                      ;; yasnippet
+                      yasnippet
                       which-key
                       keyfreq))
 
@@ -181,6 +181,9 @@
 ;;(setq company-ctags-extra-tags-files '("$HOME/TAGS" "/usr/include/TAGS"))
 (with-eval-after-load 'company
   (company-ctags-auto-setup))
+
+(require 'yasnippet)
+(yas-global-mode 1)
 
 (defun my-gtags-find-definition ()
   (interactive)
