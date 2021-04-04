@@ -73,6 +73,7 @@
                       company
                       company-ctags
                       yasnippet
+                      vterm
                       which-key
                       keyfreq))
 
@@ -184,6 +185,8 @@
 
 (require 'yasnippet)
 (yas-global-mode 1)
+
+(require 'vterm)
 
 (defun my-gtags-find-definition ()
   (interactive)
