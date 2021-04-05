@@ -11,3 +11,8 @@ TAGS
 history
 places
 .emacs.desktop.lock
+backups
+ido.last
+custom.el
+projectile.cache
+recentf~
