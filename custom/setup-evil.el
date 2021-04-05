@@ -11,43 +11,43 @@
   (evil-leader/set-leader "SPC"))
 
 (evil-leader/set-key
-  ;;"/" 'swiper-isearch-thing-at-point
+  "/" 'helm-swoop
   ;;";" 'swiper-all-thing-at-point
-  ;;"SPC" 'counsel-M-x
+  "SPC" 'helm-M-x
 
   ;; c l n t u v x y z ' .
   "a" 'avy-goto-char-2
-  ;;"b" 'counsel-switch-buffer
+  "b" 'switch-to-buffer
   "d" 'kill-current-buffer
-  ;;"e" 'counsel-find-file
+  "e" 'helm-find-files
 
-  ;;"i" 'evil-jump-forward
-  ;;"o" 'evil-jump-backward
-  ;;"j" 'evil-scroll-page-down
-  ;;"k" 'evil-scroll-page-up
+  "i" 'evil-jump-forward
+  "o" 'evil-jump-backward
+  "j" 'evil-scroll-page-down
+  "k" 'evil-scroll-page-up
 
   "p" 'projectile-command-map
-  ;;"r" 'counsel-recentf
+  "r" 'helm-recentf
   ;;"s" 'my-rg
   ;;"," 'rg
 
-  ;;"v" 'magit
+  "v" 'magit
 
-  ;;"qq" 'save-buffers-kill-terminal
+  "qq" 'save-buffers-kill-terminal
 
   ;;"ff" 'counsel-git
-  ;;"fe" 'my-git-grep
+  "fe" 'helm-grep-do-git-grep
 
-  ;;"fd" 'my-gtags-find-definition
-  ;;"fa" 'my-gtags-find-reference
-  ;;"fs" 'my-gtags-find-symbol
+  "fd" 'helm-gtags-dwim
+  "fs" 'helm-gtags-find-symbol
+  "fa" 'helm-gtags-find-tag
 
   ;;"ft" 'counsel-etags-list-tag
   ;;"fg" 'counsel-etags-list-tag-in-current-file
   ;;"gg" 'counsel-etags-find-tag-at-point
 
-  ;;"gc" 'counsel-gtags-create-tags
-  ;;"gu" 'counsel-gtags-update-tags
+  "gc" 'helm-gtags-create-tags
+  "gu" 'helm-gtags-update-tags
 
   "mm" 'highlight-symbol-at-point
   "mr" 'highlight-regexp
