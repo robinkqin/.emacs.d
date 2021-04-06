@@ -395,10 +395,9 @@
 
 (evil-leader/set-key
   "/" 'helm-swoop
-  ;;";" 'swiper-all-thing-at-point
   "SPC" 'helm-M-x
 
-  ;; c l n t u v x y z ' .
+  ;; c l n t u x y z ' ;
   "a" 'avy-goto-char-2
   "b" 'helm-buffers-list
   "d" 'kill-current-buffer
@@ -456,9 +455,9 @@
   "]]" 'git-gutter:next-hunk
   "[[" 'git-gutter:previous-hunk
 
-  "hf" 'counsel-describe-function
-  "hv" 'counsel-describe-variable
-  "hs" 'counsel-describe-symbol
+  "hf" 'describe-function
+  "hv" 'describe-variable
+  "hs" 'describe-symbol
   "hr" 'info-emacs-manual
   "hb" 'describe-bindings
   "hk" 'describe-key
