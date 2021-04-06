@@ -25,7 +25,7 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-(add-to-list 'load-path "~/.emacs.d/custom")
+;;(add-to-list 'load-path "~/.emacs.d/custom")
 
 ;;(require 'setup-general)
 (menu-bar-mode -1)
@@ -90,9 +90,8 @@
   (setq smooth-scroll-margin 3))
 
 (use-package rainbow-delimiters
-  :defer t
-  :init
-  (rainbow-delimiters-mode 1))
+  :defer t)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
 (use-package super-save
   :defer t
@@ -145,17 +144,17 @@
   :init
   (which-key-mode 1))
 
-;;(use-package which-key
-;;  :defer t
-;;  :init
-;;  (keyfreq-mode)
-;;  (keyfreq-autosave-mode 1)
-;;  (setq keyfreq-excluded-commands
-;;        '(self-insert-command
-;;          forward-char
-;;          backward-char
-;;          previous-line
-;;          next-line)))
+(use-package keyfreq
+  :defer t
+  :init
+  (keyfreq-mode)
+  (keyfreq-autosave-mode 1)
+  (setq keyfreq-excluded-commands
+        '(self-insert-command
+          forward-char
+          backward-char
+          previous-line
+          next-line)))
 
 ;;(require 'setup-helm)
 (use-package helm
@@ -237,11 +236,11 @@
     (global-set-key (kbd "C-x C-f") 'helm-find-files)
     (global-set-key (kbd "C-c r") 'helm-recentf)
     (global-set-key (kbd "C-h SPC") 'helm-all-mark-rings)
-    (global-set-key (kbd "C-c h o") 'helm-occur)
+    ;;(global-set-key (kbd "C-c h o") 'helm-occur)
     (global-set-key (kbd "C-c h o") 'helm-occur)
 
-    (global-set-key (kbd "C-c h w") 'helm-wikipedia-suggest)
-    (global-set-key (kbd "C-c h g") 'helm-google-suggest)
+    ;;(global-set-key (kbd "C-c h w") 'helm-wikipedia-suggest)
+    ;;(global-set-key (kbd "C-c h g") 'helm-google-suggest)
 
     (global-set-key (kbd "C-c h x") 'helm-register)
     ;; (global-set-key (kbd "C-x r j") 'jump-to-register)
@@ -347,21 +346,21 @@
 (ggtags-mode 1)
 (add-hook 'c-mode-common-hook
           (lambda ()
-            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
+            (when (derived-mode-p 'c-mode 'c++-mode)
               (ggtags-mode 1))))
 
-(dolist (map (list ggtags-mode-map))
-  (define-key map (kbd "C-c g s") 'ggtags-find-other-symbol)
-  (define-key map (kbd "C-c g h") 'ggtags-view-tag-history)
-  (define-key map (kbd "C-c g r") 'ggtags-find-reference)
-  (define-key map (kbd "C-c g f") 'ggtags-find-file)
-  (define-key map (kbd "C-c g c") 'ggtags-create-tags)
-  (define-key map (kbd "C-c g u") 'ggtags-update-tags)
-  (define-key map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
-  (define-key map (kbd "M-.") 'ggtags-find-tag-dwim)
-  (define-key map (kbd "M-,") 'pop-tag-mark)
-  (define-key map (kbd "C-c <") 'ggtags-prev-mark)
-  (define-key map (kbd "C-c >") 'ggtags-next-mark))
+;;(dolist (map (list ggtags-mode-map))
+;;  (define-key map (kbd "C-c g s") 'ggtags-find-other-symbol)
+;;  (define-key map (kbd "C-c g h") 'ggtags-view-tag-history)
+;;  (define-key map (kbd "C-c g r") 'ggtags-find-reference)
+;;  (define-key map (kbd "C-c g f") 'ggtags-find-file)
+;;  (define-key map (kbd "C-c g c") 'ggtags-create-tags)
+;;  (define-key map (kbd "C-c g u") 'ggtags-update-tags)
+;;  (define-key map (kbd "C-c g a") 'helm-gtags-tags-in-this-function)
+;;  (define-key map (kbd "M-.") 'ggtags-find-tag-dwim)
+;;  (define-key map (kbd "M-,") 'pop-tag-mark)
+;;  (define-key map (kbd "C-c <") 'ggtags-prev-mark)
+;;  (define-key map (kbd "C-c >") 'ggtags-next-mark))
 
 ;;(require 'setup-company)
 ;; Package: yasnippet
@@ -401,35 +400,42 @@
 
   ;; c l n t u v x y z ' .
   "a" 'avy-goto-char-2
-  "b" 'switch-to-buffer
+  "b" 'helm-buffers-list
   "d" 'kill-current-buffer
   "e" 'helm-find-files
 
   "i" 'evil-jump-forward
   "o" 'evil-jump-backward
+
   "j" 'evil-scroll-page-down
   "k" 'evil-scroll-page-up
 
   "p" 'projectile-command-map
   "r" 'helm-recentf
-  ;;"s" 'my-rg
-  ;;"," 'rg
+  "s" 'rg
 
   "v" 'magit
 
   "qq" 'save-buffers-kill-terminal
 
-  ;;"ff" 'counsel-git
-  "fe" 'helm-grep-do-git-grep
+  "ff" 'helm-projectile-find-file
+  "fa" 'helm-do-grep-ag
+  "fg" 'helm-grep-do-git-grep
 
   "fd" 'helm-gtags-dwim
   "fs" 'helm-gtags-find-symbol
-  "fa" 'helm-gtags-find-tag
+  "fr" 'helm-gtags-find-rtag
+  "ft" 'helm-gtags-select
+  "fm" 'helm-man-woman
 
-  ;;"ft" 'counsel-etags-list-tag
-  ;;"fg" 'counsel-etags-list-tag-in-current-file
-  ;;"gg" 'counsel-etags-find-tag-at-point
+  "fo" 'helm-gtags-resume
+  "fj" 'helm-gtags-next-history
+  "fk" 'helm-gtags-previous-history
 
+  "," 'helm-gtags-pop-stack
+  "." 'helm-gtags-dwim
+
+  "gg" 'helm-imenu
   "gc" 'helm-gtags-create-tags
   "gu" 'helm-gtags-update-tags
 

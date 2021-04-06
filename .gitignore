@@ -16,3 +16,4 @@ ido.last
 custom.el
 projectile.cache
 recentf~
+*.log
