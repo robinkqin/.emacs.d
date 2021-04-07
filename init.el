@@ -411,32 +411,31 @@
 
   "p" 'projectile-command-map
   "r" 'helm-recentf
-  "s" 'rg
+  "s" 'rg-dwim
 
   "v" 'magit
 
   "qq" 'save-buffers-kill-terminal
 
   "ff" 'helm-projectile-find-file
-  "fa" 'helm-do-grep-ag
-  "fg" 'helm-grep-do-git-grep
 
   "fd" 'helm-gtags-dwim
   "fs" 'helm-gtags-find-symbol
   "fr" 'helm-gtags-find-rtag
-  "ft" 'helm-gtags-select
-  "fm" 'helm-man-woman
 
   "fo" 'helm-gtags-resume
   "fj" 'helm-gtags-next-history
   "fk" 'helm-gtags-previous-history
 
+  ";" 'helm-do-grep-ag
+  ;;";" 'helm-grep-do-git-grep
   "," 'helm-gtags-pop-stack
   "." 'helm-gtags-dwim
 
   "gg" 'helm-imenu
-  "gc" 'helm-gtags-create-tags
-  "gu" 'helm-gtags-update-tags
+  "gt" 'helm-gtags-select
+
+  "hh" 'helm-man-woman
 
   "mm" 'highlight-symbol-at-point
   "mr" 'highlight-regexp
