@@ -395,51 +395,39 @@
 
 (evil-leader/set-key
   "/" 'helm-swoop
-  "SPC" 'helm-M-x
-
-  ;; c l n t u x y z ' ;
-  "a" 'avy-goto-char-2
-  "b" 'helm-buffers-list
-  "d" 'kill-current-buffer
-  "e" 'helm-find-files
-
-  "i" 'evil-jump-forward
-  "o" 'evil-jump-backward
-
-  "j" 'evil-scroll-page-down
-  "k" 'evil-scroll-page-up
-
-  "p" 'projectile-command-map
-  "r" 'helm-recentf
-  "s" 'rg-dwim
-
-  "v" 'magit
-
-  "qq" 'save-buffers-kill-terminal
-
-  "ff" 'helm-projectile-find-file
-
-  "fd" 'helm-gtags-dwim
-  "fs" 'helm-gtags-find-symbol
-  "fr" 'helm-gtags-find-rtag
-
-  "fo" 'helm-gtags-resume
-  "fj" 'helm-gtags-next-history
-  "fk" 'helm-gtags-previous-history
-
   ";" 'helm-do-grep-ag
   ;;";" 'helm-grep-do-git-grep
-  "," 'helm-gtags-pop-stack
-  "." 'helm-gtags-dwim
+  "SPC" 'helm-M-x
 
-  "gg" 'helm-imenu
-  "gt" 'helm-gtags-select
+  ;; c i n r t u y z , .
+  "a" 'rg-dwim
+  "b" 'helm-buffers-list
 
-  "hh" 'helm-man-woman
+  "e" 'helm-find-files
+  "f" 'helm-projectile-find-file
+
+  "g" 'avy-goto-char-2
+
+  "d" 'helm-gtags-dwim
+  "l" 'helm-gtags-pop-stack
+  "s" 'helm-gtags-find-rtag
+  "o" 'helm-gtags-resume
+
+  "j" 'helm-imenu
+  "k" 'helm-gtags-select
+
+  "p" 'projectile-command-map
+  "v" 'magit
+  "x" 'kill-current-buffer
+
+  "]]" 'git-gutter:next-hunk
+  "[[" 'git-gutter:previous-hunk
 
   "mm" 'highlight-symbol-at-point
   "mr" 'highlight-regexp
   "mu" 'unhighlight-regexp
+
+  "qq" 'save-buffers-kill-terminal
 
   "ww" 'other-window
   "wo" 'delete-other-windows
@@ -451,9 +439,7 @@
   "wj" 'evil-window-down
   "wk" 'evil-window-up
 
-  "]]" 'git-gutter:next-hunk
-  "[[" 'git-gutter:previous-hunk
-
+  "hh" 'helm-man-woman
   "hf" 'describe-function
   "hv" 'describe-variable
   "hs" 'describe-symbol
