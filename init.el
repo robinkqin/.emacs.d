@@ -93,6 +93,12 @@
   :defer t)
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 
+(use-package smartparens
+  :defer t
+  :init
+  (require 'smartparens-config))
+(add-hook 'prog-mode-hook 'smartparens-mode)
+
 (use-package super-save
   :defer t
   :init
