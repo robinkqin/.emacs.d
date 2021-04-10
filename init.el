@@ -96,7 +96,8 @@
 (use-package smartparens
   :defer t
   :init
-  (require 'smartparens-config))
+  (progn
+    (require 'smartparens-config)))
 (add-hook 'prog-mode-hook 'smartparens-mode)
 
 (use-package super-save
@@ -344,6 +345,17 @@
       (define-key helm-gtags-mode-map (kbd "M-,") 'helm-gtags-pop-stack)
       (define-key helm-gtags-mode-map (kbd "C-c <") 'helm-gtags-previous-history)
       (define-key helm-gtags-mode-map (kbd "C-c >") 'helm-gtags-next-history))))
+
+(use-package helm-ag
+  :defer t)
+;;(custom-set-variables
+;; '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
+;; '(helm-ag-command-option "--all-text")
+;; '(helm-ag-insert-at-point 'symbol)
+;; '(helm-ag-ignore-buffer-patterns '("\\.txt\\'" "\\.mkd\\'")))
+;;(custom-set-variables
+;; '(helm-ag-base-command "rg --no-heading")
+;; '(helm-ag-success-exit-status '(0 2)))
 
 ;;(require 'setup-ggtags)
 (use-package ggtags
