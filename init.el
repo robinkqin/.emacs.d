@@ -399,24 +399,28 @@
   ;;";" 'helm-grep-do-git-grep
   "SPC" 'helm-M-x
 
-  ;; c i n r t u y z , .
-  "a" 'rg-dwim
+  ;; c t u y z , .
+  "a" 'avy-goto-char-2
   "b" 'helm-buffers-list
 
   "e" 'helm-find-files
   "f" 'helm-projectile-find-file
+  "r" 'helm-recentf
 
-  "g" 'avy-goto-char-2
-
-  "d" 'helm-gtags-dwim
+  "j" 'helm-gtags-dwim
+  "k" 'helm-gtags-find-rtag
   "l" 'helm-gtags-pop-stack
-  "s" 'helm-gtags-find-rtag
   "o" 'helm-gtags-resume
 
-  "j" 'helm-imenu
-  "k" 'helm-gtags-select
+  "d" 'helm-imenu
+  "g" 'helm-gtags-select
 
-  "p" 'projectile-command-map
+  "s" 'rg-dwim
+
+  "n" 'evil-scroll-page-down
+  "p" 'evil-scroll-page-up
+
+  "i" 'projectile-command-map
   "v" 'magit
   "x" 'kill-current-buffer
 
