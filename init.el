@@ -348,14 +348,15 @@
 
 (use-package helm-ag
   :defer t)
-;;(custom-set-variables
-;; '(helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
-;; '(helm-ag-command-option "--all-text")
-;; '(helm-ag-insert-at-point 'symbol)
-;; '(helm-ag-ignore-buffer-patterns '("\\.txt\\'" "\\.mkd\\'")))
-;;(custom-set-variables
-;; '(helm-ag-base-command "rg --no-heading")
-;; '(helm-ag-success-exit-status '(0 2)))
+;;(setq helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
+;;(setq helm-ag-command-option "--all-text")
+;;(setq helm-ag-ignore-buffer-patterns '("\\.txt\\'" "\\.mkd\\'")))
+(setq helm-ag-insert-at-point 'symbol)
+(setq helm-ag-base-command "rg --no-heading")
+(setq helm-ag-success-exit-status '(0 2))
+;;(defun my/helm-do-ag-project-root ()
+;;  (interactive)
+;;  (helm-do-ag-project-root (thing-at-point 'symbol)))
 
 ;;(require 'setup-ggtags)
 (use-package ggtags
@@ -434,6 +435,8 @@
   "g" 'helm-gtags-select
 
   "s" 'rg-dwim
+  "," 'helm-do-ag-this-file
+  "." 'helm-do-ag-project-root
 
   "n" 'evil-scroll-page-down
   "p" 'evil-scroll-page-up
