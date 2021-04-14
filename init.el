@@ -416,11 +416,11 @@
 
 (evil-leader/set-key
   "/" 'helm-swoop
-  ";" 'helm-do-grep-ag
-  ;;";" 'helm-grep-do-git-grep
+  ;;";" 'helm-do-grep-ag
+  ";" 'helm-grep-do-git-grep
   "SPC" 'helm-M-x
 
-  ;; c t u y z , .
+  ;; c n t y z
   "a" 'avy-goto-char-2
   "b" 'helm-buffers-list
 
@@ -429,21 +429,21 @@
   "r" 'helm-recentf
 
   "j" 'helm-gtags-dwim
-  "k" 'helm-gtags-find-rtag
-  "l" 'helm-gtags-pop-stack
-  "o" 'helm-gtags-resume
+  "k" 'helm-gtags-pop-stack
+  "l" 'helm-gtags-resume
+  "g" 'helm-gtags-find-rtag
 
-  "d" 'helm-imenu
-  "g" 'helm-gtags-select
+  "i" 'helm-imenu
+  "o" 'helm-gtags-select
 
   "s" 'rg-dwim
   "," 'helm-do-ag-this-file
   "." 'helm-do-ag-project-root
 
-  "n" 'evil-scroll-page-down
-  "p" 'evil-scroll-page-up
+  "d" 'evil-scroll-page-down
+  "u" 'evil-scroll-page-up
 
-  "i" 'projectile-command-map
+  "p" 'projectile-command-map
   "v" 'magit
   "x" 'kill-current-buffer
 
