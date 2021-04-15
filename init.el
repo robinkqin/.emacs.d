@@ -351,7 +351,7 @@
 ;;(setq helm-ag-base-command "ag --nocolor --nogroup --ignore-case")
 ;;(setq helm-ag-command-option "--all-text")
 ;;(setq helm-ag-ignore-buffer-patterns '("\\.txt\\'" "\\.mkd\\'")))
-(setq helm-follow-mode-persistent t)
+;;(setq helm-follow-mode-persistent t)
 (setq helm-ag-insert-at-point 'symbol)
 ;;(setq helm-ag-base-command "rg --no-heading")
 ;;(setq helm-ag-success-exit-status '(0 2))
@@ -415,36 +415,34 @@
   (evil-leader/set-leader "SPC"))
 
 (evil-leader/set-key
-  "/" 'helm-swoop
-  ;;";" 'helm-do-grep-ag
-  ";" 'helm-grep-do-git-grep
   "SPC" 'helm-M-x
 
-  ;; c n t y z
-  "a" 'avy-goto-char-2
-  "b" 'helm-buffers-list
+  ;; c i n u t y z ,
+  ;;"a" 'helm-do-grep-ag
+  ;;"a" 'helm-grep-do-git-grep
+  "a" 'helm-do-ag-project-root
+  "s" 'helm-swoop
+  ;;"s" 'helm-do-ag-this-file
+  "r" 'rg-dwim
 
   "e" 'helm-find-files
-  "f" 'helm-projectile-find-file
-  "r" 'helm-recentf
+  "o" 'helm-projectile-find-file
+  "b" 'helm-buffers-list
+
+  ";" 'avy-goto-char-2
+
+  "f" 'evil-scroll-page-down
+  "v" 'evil-scroll-page-up
 
   "j" 'helm-gtags-dwim
   "k" 'helm-gtags-pop-stack
   "l" 'helm-gtags-resume
-  "g" 'helm-gtags-find-rtag
+  "." 'helm-gtags-find-rtag
 
-  "i" 'helm-imenu
-  "o" 'helm-gtags-select
-
-  "s" 'rg-dwim
-  "," 'helm-do-ag-this-file
-  "." 'helm-do-ag-project-root
-
-  "d" 'evil-scroll-page-down
-  "u" 'evil-scroll-page-up
+  "d" 'helm-imenu
+  "g" 'helm-gtags-select
 
   "p" 'projectile-command-map
-  "v" 'magit
   "x" 'kill-current-buffer
 
   "]]" 'git-gutter:next-hunk
