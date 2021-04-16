@@ -30,6 +30,8 @@
 ;;(require 'setup-general)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+;;(line-number-mode 1)
+(column-number-mode 1)
 
 (setq gc-cons-threshold 100000000)
 (setq inhibit-startup-message t)
@@ -418,9 +420,9 @@
   "SPC" 'helm-M-x
 
   ;; c i n u t y z ,
-  ;;"a" 'helm-do-grep-ag
+  "a" 'helm-do-grep-ag
   ;;"a" 'helm-grep-do-git-grep
-  "a" 'helm-do-ag-project-root
+  ;;"a" 'helm-do-ag-project-root
   "s" 'helm-swoop
   ;;"s" 'helm-do-ag-this-file
   "r" 'rg-dwim
