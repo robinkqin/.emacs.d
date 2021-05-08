@@ -145,8 +145,8 @@
   (custom-set-variables
    '(git-gutter:update-interval 2)))
 
-(use-package vterm
-  :defer t)
+;;(use-package vterm
+;;  :defer t)
 
 (use-package which-key
   :defer t
