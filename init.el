@@ -477,6 +477,17 @@
   "hi" 'info
   )
 
+(defun evil-search-symbol-backward ()
+  (interactive)
+    (evil-search-word nil nil t))
+
+(defun evil-search-symbol-forward ()
+  (interactive)
+    (evil-search-word t nil t))
+
+(define-key evil-motion-state-map "#" #'evil-search-symbol-backward)
+(define-key evil-motion-state-map "*" #'evil-search-symbol-forward)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
