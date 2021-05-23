@@ -488,6 +488,13 @@
 (define-key evil-motion-state-map "#" #'evil-search-symbol-backward)
 (define-key evil-motion-state-map "*" #'evil-search-symbol-forward)
 
+(use-package evil-escape
+  :defer t
+  :init
+  (setq-default evil-escape-key-sequence "jk")
+  (setq-default evil-escape-delay 0.2)
+  (evil-escape-mode 1))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
