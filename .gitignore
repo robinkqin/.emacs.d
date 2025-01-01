@@ -1,0 +1,13 @@
+# Ignore all the files
+*
+
+# Excludes - only control these files
+!.gitignore
+!README*.md
+!init.el
+!init-mini.el
+!early-init.el
+!lisp/
+!lisp/**
+!lisp/**/**
+!site-lisp/
