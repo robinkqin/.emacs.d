@@ -40,7 +40,7 @@
              return (set-face-attribute 'default nil
                                         :family font
                                         :height (cond (sys/macp 150)
-                                                      (sys/win32p 150)
+                                                      (sys/win32p 135)
                                                       (t 150))))
 
     ;; Specify font for all unicode characters

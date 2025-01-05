@@ -109,6 +109,8 @@ Otherwise the startup will be very slow."
 
 (require 'init-misc)
 
+(require 'init-ai)
+
 (require 'init-functions)
 (require 'init-keymaps)
 

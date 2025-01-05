@@ -19,7 +19,7 @@
   ;; sessions
   (tabspaces-session t)
   (tabspaces-session-auto-restore t)
-  :init
+  :config
   ;; Filter Buffers for Consult-Buffer
   (with-eval-after-load 'consult
     ;; hide full buffer list (still available with "b" prefix)

@@ -32,10 +32,6 @@
   (string-equal "root" (getenv "USER"))
   "Are you using ROOT user?")
 
-(defconst emacs/>=28p
-  (>= emacs-major-version 28)
-  "Emacs is 28 or above?")
-
 (defconst emacs/>=29p
   (>= emacs-major-version 29)
   "Emacs is 29 or above?")
@@ -43,6 +39,10 @@
 (defconst emacs/>=30p
   (>= emacs-major-version 30)
   "Emacs is 30 or above.")
+
+(defconst emacs/>=31p
+  (>= emacs-major-version 31)
+  "Emacs is 31 or above.")
 
 (defun my/treesit-available-p ()
   "Check whether tree-sitter is available.
@@ -52,10 +52,13 @@
 
 (defun childframe-workable-p ()
   "Whether childframe is workable."
-  (not (or t
-           noninteractive
-           emacs-basic-display
-           (not (display-graphic-p)))))
+  (and (>= emacs-major-version 26)
+       nil ;; force disable childframe
+       (not noninteractive)
+       (not emacs-basic-display)
+       (or (display-graphic-p)
+           (featurep 'tty-child-frames))
+       (eq (frame-parameter (selected-frame) 'minibuffer) 't)))
 
 (defun childframe-completion-workable-p ()
   "Whether childframe completion is workable."
