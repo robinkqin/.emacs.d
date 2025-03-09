@@ -12,6 +12,11 @@
   :bind ("C-x C-b" . ibuffer)
   :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold))))
 
+;; Display icons for buffers
+(use-package nerd-icons-ibuffer
+  :hook (ibuffer-mode . nerd-icons-ibuffer-mode)
+  :init (setq nerd-icons-ibuffer-icon t))
+
 ;; Group ibuffer's list by project
 (use-package ibuffer-project
   :hook (ibuffer . (lambda ()
@@ -26,14 +31,19 @@
     (if (and (stringp type) (> (length type) 0))
         (format "%s %s" type root)
       (format "%s" root)))
-  (progn
-    (advice-remove #'ibuffer-project-group-name #'my-ibuffer-project-group-name)
-    (setq ibuffer-project-root-functions
-          '((ibuffer-project-project-root . "Project")
-            (file-remote-p . "Remote")))))
+  (if (icons-displayable-p)
+      (progn
+        (advice-add #'ibuffer-project-group-name :override #'my-ibuffer-project-group-name)
+        (setq ibuffer-project-root-functions
+              `((ibuffer-project-project-root . ,(nerd-icons-octicon "nf-oct-repo" :height 1.2 :face ibuffer-filter-group-name-face))
+                (file-remote-p . ,(nerd-icons-codicon "nf-cod-radio_tower" :height 1.2 :face ibuffer-filter-group-name-face)))))
+    (progn
+      (advice-remove #'ibuffer-project-group-name #'my-ibuffer-project-group-name)
+      (setq ibuffer-project-root-functions
+            '((ibuffer-project-project-root . "Project")
+              (file-remote-p . "Remote"))))))
 
 ;;(defalias 'list-buffers 'ibuffer)
-
 
 (provide 'init-ibuffer)
 

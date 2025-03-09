@@ -24,13 +24,6 @@
 
 ;;(add-hook 'prog-mode-hook 'prettify-symbols-mode)
 
-;;;; handling capitalized subwords in a nomenclature
-;;(use-package subword
-;;  :ensure nil
-;;  :diminish
-;;  :hook ((prog-mode . subword-mode)
-;;         (minibuffer-setup . subword-mode)))
-
 ;;(use-package whitespace
 ;;  :ensure nil
 ;;  :hook ((prog-mode markdown-mode conf-mode) . whitespace-mode)

@@ -73,20 +73,18 @@
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
     "C-c C-x" "markdown-toggle")
 
-  ;;(when (childframe-completion-workable-p)
-  ;;  (use-package which-key-posframe
-  ;;    :diminish
-  ;;    :functions posframe-poshandler-frame-center-near-bottom
-  ;;    :custom-face
-  ;;    (which-key-posframe ((t (:inherit tooltip))))
-  ;;    (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
-  ;;    :init
-  ;;    (setq which-key-posframe-border-width posframe-border-width
-  ;;          which-key-posframe-poshandler #'posframe-poshandler-frame-center-near-bottom
-  ;;          which-key-posframe-parameters '((left-fringe . 8)
-  ;;                                          (right-fringe . 8)))
-  ;;    (which-key-posframe-mode 1)))
-  )
+  (when (childframe-completion-workable-p)
+    (use-package which-key-posframe
+      :diminish
+      :custom-face
+      (which-key-posframe ((t (:inherit tooltip))))
+      (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
+      :init
+      (setq which-key-posframe-border-width 2
+            which-key-posframe-poshandler #'posframe-poshandler-frame-bottom-center
+            which-key-posframe-parameters '((left-fringe . 8)
+                                            (right-fringe . 8)))
+      (which-key-posframe-mode 1))))
 
 ;;;; Persistent the scratch buffer
 ;;(use-package persistent-scratch

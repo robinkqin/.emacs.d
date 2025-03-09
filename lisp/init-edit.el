@@ -207,6 +207,13 @@
 (use-package goto-chg
   :bind ("C-," . goto-last-change))
 
+;;;; Handling capitalized subwords in a nomenclature
+;;(use-package subword
+;;  :ensure nil
+;;  :diminish
+;;  :hook ((prog-mode . subword-mode)
+;;         (minibuffer-setup . subword-mode)))
+
 (use-package hideshow
   :ensure nil
   :diminish hs-minor-mode
@@ -228,9 +235,9 @@
             (lambda (text)
               (start-process "xclip"  nil xclip-program "--trim-newline" "--type" "text/plain;charset=utf-8" text))))))
 
-;;;; Open files as another user
-;;(unless sys/win32p
-;;  (use-package sudo-edit))
+;; Open files as another user
+(unless sys/win32p
+  (use-package sudo-edit))
 
 ;; Hanlde minified code
 (use-package so-long

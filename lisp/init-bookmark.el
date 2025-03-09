@@ -27,7 +27,16 @@
                                       (propertize (format fmt "NOTFOUND") 'face 'error))
                                      ((file-directory-p location)
                                       (propertize (format fmt "DIRED") 'face 'warning))
-                                     (t (propertize (format fmt "FILE") 'face 'success))))))
+                                     (t (propertize (format fmt "FILE") 'face 'success)))))
+                 (icon       (if (icons-displayable-p)
+                                 (cond
+                                  ((file-remote-p location)
+                                   (nerd-icons-codicon "nf-cod-radio_tower"))
+                                  ((file-directory-p location)
+                                   (nerd-icons-icon-for-dir location))
+                                  ((not (string-empty-p file))
+                                   (nerd-icons-icon-for-file file)))
+                               "")))
             (push (list
                    full-record
                    `[,(if (and annotation (not (string-equal annotation "")))

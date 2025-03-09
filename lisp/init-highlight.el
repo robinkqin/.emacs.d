@@ -119,7 +119,7 @@ FACE defaults to inheriting from default and highlight."
 
     (advice-add #'easy-kill :after #'turn-off-symbol-overlay)
     (advice-add #'easy-kill-destroy-candidate :after #'turn-on-symbol-overlay)
-    (advice-add #'set-mark :after #'turn-off-symbol-overlay)
+    (advice-add #'activate-mark :after #'turn-off-symbol-overlay)
     (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)))
 ;;(global-set-key (kbd "M-s m") symbol-overlay-map)
 
@@ -284,10 +284,10 @@ FACE defaults to inheriting from default and highlight."
                    goto-last-change))
       (advice-add cmd :after #'my-recenter-and-pulse))))
 
-;;;; Pulse modified region
-;;(use-package goggles
-;;  :diminish
-;;  :hook ((prog-mode text-mode) . goggles-mode))
+;; Pulse modified region
+(use-package goggles
+  :diminish
+  :hook ((prog-mode text-mode) . goggles-mode))
 
 (provide 'init-highlight)
 

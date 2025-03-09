@@ -46,14 +46,14 @@
 
 (defun my/treesit-available-p ()
   "Check whether tree-sitter is available.
-  Native tree-sitter is introduced since 29.1."
+Native tree-sitter is introduced since 29.1."
   (and (fboundp 'treesit-available-p)
        (treesit-available-p)))
 
 (defun childframe-workable-p ()
   "Whether childframe is workable."
   (and (>= emacs-major-version 26)
-       nil ;; force disable childframe
+       t
        (not noninteractive)
        (not emacs-basic-display)
        (or (display-graphic-p)
@@ -62,8 +62,25 @@
 
 (defun childframe-completion-workable-p ()
   "Whether childframe completion is workable."
-  (and nil
+  (and t
        (childframe-workable-p)))
+
+(defun icons-displayable-p ()
+  "Return non-nil if icons are displayable."
+  (and t
+       (or (featurep 'nerd-icons)
+           (require 'nerd-icons nil t))))
+
+(defun too-long-file-p ()
+  "Check whether the file is too long."
+  (or (> (buffer-size) 500000)
+      (and (fboundp 'buffer-line-statistics)
+           (> (car (buffer-line-statistics)) 10000))))
+
+(defun xwidget-workable-p ()
+  "Check whether xwidget is available."
+  (and (display-graphic-p)
+       (featurep 'xwidget-internal)))
 
 (provide 'init-const)
 

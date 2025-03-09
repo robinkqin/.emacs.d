@@ -65,9 +65,9 @@
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)
   :init
-  (setq doom-modeline-icon nil
+  (setq doom-modeline-icon t
         doom-modeline-time-icon nil
-        doom-modeline-minor-modes nil))
+        doom-modeline-minor-modes t))
 
 ;;(use-package hide-mode-line
 ;;  :hook (((treemacs-mode
@@ -83,6 +83,13 @@
 ;;;; A minor-mode menu for mode-line
 ;;(use-package minions
 ;;  :hook (doom-modeline-mode . minions-mode))
+
+;; Icons
+(use-package nerd-icons
+  :config
+  (when (and (display-graphic-p)
+             (not (font-installed-p nerd-icons-font-family)))
+    (nerd-icons-install-fonts t)))
 
 ;; Show line numbers
 (use-package display-line-numbers
@@ -128,23 +135,30 @@
       auto-window-vscroll nil
       scroll-preserve-screen-position t)
 
-;;;; Smooth scrolling
-;;(use-package ultra-scroll
-;;  :when emacs/>=29p
-;;  :ensure nil
-;;  :init (unless (package-installed-p 'ultra-scroll)
-;;          (package-vc-install "https://github.com/jdtsmith/ultra-scroll"))
-;;  :hook (after-init . ultra-scroll-mode))
+;; Smooth scrolling
+(use-package ultra-scroll
+  :when emacs/>=29p
+  :ensure nil
+  :init (unless (package-installed-p 'ultra-scroll)
+          (package-vc-install "https://github.com/jdtsmith/ultra-scroll"))
+  :hook (after-init . ultra-scroll-mode))
 
-;;;; Smooth scrolling over images
-;;(unless emacs/>=30p
-;;  (use-package iscroll
-;;    :diminish
-;;    :hook (image-mode . iscroll-mode)))
+;; Smooth scrolling over images
+(unless emacs/>=30p
+  (use-package iscroll
+    :diminish
+    :hook (image-mode . iscroll-mode)))
 
-;; Child frame
-;;(when (childframe-workable-p)
-;;  (use-package posframe)
+(when (childframe-workable-p)
+  ;; Child frame
+  (use-package posframe
+    :hook (after-load-theme . posframe-delete-all))
+
+  ;; Display transient in child frame
+  (use-package transient-posframe
+    :diminish
+    :hook (after-init . transient-posframe-mode)))
+
 
 (provide 'init-ui)
 

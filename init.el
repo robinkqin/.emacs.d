@@ -27,8 +27,8 @@
 
 ;;(eglot-upgrade-eglot)
 
-(when (version< emacs-version "27.1")
-  (error "This requires Emacs 27.1 and above!"))
+(when (version< emacs-version "28.1")
+  (error "This requires Emacs 28.1 and above!"))
 
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
@@ -76,7 +76,7 @@ Otherwise the startup will be very slow."
 (require 'init-ui)
 (require 'init-edit)
 (require 'init-completion)
-;;(require 'init-snippet)
+(require 'init-snippet)
 
 (require 'init-bookmark)
 (require 'init-dired)
@@ -109,7 +109,7 @@ Otherwise the startup will be very slow."
 
 (require 'init-misc)
 
-(require 'init-ai)
+;;(require 'init-ai)
 
 (require 'init-functions)
 (require 'init-keymaps)

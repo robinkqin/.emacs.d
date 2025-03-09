@@ -45,10 +45,10 @@
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read
         xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
-;;;; Code styles
-;;(use-package editorconfig
-;;  :diminish
-;;  :hook (after-init . editorconfig-mode))
+;; Code styles
+(use-package editorconfig
+  :diminish
+  :hook (after-init . editorconfig-mode))
 
 ;;;; Run commands quickly
 ;;(use-package quickrun

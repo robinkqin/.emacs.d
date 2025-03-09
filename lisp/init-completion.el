@@ -18,9 +18,10 @@
   :after orderless
   :autoload pinyinlib-build-regexp-string
   :init
-  (defun completion--regex-pinyin (str)
+  (defun orderless-regexp-pinyin (str)
+    "Match COMPONENT as a pinyin regex."
     (orderless-regexp (pinyinlib-build-regexp-string str)))
-  (add-to-list 'orderless-matching-styles 'completion--regex-pinyin))
+  (add-to-list 'orderless-matching-styles 'orderless-regexp-pinyin))
 
 (use-package vertico
   :custom (vertico-count 16)
@@ -31,14 +32,18 @@
   :hook ((after-init . vertico-mode)
          (rfn-eshadow-update-overlay . vertico-directory-tidy)))
 
-;;(when (childframe-completion-workable-p)
-;;  (use-package vertico-posframe
-;;    :hook (vertico-mode . vertico-posframe-mode)
-;;    :init (setq vertico-posframe-poshandler
-;;                #'posframe-poshandler-frame-center-near-bottom
-;;                vertico-posframe-parameters
-;;                '((left-fringe  . 8)
-;;                  (right-fringe . 8)))))
+(when (childframe-completion-workable-p)
+  (use-package vertico-posframe
+    :hook (vertico-mode . vertico-posframe-mode)
+    :init (setq vertico-posframe-poshandler
+                #'posframe-poshandler-frame-bottom-center
+                vertico-posframe-parameters
+                '((left-fringe  . 8)
+                  (right-fringe . 8)))))
+
+(use-package nerd-icons-completion
+  :when (icons-displayable-p)
+  :hook (vertico-mode . nerd-icons-completion-mode))
 
 (use-package marginalia
   :hook (after-init . marginalia-mode))
@@ -195,11 +200,11 @@ value of the selected COLOR."
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help))
 
-;;(use-package consult-flyspell
-;;  :bind ("M-g s" . consult-flyspell))
+(use-package consult-flyspell
+  :bind ("M-g s" . consult-flyspell))
 
-;;(use-package consult-yasnippet
-;;  :bind ("M-g y" . consult-yasnippet))
+(use-package consult-yasnippet
+  :bind ("M-g y" . consult-yasnippet))
 
 (use-package embark
   :bind (("s-."   . embark-act)
@@ -269,9 +274,6 @@ targets."
 (use-package embark-consult
   :bind (:map minibuffer-mode-map
          ("C-c C-o" . embark-export))
-  :hook (embark-collect-mode . consult-preview-at-point-mode))(use-package embark-consult
-  :bind (:map minibuffer-mode-map
-         ("C-c C-o" . embark-export))
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; Auto completion
@@ -310,6 +312,10 @@ targets."
   ;; mode.  Corfu commands are hidden, since they are not used via M-x. This
   ;; setting is useful beyond Corfu.
   (read-extended-command-predicate #'command-completion-default-include-p))
+
+(use-package nerd-icons-corfu
+  :after corfu
+  :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 ;; Add extensions
 (use-package cape

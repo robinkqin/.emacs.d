@@ -109,11 +109,23 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
       (buffer-substring-no-properties (region-beginning) (region-end))
     (thing-at-point 'symbol t)))
 
+;; Browse URL
+(defun my/browse-url (url)
+  "Open URL using a configurable method.
+See `browse-url' for more details."
+  (interactive (progn
+                 (require 'browse-url)
+                 (browse-url-interactive-arg "URL: ")))
+  (if (xwidget-workable-p)
+      (my/webkit-browse-url url t)
+    (browse-url url)))
+
 (defun my/webkit-browse-url (url &optional pop-buffer new-session)
   "Browse URL with xwidget-webkit' and switch or pop to the buffer.
-  POP-BUFFER specifies whether to pop to the buffer.
-  NEW-SESSION specifies whether to create a new xwidget-webkit session.
-  Interactively, URL defaults to the string looking like a url around point."
+
+POP-BUFFER specifies whether to pop to the buffer.
+NEW-SESSION specifies whether to create a new xwidget-webkit session.
+Interactively, URL defaults to the string looking like a url around point."
   (interactive (progn
                  (require 'browse-url)
                  (browse-url-interactive-arg "URL: ")))
@@ -125,7 +137,11 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
           (pop-to-buffer buf)
         (switch-to-buffer buf)))))
 
-
+;; Reload configurations
+(defun reload-init-file ()
+  "Reload Emacs configurations."
+  (interactive)
+  (load user-init-file))
 
 (defun my/open-init-file()
   (interactive)

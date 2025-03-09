@@ -51,6 +51,10 @@
     :custom (exec-path-from-shell-arguments '("-l"))
     :init (exec-path-from-shell-initialize)))
 
+;;;; Start server
+;;(use-package server
+;;  :hook (after-init . server-mode))
+
 (use-package saveplace
   :init
   (setq save-place-forget-unreadable-files t)
@@ -158,10 +162,6 @@
         confirm-nonexistent-file-or-buffer nil
         large-file-warning-threshold (* 64 1024 1024))
   :hook (after-init . auto-save-visited-mode))
-
-;;(use-package desktop
-;;  :ensure nil
-;;  :init (desktop-save-mode t))
 
 (provide 'init-base)
 

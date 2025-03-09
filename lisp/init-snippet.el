@@ -18,7 +18,6 @@
 (use-package yasnippet-capf
   :init (add-to-list 'completion-at-point-functions #'yasnippet-capf))
 
-
 (provide 'init-snippet)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
