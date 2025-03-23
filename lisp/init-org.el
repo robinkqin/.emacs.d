@@ -4,7 +4,7 @@
 
 ;;; Code:
 
-(defconst my/org-directory (expand-file-name "~/org"))
+(defconst my/org-directory (expand-file-name "~/data/org"))
 
 (use-package org
   :ensure nil
@@ -69,6 +69,14 @@
 
   ;; Add new template
   (add-to-list 'org-structure-template-alist '("n" . "note"))
+
+  ;; Use embedded webkit browser if possible
+  (when (xwidget-workable-p)
+    (push '("\\.\\(x?html?\\|pdf\\)\\'"
+            .
+            (lambda (file _link)
+              (my/webkit-browse-url (concat "file://" file) t)))
+          org-file-apps))
 
   ;; Add md/gfm backends
   (add-to-list 'org-export-backends 'md)
@@ -191,6 +199,7 @@
 (when (and (fboundp 'sqlite-available-p) (sqlite-available-p))
   (use-package org-roam
     :diminish
+    :functions my/browse-url
     :defines org-roam-graph-viewer
     :bind (("C-c n l" . org-roam-buffer-toggle)
            ("C-c n f" . org-roam-node-find)
@@ -201,9 +210,7 @@
     :init
     (setq org-roam-directory (file-truename my/org-directory)
           org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag))
-          org-roam-graph-viewer (if (featurep 'xwidget-internal)
-                                    #'xwidget-webkit-browse-url
-                                  #'browse-url))
+          org-roam-graph-viewer #'my/browse-url)
     :config
     (unless (file-exists-p org-roam-directory)
       (make-directory org-roam-directory))
@@ -212,7 +219,8 @@
     (org-roam-db-autosync-enable))
 
   (use-package org-roam-ui
-    :bind ("C-c n u" . org-roam-ui-mode)))
+    :bind ("C-c n u" . org-roam-ui-mode)
+    :init (setq org-roam-ui-browser-function #'my/browse-url)))
 
 (provide 'init-org)
 

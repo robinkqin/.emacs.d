@@ -55,51 +55,51 @@
 ;;  :bind (("C-<f5>" . quickrun)
 ;;         ("C-c X"  . quickrun)))
 
-;;;; Browse devdocs.io documents using EWW
-;;(use-package devdocs
-;;  :autoload (devdocs--installed-docs devdocs--available-docs)
-;;  :bind (:map prog-mode-map
-;;         ("M-<f1>" . devdocs-dwim)
-;;         ("C-h D"  . devdocs-dwim))
-;;  :init
-;;  (defconst devdocs-major-mode-docs-alist
-;;    '((c-mode          . ("c"))
-;;      (c++-mode        . ("cpp"))
-;;      (python-mode     . ("python~3.13"))
-;;      (rustic-mode     . ("rust"))
-;;      (emacs-lisp-mode . ("elisp")))
-;;    "Alist of major-mode and docs.")
-;;
-;;  (mapc
-;;   (lambda (mode)
-;;     (add-hook (intern (format "%s-hook" (car mode)))
-;;               (lambda ()
-;;                 (setq-local devdocs-current-docs (cdr mode)))))
-;;   devdocs-major-mode-docs-alist)
-;;
-;;  (setq devdocs-data-dir (expand-file-name "devdocs" user-emacs-directory))
-;;
-;;  (defun devdocs-dwim()
-;;    "Look up a DevDocs documentation entry.
-;;
-;;Install the doc if it's not installed."
-;;    (interactive)
-;;    ;; Install the doc if it's not installed
-;;    (mapc
-;;     (lambda (slug)
-;;       (unless (member slug (let ((default-directory devdocs-data-dir))
-;;                              (seq-filter #'file-directory-p
-;;                                          (when (file-directory-p devdocs-data-dir)
-;;                                            (directory-files "." nil "^[^.]")))))
-;;         (mapc
-;;          (lambda (doc)
-;;            (when (string= (alist-get 'slug doc) slug)
-;;              (devdocs-install doc)))
-;;          (devdocs--available-docs))))
-;;     (alist-get major-mode devdocs-major-mode-docs-alist))
-;;
-;;    ;; Lookup the symbol at point
-;;    (devdocs-lookup nil (thing-at-point 'symbol t))))
+;; Browse devdocs.io documents using EWW
+(use-package devdocs
+  :autoload (devdocs--installed-docs devdocs--available-docs)
+  :bind (:map prog-mode-map
+         ("M-<f1>" . devdocs-dwim)
+         ("C-h D"  . devdocs-dwim))
+  :init
+  (defconst devdocs-major-mode-docs-alist
+    '((c-mode          . ("c"))
+      (c++-mode        . ("cpp"))
+      (python-mode     . ("python~3.13"))
+      (rustic-mode     . ("rust"))
+      (emacs-lisp-mode . ("elisp")))
+    "Alist of major-mode and docs.")
+
+  (mapc
+   (lambda (mode)
+     (add-hook (intern (format "%s-hook" (car mode)))
+               (lambda ()
+                 (setq-local devdocs-current-docs (cdr mode)))))
+   devdocs-major-mode-docs-alist)
+
+  (setq devdocs-data-dir (expand-file-name "devdocs" user-emacs-directory))
+
+  (defun devdocs-dwim()
+    "Look up a DevDocs documentation entry.
+
+Install the doc if it's not installed."
+    (interactive)
+    ;; Install the doc if it's not installed
+    (mapc
+     (lambda (slug)
+       (unless (member slug (let ((default-directory devdocs-data-dir))
+                              (seq-filter #'file-directory-p
+                                          (when (file-directory-p devdocs-data-dir)
+                                            (directory-files "." nil "^[^.]")))))
+         (mapc
+          (lambda (doc)
+            (when (string= (alist-get 'slug doc) slug)
+              (devdocs-install doc)))
+          (devdocs--available-docs))))
+     (alist-get major-mode devdocs-major-mode-docs-alist))
+
+    ;; Lookup the symbol at point
+    (devdocs-lookup nil (thing-at-point 'symbol t))))
 
 
 ;;Example .dumbjump
@@ -121,18 +121,26 @@
     (setq dumb-jump-force-searcher 'rg))
   (setq dumb-jump-selector 'completing-read))
 
-;;(use-package csv-mode)
-;;(use-package lua-mode)
-
+(use-package csv-mode)
+(unless emacs/>=29p
+  (use-package csharp-mode))
 (use-package cmake-mode)
+(use-package lua-mode)
+(use-package vimrc-mode)
+(use-package yaml-mode)
+
+(use-package protobuf-mode
+  :hook (protobuf-mode . (lambda ()
+                           (setq imenu-generic-expression
+                                 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
+
+;; Fish shell
+(use-package fish-mode
+  :hook (fish-mode . (lambda ()
+                       (add-hook 'before-save-hook
+                                 #'fish_indent-before-save))))
 
 (use-package cuda-mode)
-
-;;;; Fish shell
-;;(use-package fish-mode
-;;  :hook (fish-mode . (lambda ()
-;;                       (add-hook 'before-save-hook
-;;                                 #'fish_indent-before-save))))
 
 (use-package format-all
   ;;:bind ("C-c f" . #'format-all-region-or-buffer)

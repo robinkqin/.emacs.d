@@ -8,7 +8,6 @@
 ;;; Code:
 
 ;; Python Mode
-;; Install: pip install pyflakes autopep8
 (use-package python
   :ensure nil
   :hook (inferior-python-mode . (lambda ()

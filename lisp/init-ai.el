@@ -7,25 +7,45 @@
 
 ;;; Code:
 
-(use-package gptel
-  :ensure t
-  :config
-  (setq gptel-model   'deepseek-chat
-        gptel-backend
-        (gptel-make-openai "DeepSeek"
-          :host "api.deepseek.com"
-          :endpoint "/chat/completions"
-          :stream t
-          :key "your-api-key"  ;can be a function that returns the key
-          :models '(deepseek-chat deepseek-coder))))
 
-
+;;https://aider.chat/docs/install.html
 ;;https://github.com/Aider-AI/aider.git
-;;https://github.com/tninja/aider.el.git
 ;;how to install:
 ;;python -m pip install aider-install
 ;;aider-install
 
+;;Set API_KEY in .bashrc
+;;export OPENAI_API_KEY="your_api_key_here"
+;;export GITHUB_TOKEN="your_github_token_here"
+
+;;;;1. create api_key file
+;;touch ~/.api_keys
+;;chmod 600 ~/.api_keys
+;;;;2. add to ~/.api_keys
+;;export OPENAI_API_KEY="your_api_key_here"
+;;export GITHUB_TOKEN="your_github_token_here"
+;;;;3. add to .bashrc
+;;if [ -f ~/.api_keys ]; then
+;;    source ~/.api_keys
+;;fi
+
+;;https://github.com/MatthewZMD/aidermacs
+;;https://emacs-china.org/t/aidermacs-emacs-ai-emacs-aider/28916
+(use-package aidermacs
+  :bind (("C-c a" . aidermacs-transient-menu))
+  ;;:config
+  ;;;; Set API_KEY in .bashrc, that will automatically picked up by aider or in elisp
+  ;;(setenv "ANTHROPIC_API_KEY" "sk-...")
+  ;;;; defun my-get-openrouter-api-key yourself elsewhere for security reasons
+  ;;(setenv "OPENROUTER_API_KEY" (my-get-openrouter-api-key))
+  :custom
+  ;; See the Configuration section below
+  (aidermacs-use-architect-mode t)
+  (aidermacs-default-model "sonnet"))
+
+
+;;https://github.com/tninja/aider.el
+;;https://emacs-china.org/t/ai-aider-emacs-aider-el/28064
 ;;(when (executable-find "aider")
 ;;  (message "load aider...")
 ;;  (use-package aider
@@ -49,6 +69,20 @@
 ;;    ;; Optional: Set a key binding for the transient menu
 ;;    (global-set-key (kbd "C-c a") 'aider-transient-menu))
 ;;  (message "aider loaded..."))
+
+
+;;https://emacs-china.org/t/gptel-0-98-tool-use/29171
+;;(use-package gptel
+;;  :ensure t
+;;  :config
+;;  (setq gptel-model   'deepseek-chat
+;;        gptel-backend
+;;        (gptel-make-openai "DeepSeek"
+;;          :host "api.deepseek.com"
+;;          :endpoint "/chat/completions"
+;;          :stream t
+;;          :key "your-api-key"  ;can be a function that returns the key
+;;          :models '(deepseek-chat deepseek-coder))))
 
 
 (provide 'init-ai)

@@ -12,9 +12,9 @@
 ;; dict: fanyi, go-translate
 
 ;; tools: git, make, clangd, clang-format, ripgrep, fd, cmake,
-;;        bear, libtool, marksman, libvterm, skim/fzf
+;;        bear, libtool, marksman, libvterm, skim/fzf, shellcheck
 ;; check clangd: clang++ main.cpp; clang main.c; clang++ -v; libstdc++.a; clang -v
-;; pip install epc orjson sexpdata six paramiko requests compiledb cmake-language-server
+;; pip install epc orjson sexpdata six paramiko requests compiledb cmake-language-server pyflakes autopep8
 
 ;; export PATH=$HOME/.local/bin:${PATH}
 ;; export TERM=xterm-256color
@@ -86,8 +86,8 @@ Otherwise the startup will be very slow."
 (require 'init-workspace)
 (require 'init-window)
 
-;;(require 'init-markdown)
-;;(require 'init-org)
+(require 'init-markdown)
+(require 'init-org)
 
 (require 'init-dict)
 (require 'init-utils)
@@ -96,20 +96,21 @@ Otherwise the startup will be very slow."
 (require 'init-check)
 (require 'init-eglot)
 (require 'init-gdb)
-;;(require 'init-dap)
+(require 'init-dap)
 
 (require 'init-program)
 (require 'init-c)
 ;;(require 'init-citre)
-;;(require 'init-elisp)
-;;(require 'init-python)
 
-;;(require 'init-eshell)
+(require 'init-elisp)
+(require 'init-python)
+
+(require 'init-eshell)
 (require 'init-shell)
 
 (require 'init-misc)
 
-;;(require 'init-ai)
+(require 'init-ai)
 
 (require 'init-functions)
 (require 'init-keymaps)

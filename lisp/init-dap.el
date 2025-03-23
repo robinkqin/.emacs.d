@@ -12,7 +12,7 @@
 
 (when emacs/>=29p
   (use-package dape
-    :bind (("<f5>" . dape))
+    ;;:bind (("<f5>" . dape))
     :custom (dape-buffer-window-arrangment 'right)
     :config
     ;; Save buffers on startup, useful for interpreted languages
