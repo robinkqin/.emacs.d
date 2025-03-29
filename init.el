@@ -86,6 +86,8 @@ Otherwise the startup will be very slow."
 (require 'init-workspace)
 (require 'init-window)
 
+(require 'init-eaf)
+
 (require 'init-markdown)
 (require 'init-org)
 

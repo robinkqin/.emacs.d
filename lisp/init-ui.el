@@ -149,11 +149,11 @@
     :diminish
     :hook (image-mode . iscroll-mode)))
 
-(when (childframe-workable-p)
-  ;; Child frame
-  (use-package posframe
-    :hook (after-load-theme . posframe-delete-all))
+;; Child frame
+(use-package posframe
+  :hook (after-load-theme . posframe-delete-all))
 
+(when (childframe-completion-workable-p)
   ;; Display transient in child frame
   (use-package transient-posframe
     :diminish
