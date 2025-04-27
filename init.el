@@ -74,6 +74,8 @@ Otherwise the startup will be very slow."
 (require 'init-base)
 
 (require 'init-ui)
+(require 'init-hydra)
+
 (require 'init-edit)
 (require 'init-completion)
 (require 'init-snippet)
@@ -112,7 +114,7 @@ Otherwise the startup will be very slow."
 
 (require 'init-misc)
 
-(require 'init-ai)
+;;(require 'init-ai)
 
 (require 'init-functions)
 (require 'init-keymaps)

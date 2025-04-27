@@ -4,24 +4,31 @@
 
 ;;; Code:
 
-(global-set-key [f5] 'gud-cont)
-(global-set-key [f6] 'gud-finish)
-(global-set-key [f7] 'gud-step)
-(global-set-key [f8] 'gud-next)
-(global-set-key [f9] 'gud-break)
+(pretty-hydra-define my/gud-hydra
+  (:title (pretty-hydra-title "GUD Debug" 'codicon "nf-cod-debug")
+   :color pink :quit-key ("q" "C-g"))
+  ("Stepping"
+   (("r" gud-cont "continue")
+    ("s" gud-step "step")
+    ("n" gud-next "next")
+    ("t" gud-until "until")
+    ("g" gud-go "go")
+    ("f" gud-finish "finish")
+    ("q" gud-stop-subjob "stop" :exit t))
 
-(global-set-key (kbd "M-s r") 'gud-cont)
-(global-set-key (kbd "M-s f") 'gud-finish)
-(global-set-key (kbd "M-s s") 'gud-step)
-(global-set-key (kbd "M-s n") 'gud-next)
-(global-set-key (kbd "M-s b") 'gud-break)
-(global-set-key (kbd "M-s u") 'gud-until)
-(global-set-key (kbd "M-s d") 'gud-remove)
-(global-set-key (kbd "M-s <") 'gud-up)
-(global-set-key (kbd "M-s >") 'gud-down)
-(global-set-key (kbd "M-s p") 'gud-print)
-(global-set-key (kbd "M-s v") 'gud-go)
-(global-set-key (kbd "M-s w") 'gud-watch)
+   "Breakpoints"
+   (("b" gud-break "break")
+    ("d" gud-remove "delete")
+    ("l" gud-refresh "refresh"))
+
+   "Info"
+   (("p" gud-print "print")
+    ("u" gud-up "up")
+    ("o" gud-down "down")
+    ("w" gud-watch "watch")
+    ("m" gdb-many-windows "toggle windows"))))
+
+(global-set-key (kbd "M-<f6>") 'my/gud-hydra/body)
 
 ;; set gdb multi-windows when open
 (setq gdb-many-windows t)
