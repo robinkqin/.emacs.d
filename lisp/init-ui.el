@@ -72,7 +72,7 @@
 ;;(use-package hide-mode-line
 ;;  :hook (((treemacs-mode
 ;;           eshell-mode shell-mode
-;;           term-mode vterm-mode
+;;           term-mode vterm-mode eat-mode
 ;;           embark-collect-mode
 ;;           lsp-ui-imenu-mode
 ;;           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
@@ -148,10 +148,6 @@
   (use-package iscroll
     :diminish
     :hook (image-mode . iscroll-mode)))
-
-;; Child frame
-(use-package posframe
-  :hook (after-load-theme . posframe-delete-all))
 
 (when (childframe-completion-workable-p)
   ;; Display transient in child frame

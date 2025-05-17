@@ -131,7 +131,8 @@
          ("C-M-<tab>"   . popper-toggle-type))
   :hook (emacs-startup . popper-echo-mode)
   :init
-  (setq popper-reference-buffers
+  (setq popper-mode-line ""
+        popper-reference-buffers
         '("\\*Messages\\*$"
           "Output\\*$" "\\*Pp Eval Output\\*$"
           "^\\*eldoc.*\\*$"
@@ -164,6 +165,7 @@
           "^\\*Process List\\*$" process-menu-mode
           list-environment-mode cargo-process-mode
 
+          "^\\*.*eat.*\\*.*$"
           "^\\*.*eshell.*\\*.*$"
           "^\\*.*shell.*\\*.*$"
           "^\\*.*terminal.*\\*.*$"
@@ -188,34 +190,30 @@
           "\\*prolog\\*" inferior-python-mode inf-ruby-mode swift-repl-mode
           "\\*rustfmt\\*$" rustic-compilation-mode rustic-cargo-clippy-mode
           rustic-cargo-outdated-mode rustic-cargo-run-mode rustic-cargo-test-mode))
-
   :config
   (with-no-warnings
     (defun my-popper-fit-window-height (win)
-      "Determine the height of popup window WIN by fitting it to the buffer's content."
-      (fit-window-to-buffer
-       win
-       (floor (frame-height) 3)
-       (floor (frame-height) 3)))
+      "Adjust the height of popup window WIN to fit the buffer's content."
+      (let ((desired-height (floor (/ (frame-height) 3))))
+        (fit-window-to-buffer win desired-height desired-height)))
     (setq popper-window-height #'my-popper-fit-window-height)
 
     (defun popper-close-window-hack (&rest _)
       "Close popper window via `C-g'."
-      ;; `C-g' can deactivate region
       (when (and ;(called-interactively-p 'interactive)
              (not (region-active-p))
              popper-open-popup-alist)
         (when-let* ((window (caar popper-open-popup-alist))
                     (buffer (cdar popper-open-popup-alist)))
-          (when (and (with-current-buffer buffer
-                       (not (derived-mode-p 'eshell-mode
+          (when (and (window-live-p window)
+                     (buffer-live-p buffer)
+                     (not (with-current-buffer buffer
+                            (derived-mode-p 'eshell-mode
                                             'shell-mode
                                             'term-mode
-                                            'vterm-mode)))
-                     (window-live-p window))
+                                            'vterm-mode))))
             (delete-window window)))))
     (advice-add #'keyboard-quit :before #'popper-close-window-hack)))
-
 
 (provide 'init-window)
 

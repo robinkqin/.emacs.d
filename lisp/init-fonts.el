@@ -67,6 +67,12 @@
 (add-hook 'window-setup-hook #'my/setup-fonts)
 (add-hook 'server-after-make-frame-hook #'my/setup-fonts)
 
+(defun my/set-eww-font (fontconfig)
+  (interactive "sFontconfig(Ubuntu-20): ")
+  (let ((font (or (if (string-empty-p fontconfig)
+                      "Ubuntu-20"
+                    fontconfig))))
+    (set-face-attribute 'variable-pitch (selected-frame) :font font)))
 
 (provide 'init-fonts)
 

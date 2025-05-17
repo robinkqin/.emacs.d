@@ -9,21 +9,21 @@
 ;; completion: corfu
 ;; format: format-all
 ;; refactor: eglot, color-rg, symbol-overlay
-;; dict: fanyi, go-translate
+;; dict: fanyi, go-translate, immersive-translate
 
 ;; tools: git, make, clangd, clang-format, ripgrep, fd, cmake,
-;;        bear, libtool, marksman, libvterm, skim/fzf, shellcheck
-;; check clangd: clang++ main.cpp; clang main.c; clang++ -v; libstdc++.a; clang -v
-;; pip install epc orjson sexpdata six paramiko requests compiledb cmake-language-server pyflakes autopep8
-
-;; export PATH=$HOME/.local/bin:${PATH}
-;; export TERM=xterm-256color
-;; export COLORTERM=truecolor
+;;        bear, marksman, fzf, shellcheck, translate-shell
+;; pip: epc orjson sexpdata six paramiko requests compiledb cmake-language-server pyflakes autopep8
+;; check: clang++ main.cpp; clang main.c; clang++ -v; libstdc++.a; clang -v
 
 ;; compile_flags.txt, compile_commands.json:
 ;; cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1
 ;; compiledb -n make
 ;; bear -- make
+
+;; export PATH=$HOME/.local/bin:${PATH}
+;; export TERM=xterm-256color
+;; export COLORTERM=truecolor
 
 ;;(eglot-upgrade-eglot)
 
@@ -92,6 +92,7 @@ Otherwise the startup will be very slow."
 
 (require 'init-markdown)
 (require 'init-org)
+(require 'init-reader)
 
 (require 'init-dict)
 (require 'init-utils)

@@ -23,7 +23,7 @@
               :background-color ,(face-background 'default nil t)
               :foreground-color ,(face-foreground 'default nil t)
               :lines-truncate t
-              :poshandler posframe-poshandler-window-bottom-center)))
+              :poshandler posframe-poshandler-frame-bottom-center)))
     (hydra-set-posframe-show-params)
     (add-hook 'after-load-theme-hook #'hydra-set-posframe-show-params t)))
 

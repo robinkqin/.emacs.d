@@ -30,9 +30,8 @@
           (window-height . 0.4)))
 
   ;;(setq gt-pop-posframe-forecolor (face-foreground 'tooltip nil t)
-  ;;      gt-pop-posframe-backcolor (face-background 'tooltip nil t))
-  ;;(when (facep 'posframe-border)
-  ;;  (setq gt-pin-posframe-bdcolor (face-background 'posframe-border nil t)))
+  ;;      gt-pop-posframe-backcolor (face-background 'tooltip nil t)
+  ;;      gt-pin-posframe-bdcolor (face-background 'posframe-border nil t))
   :config
   (with-no-warnings
     (setq gt-preset-translators
@@ -44,12 +43,14 @@
                                                         (and (not (derived-mode-p 'fanyi-mode)) buffer-read-only)))
                                         (gt-taker :text 'word))
                          :engines (if (display-graphic-p)
-                                      (list (gt-bing-engine :if 'not-word)
-                                            (gt-youdao-dict-engine :if 'word))
-                                    (list (gt-bing-engine :if 'not-word)
-                                          (gt-youdao-dict-engine :if 'word)
-                                          (gt-youdao-suggest-engine :if 'word)
-                                          (gt-google-engine :if 'word)))
+                                      (list (gt-youdao-dict-engine :if 'word)
+                                            (gt-bing-engine :if 'not-word)
+                                            )
+                                    (list (gt-youdao-dict-engine :if 'word)
+                                          ;;(gt-youdao-suggest-engine :if 'word)
+                                          (gt-bing-engine :if 'not-word)
+                                          ;;(gt-google-engine :if 'word)
+                                          ))
                          ;;:render  (list (gt-posframe-pop-render
                          ;;                :if (lambda (translator)
                          ;;                      (and (display-graphic-p)
@@ -68,10 +69,11 @@
                          :render (gt-buffer-render)
                          ))
             (multi-dict . ,(gt-translator :taker (gt-taker :prompt t)
-                                          :engines (list (gt-bing-engine)
-                                                         (gt-youdao-dict-engine)
-                                                         (gt-youdao-suggest-engine :if 'word)
-                                                         (gt-google-engine))
+                                          :engines (list (gt-youdao-dict-engine)
+                                                         ;;(gt-youdao-suggest-engine :if 'word)
+                                                         (gt-bing-engine)
+                                                         ;;(gt-google-engine)
+                                                         )
                                           :render (gt-buffer-render)))
             (Text-Utility . ,(gt-text-utility :taker (gt-taker :pick nil)
                                               :render (gt-buffer-render)))))
@@ -89,6 +91,26 @@
       "Handle the texts with the utilities."
       (interactive)
       (gt--do-translate 'Text-Utility))))
+
+
+(use-package immersive-translate
+  :init
+  ;; use translate-shell
+  (setq immersive-translate-backend 'trans)
+
+  ;; use Baidu Translation
+  ;;(setq immersive-translate-backend 'baidu
+  ;;      immersive-translate-baidu-appid "your-appid")
+
+  ;; use ChatGPT
+  ;; (setq immersive-translate-backend 'chatgpt
+  ;;       immersive-translate-chatgpt-host "api.openai.com")
+
+  ;;:hook
+  ;;(add-hook 'elfeed-show-mode-hook #'immersive-translate-setup)
+  ;;(add-hook 'nov-pre-html-render-hook #'immersive-translate-setup)
+  )
+
 
 ;;;; OSX dictionary
 ;;(when sys/macp
