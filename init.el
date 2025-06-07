@@ -74,7 +74,7 @@ Otherwise the startup will be very slow."
 (require 'init-base)
 
 (require 'init-ui)
-(require 'init-hydra)
+;;(require 'init-hydra)
 
 (require 'init-edit)
 (require 'init-completion)
@@ -101,7 +101,7 @@ Otherwise the startup will be very slow."
 ;;(require 'init-check)
 (require 'init-eglot)
 (require 'init-gdb)
-(require 'init-dap)
+;;(require 'init-dap)
 
 (require 'init-program)
 (require 'init-c)

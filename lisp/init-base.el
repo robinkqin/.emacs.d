@@ -153,6 +153,11 @@
       sentence-end-double-space nil
       word-wrap-by-category t)
 
+(use-package help
+  :ensure nil
+  :init
+  (setq help-window-select t))
+
 (use-package files
   :ensure nil
   :init

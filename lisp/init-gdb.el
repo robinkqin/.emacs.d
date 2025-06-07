@@ -4,31 +4,30 @@
 
 ;;; Code:
 
-(pretty-hydra-define my/gud-hydra
-  (:title (pretty-hydra-title "GUD Debug" 'codicon "nf-cod-debug")
-   :color pink :quit-key ("q" "C-g"))
-  ("Stepping"
-   (("r" gud-cont "continue")
-    ("s" gud-step "step")
-    ("n" gud-next "next")
-    ("t" gud-until "until")
-    ("g" gud-go "go")
-    ("f" gud-finish "finish")
-    ("q" gud-stop-subjob "stop" :exit t))
-
-   "Breakpoints"
-   (("b" gud-break "break")
-    ("d" gud-remove "delete")
-    ("l" gud-refresh "refresh"))
-
-   "Info"
-   (("p" gud-print "print")
-    ("u" gud-up "up")
-    ("o" gud-down "down")
-    ("w" gud-watch "watch")
-    ("m" gdb-many-windows "toggle windows"))))
-
-(global-set-key (kbd "M-<f6>") 'my/gud-hydra/body)
+;;(pretty-hydra-define my/gud-hydra
+;;  (:title (pretty-hydra-title "GUD Debug" 'codicon "nf-cod-debug")
+;;   :color pink :quit-key ("q" "C-g"))
+;;  ("Stepping"
+;;   (("r" gud-cont "continue")
+;;    ("s" gud-step "step")
+;;    ("n" gud-next "next")
+;;    ("t" gud-until "until")
+;;    ("g" gud-go "go")
+;;    ("f" gud-finish "finish")
+;;    ("q" gud-stop-subjob "stop" :exit t))
+;;
+;;   "Breakpoints"
+;;   (("b" gud-break "break")
+;;    ("d" gud-remove "delete")
+;;    ("l" gud-refresh "refresh"))
+;;
+;;   "Info"
+;;   (("p" gud-print "print")
+;;    ("u" gud-up "up")
+;;    ("o" gud-down "down")
+;;    ("w" gud-watch "watch")
+;;    ("m" gdb-many-windows "toggle windows"))))
+;;(global-set-key (kbd "M-<f6>") 'my/gud-hydra/body)
 
 ;; set gdb multi-windows when open
 (setq gdb-many-windows t)

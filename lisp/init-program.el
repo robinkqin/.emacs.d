@@ -84,6 +84,7 @@
    devdocs-major-mode-docs-alist)
 
   (setq devdocs-data-dir (expand-file-name "devdocs" user-emacs-directory))
+  (setq devdocs-window-select t)
 
   (defun devdocs-dwim()
     "Look up a DevDocs documentation entry.

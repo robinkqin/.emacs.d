@@ -33,7 +33,7 @@
   "Setup fonts."
   (when (display-graphic-p)
     ;; Set default font
-    (cl-loop for font in '("Jetbrains Mono" "Cascadia Code" "Fira Code"
+    (cl-loop for font in '("Cascadia Code" "Jetbrains Mono" "Fira Code"
                            "SF Mono" "Hack" "Source Code Pro" "Menlo"
                            "Monaco" "DejaVu Sans Mono" "Consolas")
              when (font-installed-p font)
