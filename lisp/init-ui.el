@@ -61,13 +61,13 @@
                                   (force-mode-line-update))))))
           (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn)))
 
-;; Mode-line
-(use-package doom-modeline
-  :hook (after-init . doom-modeline-mode)
-  :init
-  (setq doom-modeline-icon t
-        doom-modeline-time-icon nil
-        doom-modeline-minor-modes t))
+;;;; Mode-line
+;;(use-package doom-modeline
+;;  :hook (after-init . doom-modeline-mode)
+;;  :init
+;;  (setq doom-modeline-icon t
+;;        doom-modeline-time-icon nil
+;;        doom-modeline-minor-modes t))
 
 ;;(use-package hide-mode-line
 ;;  :hook (((treemacs-mode
@@ -84,12 +84,13 @@
 ;;(use-package minions
 ;;  :hook (doom-modeline-mode . minions-mode))
 
-;; Icons
-(use-package nerd-icons
-  :config
-  (when (and (display-graphic-p)
-             (not (font-installed-p nerd-icons-font-family)))
-    (nerd-icons-install-fonts t)))
+;;;; Icons
+;;(use-package nerd-icons
+;;  :when (icons-displayable-p)
+;;  :config
+;;  (when (and (display-graphic-p)
+;;             (not (font-installed-p nerd-icons-font-family)))
+;;    (nerd-icons-install-fonts t)))
 
 ;; Show line numbers
 (use-package display-line-numbers

@@ -118,22 +118,22 @@ Install the doc if it's not installed."
 ;;  +*.cu
 ;;  +*.cuh
 
-;;Jump to definition
-(use-package dumb-jump
-  :init
-  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
-  (when (executable-find "rg")
-    (setq dumb-jump-prefer-searcher 'rg)
-    (setq dumb-jump-force-searcher 'rg))
-  (setq dumb-jump-selector 'completing-read))
+;;;;Jump to definition
+;;(use-package dumb-jump
+;;  :init
+;;  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+;;  (when (executable-find "rg")
+;;    (setq dumb-jump-prefer-searcher 'rg)
+;;    (setq dumb-jump-force-searcher 'rg))
+;;  (setq dumb-jump-selector 'completing-read))
 
-(use-package csv-mode)
+;;(use-package csv-mode)
 ;;(unless emacs/>=29p
 ;;  (use-package csharp-mode))
 (use-package cmake-mode)
 ;;(use-package lua-mode)
 ;;(use-package vimrc-mode)
-(use-package yaml-mode)
+;;(use-package yaml-mode)
 
 ;;(use-package protobuf-mode
 ;;  :hook (protobuf-mode . (lambda ()

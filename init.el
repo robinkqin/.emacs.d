@@ -5,7 +5,7 @@
 ;;; Code:
 
 ;; alias ec='emacsclient -t -a ""'
-;; definition/reference: xref, eglot, dumb-jump
+;; definition/reference: xref, eglot
 ;; completion: corfu
 ;; format: format-all
 ;; refactor: eglot, color-rg, symbol-overlay
@@ -98,7 +98,7 @@ Otherwise the startup will be very slow."
 (require 'init-utils)
 
 (require 'init-vcs)
-(require 'init-check)
+;;(require 'init-check)
 (require 'init-eglot)
 (require 'init-gdb)
 (require 'init-dap)

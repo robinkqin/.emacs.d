@@ -61,10 +61,10 @@
                 avy-background t
                 avy-style 'pre))
 
-;; Kill text between the point and the character CHAR
-(use-package avy-zap
-  :bind (("M-z" . avy-zap-to-char-dwim)
-         ("M-Z" . avy-zap-up-to-char-dwim)))
+;;;; Kill text between the point and the character CHAR
+;;(use-package avy-zap
+;;  :bind (("M-z" . avy-zap-to-char-dwim)
+;;         ("M-Z" . avy-zap-up-to-char-dwim)))
 
 ;; Quickly follow links
 (use-package link-hint
@@ -90,15 +90,15 @@
 ;; Minor mode to aggressively keep your code always indented
 ;;(use-package aggressive-indent)
 
-;; Show number of matches in mode-line while searching
-(use-package anzu
-  :diminish
-  :bind (([remap query-replace] . anzu-query-replace)
-         ([remap query-replace-regexp] . anzu-query-replace-regexp)
-         :map isearch-mode-map
-         ([remap isearch-query-replace] . anzu-isearch-query-replace)
-         ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
-  :hook (after-init . global-anzu-mode))
+;;;; Show number of matches in mode-line while searching
+;;(use-package anzu
+;;  :diminish
+;;  :bind (([remap query-replace] . anzu-query-replace)
+;;         ([remap query-replace-regexp] . anzu-query-replace-regexp)
+;;         :map isearch-mode-map
+;;         ([remap isearch-query-replace] . anzu-isearch-query-replace)
+;;         ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
+;;  :hook (after-init . global-anzu-mode))
 
 ;; Redefine M-< and M-> for some modes
 (use-package beginend
@@ -203,9 +203,9 @@
   :bind ("C-x u" . vundo)
   :config (setq vundo-glyph-alist vundo-unicode-symbols))
 
-;; Goto last change
-(use-package goto-chg
-  :bind ("C-," . goto-last-change))
+;;;; Goto last change
+;;(use-package goto-chg
+;;  :bind ("C-," . goto-last-change))
 
 ;;;; Handling capitalized subwords in a nomenclature
 ;;(use-package subword
