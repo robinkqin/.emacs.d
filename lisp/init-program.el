@@ -51,10 +51,10 @@
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read
         xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
-;; Code styles
-(use-package editorconfig
-  :diminish
-  :hook (after-init . editorconfig-mode))
+;;;; Code styles
+;;(use-package editorconfig
+;;  :diminish
+;;  :hook (after-init . editorconfig-mode))
 
 ;;;; Run commands quickly
 ;;(use-package quickrun
@@ -128,23 +128,23 @@ Install the doc if it's not installed."
   (setq dumb-jump-selector 'completing-read))
 
 (use-package csv-mode)
-(unless emacs/>=29p
-  (use-package csharp-mode))
+;;(unless emacs/>=29p
+;;  (use-package csharp-mode))
 (use-package cmake-mode)
-(use-package lua-mode)
-(use-package vimrc-mode)
+;;(use-package lua-mode)
+;;(use-package vimrc-mode)
 (use-package yaml-mode)
 
-(use-package protobuf-mode
-  :hook (protobuf-mode . (lambda ()
-                           (setq imenu-generic-expression
-                                 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
+;;(use-package protobuf-mode
+;;  :hook (protobuf-mode . (lambda ()
+;;                           (setq imenu-generic-expression
+;;                                 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
 
-;; Fish shell
-(use-package fish-mode
-  :hook (fish-mode . (lambda ()
-                       (add-hook 'before-save-hook
-                                 #'fish_indent-before-save))))
+;;;; Fish shell
+;;(use-package fish-mode
+;;  :hook (fish-mode . (lambda ()
+;;                       (add-hook 'before-save-hook
+;;                                 #'fish_indent-before-save))))
 
 (use-package cuda-mode)
 

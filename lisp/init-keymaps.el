@@ -39,7 +39,7 @@
 
 (global-set-key (kbd "M-u") 'symbol-overlay-remove-all)
 
-(global-set-key (kbd "M-s ]") 'diff-hl-next-hunk) ;FIXME: windows
+(global-set-key (kbd "M-s ]") 'diff-hl-next-hunk) ;FIXME: for windows
 (global-set-key (kbd "M-s [") 'diff-hl-previous-hunk)
 
 

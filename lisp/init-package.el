@@ -43,16 +43,16 @@
 ;; Required by `use-package'
 (use-package diminish :ensure t)
 
-;; Update GPG keyring for GNU ELPA
-(use-package gnu-elpa-keyring-update)
+;;;; Update GPG keyring for GNU ELPA
+;;(use-package gnu-elpa-keyring-update)
 
-;; Update packages
-(unless (fboundp 'package-upgrade-all)
-  (use-package auto-package-update
-    :init
-    (setq auto-package-update-delete-old-versions t
-          auto-package-update-hide-results t)
-    (defalias 'package-upgrade-all #'auto-package-update-now)))
+;;;; Update packages
+;;(unless (fboundp 'package-upgrade-all)
+;;  (use-package auto-package-update
+;;    :init
+;;    (setq auto-package-update-delete-old-versions t
+;;          auto-package-update-hide-results t)
+;;    (defalias 'package-upgrade-all #'auto-package-update-now)))
 
 (provide 'init-package)
 

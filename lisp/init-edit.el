@@ -312,9 +312,9 @@
             (lambda (text)
               (start-process "xclip"  nil xclip-program "--trim-newline" "--type" "text/plain;charset=utf-8" text))))))
 
-;; Open files as another user
-(unless sys/win32p
-  (use-package sudo-edit))
+;;;; Open files as another user
+;;(unless sys/win32p
+;;  (use-package sudo-edit))
 
 ;; Hanlde minified code
 (use-package so-long

@@ -41,44 +41,44 @@
       (ansi-color-for-comint-mode-on)
       (setq comint-input-sender 'my-shell-simple-send))))
 
-;; ANSI & XTERM 256 color support
-(use-package xterm-color
-  :defines (compilation-environment
-            eshell-preoutput-filter-functions
-            eshell-output-filter-functions)
-  :functions (compilation-filter my-advice-compilation-filter)
-  :init
-  ;; For shell and interpreters
-  (setenv "TERM" "xterm-256color")
-  (setq comint-output-filter-functions
-        (remove 'ansi-color-process-output comint-output-filter-functions))
-  (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter)
-  (add-hook 'shell-mode-hook
-            (lambda ()
-              ;; Disable font-locking to improve performance
-              (font-lock-mode -1)
-              ;; Prevent font-locking from being re-enabled
-              (make-local-variable 'font-lock-function)
-              (setq font-lock-function #'ignore)))
-
-  ;; For eshell
-  (with-eval-after-load 'esh-mode
-    (add-hook 'eshell-before-prompt-hook
-              (lambda ()
-                (setq xterm-color-preserve-properties t)))
-    (add-to-list 'eshell-preoutput-filter-functions 'xterm-color-filter)
-    (setq eshell-output-filter-functions
-          (remove 'eshell-handle-ansi-color eshell-output-filter-functions)))
-
-  ;; For compilation buffers
-  (setq compilation-environment '("TERM=xterm-256color"))
-  (defun my-advice-compilation-filter (f proc string)
-    (funcall f proc
-             (if (eq major-mode 'rg-mode) ; compatible with `rg'
-                 string
-               (xterm-color-filter string))))
-  (advice-add 'compilation-filter :around #'my-advice-compilation-filter)
-  (advice-add 'gud-filter :around #'my-advice-compilation-filter))
+;;;; ANSI & XTERM 256 color support
+;;(use-package xterm-color
+;;  :defines (compilation-environment
+;;            eshell-preoutput-filter-functions
+;;            eshell-output-filter-functions)
+;;  :functions (compilation-filter my-advice-compilation-filter)
+;;  :init
+;;  ;; For shell and interpreters
+;;  (setenv "TERM" "xterm-256color")
+;;  (setq comint-output-filter-functions
+;;        (remove 'ansi-color-process-output comint-output-filter-functions))
+;;  (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter)
+;;  (add-hook 'shell-mode-hook
+;;            (lambda ()
+;;              ;; Disable font-locking to improve performance
+;;              (font-lock-mode -1)
+;;              ;; Prevent font-locking from being re-enabled
+;;              (make-local-variable 'font-lock-function)
+;;              (setq font-lock-function #'ignore)))
+;;
+;;  ;; For eshell
+;;  (with-eval-after-load 'esh-mode
+;;    (add-hook 'eshell-before-prompt-hook
+;;              (lambda ()
+;;                (setq xterm-color-preserve-properties t)))
+;;    (add-to-list 'eshell-preoutput-filter-functions 'xterm-color-filter)
+;;    (setq eshell-output-filter-functions
+;;          (remove 'eshell-handle-ansi-color eshell-output-filter-functions)))
+;;
+;;  ;; For compilation buffers
+;;  (setq compilation-environment '("TERM=xterm-256color"))
+;;  (defun my-advice-compilation-filter (f proc string)
+;;    (funcall f proc
+;;             (if (eq major-mode 'rg-mode) ; compatible with `rg'
+;;                 string
+;;               (xterm-color-filter string))))
+;;  (advice-add 'compilation-filter :around #'my-advice-compilation-filter)
+;;  (advice-add 'gud-filter :around #'my-advice-compilation-filter))
 
 ;; Better terminal emulator
 (use-package eat

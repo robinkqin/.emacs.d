@@ -135,19 +135,13 @@
       auto-window-vscroll nil
       scroll-preserve-screen-position t)
 
-;; Smooth scrolling
-(use-package ultra-scroll
-  :when emacs/>=29p
-  :ensure nil
-  :init (unless (package-installed-p 'ultra-scroll)
-          (package-vc-install "https://github.com/jdtsmith/ultra-scroll"))
-  :hook (after-init . ultra-scroll-mode))
-
-;; Smooth scrolling over images
-(unless emacs/>=30p
-  (use-package iscroll
-    :diminish
-    :hook (image-mode . iscroll-mode)))
+;;;; Smooth scrolling
+;;(use-package ultra-scroll
+;;  :when emacs/>=29p
+;;  :ensure nil
+;;  :init (unless (package-installed-p 'ultra-scroll)
+;;          (package-vc-install "https://github.com/jdtsmith/ultra-scroll"))
+;;  :hook (after-init . ultra-scroll-mode))
 
 (when (childframe-completion-workable-p)
   ;; Display transient in child frame

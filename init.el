@@ -78,21 +78,21 @@ Otherwise the startup will be very slow."
 
 (require 'init-edit)
 (require 'init-completion)
-(require 'init-snippet)
+;;(require 'init-snippet)
 
 (require 'init-bookmark)
-(require 'init-dired)
+;;(require 'init-dired)
 (require 'init-highlight)
 (require 'init-ibuffer)
 (require 'init-kill-ring)
 (require 'init-workspace)
 (require 'init-window)
 
-(require 'init-eaf)
+;;(require 'init-eaf)
 
-(require 'init-markdown)
-(require 'init-org)
-(require 'init-reader)
+;;(require 'init-markdown)
+;;(require 'init-org)
+;;(require 'init-reader)
 
 (require 'init-dict)
 (require 'init-utils)
@@ -107,10 +107,10 @@ Otherwise the startup will be very slow."
 (require 'init-c)
 ;;(require 'init-citre)
 
-(require 'init-elisp)
+;;(require 'init-elisp)
 (require 'init-python)
 
-(require 'init-eshell)
+;;(require 'init-eshell)
 (require 'init-shell)
 
 (require 'init-misc)

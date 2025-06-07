@@ -12,11 +12,11 @@
 (set-language-environment "UTF-8")
 (set-default-coding-systems 'utf-8)
 (set-buffer-file-coding-system 'utf-8)
-;;(set-clipboard-coding-system 'utf-8)
+;;(set-clipboard-coding-system 'utf-8) ;FIXME: for windows
 (set-file-name-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (set-next-selection-coding-system 'utf-8)
-;;(set-selection-coding-system 'utf-8)
+;;(set-selection-coding-system 'utf-8) ;FIXME: for windows
 (set-terminal-coding-system 'utf-8)
 (setq locale-coding-system 'utf-8)
 (setq system-time-locale "C")
@@ -39,9 +39,9 @@
              when (font-installed-p font)
              return (set-face-attribute 'default nil
                                         :family font
-                                        :height (cond (sys/macp 150)
-                                                      (sys/win32p 150)
-                                                      (t 150))))
+                                        :height (cond (sys/macp 175)
+                                                      (sys/win32p 135)
+                                                      (t 235))))
 
     ;; Specify font for all unicode characters
     (cl-loop for font in '("Apple Symbols" "Segoe UI Symbol" "Symbola" "Symbol")
@@ -67,7 +67,7 @@
 (add-hook 'window-setup-hook #'my/setup-fonts)
 (add-hook 'server-after-make-frame-hook #'my/setup-fonts)
 
-(defun my/set-eww-font (fontconfig)
+(defun my/set-frame-font (fontconfig)
   (interactive "sFontconfig(Ubuntu-20): ")
   (let ((font (or (if (string-empty-p fontconfig)
                       "Ubuntu-20"
