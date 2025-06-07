@@ -163,9 +163,10 @@
         large-file-warning-threshold (* 64 1024 1024))
   :hook (after-init . auto-save-visited-mode))
 
-;; Child frame
-(use-package posframe
-  :hook (after-load-theme . posframe-delete-all))
+;;;; Child frame
+;;(when (childframe-workable-p)
+;;  (use-package posframe
+;;    :hook (after-load-theme . posframe-delete-all)))
 
 (provide 'init-base)
 

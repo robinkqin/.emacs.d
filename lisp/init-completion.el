@@ -32,17 +32,18 @@
   :hook ((after-init . vertico-mode)
          (rfn-eshadow-update-overlay . vertico-directory-tidy)))
 
-(use-package vertico-posframe
-  :hook (vertico-mode . vertico-posframe-mode)
-  :init (setq vertico-posframe-poshandler
-              #'posframe-poshandler-frame-bottom-center
-              vertico-posframe-parameters
-              '((left-fringe  . 8)
-                (right-fringe . 8))))
+;;(when (childframe-workable-p)
+;;  (use-package vertico-posframe
+;;    :hook (vertico-mode . vertico-posframe-mode)
+;;    :init (setq vertico-posframe-poshandler
+;;                #'posframe-poshandler-frame-bottom-center
+;;                vertico-posframe-parameters
+;;                '((left-fringe  . 8)
+;;                  (right-fringe . 8)))))
 
-(use-package nerd-icons-completion
-  :when (icons-displayable-p)
-  :hook (vertico-mode . nerd-icons-completion-mode))
+;;(use-package nerd-icons-completion
+;;  :when (icons-displayable-p)
+;;  :hook (vertico-mode . nerd-icons-completion-mode))
 
 (use-package marginalia
   :hook (after-init . marginalia-mode))
@@ -312,9 +313,10 @@ targets."
   ;; setting is useful beyond Corfu.
   (read-extended-command-predicate #'command-completion-default-include-p))
 
-(use-package nerd-icons-corfu
-  :after corfu
-  :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+;;(use-package nerd-icons-corfu
+;;  :when (icons-displayable-p)
+;;  :after corfu
+;;  :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 ;; Add extensions
 (use-package cape

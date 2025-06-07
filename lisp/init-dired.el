@@ -57,23 +57,23 @@
   (use-package diredfl
     :hook (dired-mode . diredfl-mode))
 
-  ;; Shows icons
-  (use-package nerd-icons-dired
-    :diminish
-    :when (icons-displayable-p)
-    :custom-face
-    (nerd-icons-dired-dir-face ((t (:inherit nerd-icons-dsilver :foreground unspecified))))
-    :hook (dired-mode . nerd-icons-dired-mode)
-    :config
-    ;; WORKAROUND: display transparent background of icons
-    ;; @see https://github.com/rainstormstudio/nerd-icons-dired/issues/1#issuecomment-2628680359
-    (defun my-nerd-icons-dired--add-overlay (pos string)
-      "Add overlay to display STRING at POS."
-      (let ((ov (make-overlay (1- pos) pos)))
-        (overlay-put ov 'nerd-icons-dired-overlay t)
-        (overlay-put ov 'after-string
-                     (propertize "_" 'display string))))
-    (advice-add #'nerd-icons-dired--add-overlay :override #'my-nerd-icons-dired--add-overlay))
+  ;;;; Shows icons
+  ;;(use-package nerd-icons-dired
+  ;;  :diminish
+  ;;  :when (icons-displayable-p)
+  ;;  :custom-face
+  ;;  (nerd-icons-dired-dir-face ((t (:inherit nerd-icons-dsilver :foreground unspecified))))
+  ;;  :hook (dired-mode . nerd-icons-dired-mode)
+  ;;  :config
+  ;;  ;; WORKAROUND: display transparent background of icons
+  ;;  ;; @see https://github.com/rainstormstudio/nerd-icons-dired/issues/1#issuecomment-2628680359
+  ;;  (defun my-nerd-icons-dired--add-overlay (pos string)
+  ;;    "Add overlay to display STRING at POS."
+  ;;    (let ((ov (make-overlay (1- pos) pos)))
+  ;;      (overlay-put ov 'nerd-icons-dired-overlay t)
+  ;;      (overlay-put ov 'after-string
+  ;;                   (propertize "_" 'display string))))
+  ;;  (advice-add #'nerd-icons-dired--add-overlay :override #'my-nerd-icons-dired--add-overlay))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)

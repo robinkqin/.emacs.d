@@ -143,11 +143,11 @@
 ;;          (package-vc-install "https://github.com/jdtsmith/ultra-scroll"))
 ;;  :hook (after-init . ultra-scroll-mode))
 
-(when (childframe-completion-workable-p)
-  ;; Display transient in child frame
-  (use-package transient-posframe
-    :diminish
-    :hook (after-init . transient-posframe-mode)))
+;;(when (childframe-completion-workable-p)
+;;  ;; Display transient in child frame
+;;  (use-package transient-posframe
+;;    :diminish
+;;    :hook (after-init . transient-posframe-mode)))
 
 
 (provide 'init-ui)
