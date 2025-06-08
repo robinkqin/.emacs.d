@@ -81,7 +81,7 @@ Otherwise the startup will be very slow."
 ;;(require 'init-snippet)
 
 (require 'init-bookmark)
-;;(require 'init-dired)
+(require 'init-dired)
 (require 'init-highlight)
 (require 'init-ibuffer)
 (require 'init-kill-ring)
