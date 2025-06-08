@@ -26,13 +26,12 @@
 
 (global-set-key (kbd "M-j") 'consult-ripgrep)
 (global-set-key (kbd "M-k") 'consult-line)
-;;(global-set-key (kbd "M-l") 'dumb-jump-go)
-(global-set-key (kbd "M-l") 'vertico-repeat) ;; vertico-suspend
+(global-set-key (kbd "M-l") 'dumb-jump-go)
 (global-set-key (kbd "M-\\") 'color-rg-search-symbol-in-project)
 
 (global-set-key (kbd "M-s j") 'my/grep-from-ynak)
 (global-set-key (kbd "M-s k") 'my/consult-line-from-ynak)
-;;(global-set-key (kbd "M-s l") 'vertico-repeat) ;; vertico-suspend
+(global-set-key (kbd "M-s l") 'vertico-repeat) ;; vertico-suspend
 (global-set-key (kbd "M-s \\") 'my/color-rg-search-symbol-in-project-from-ynak)
 
 (global-set-key (kbd "M-r") 'rg-menu)
