@@ -19,7 +19,7 @@
 (global-set-key (kbd "M-'") 'consult-imenu)
 (global-set-key (kbd "M-s '") 'consult-eglot-symbols)
 
-;;(global-set-key (kbd "M-s ,") 'goto-last-change)
+(global-set-key (kbd "M-s ,") 'goto-last-change)
 
 (global-set-key (kbd "M-m") 'consult-bookmark)
 (global-set-key (kbd "M-s m") 'my/bookmark-at-point)

@@ -61,13 +61,13 @@
                                   (force-mode-line-update))))))
           (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn)))
 
-;;;; Mode-line
-;;(use-package doom-modeline
-;;  :hook (after-init . doom-modeline-mode)
-;;  :init
-;;  (setq doom-modeline-icon t
-;;        doom-modeline-time-icon nil
-;;        doom-modeline-minor-modes t))
+;; Mode-line
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode)
+  :init
+  (setq doom-modeline-icon nil
+        doom-modeline-time-icon nil
+        doom-modeline-minor-modes t))
 
 ;;(use-package hide-mode-line
 ;;  :hook (((treemacs-mode
