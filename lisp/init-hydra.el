@@ -8,26 +8,28 @@
 ;;; Code:
 
 (use-package hydra
+  :functions childframe-completion-workable-p
   :hook (emacs-lisp-mode . hydra-add-imenu)
   :init
   (when (childframe-completion-workable-p)
     (setq hydra-hint-display-type 'posframe)
-
-    (defun hydra-set-posframe-show-params ()
-      "Set hydra-posframe style."
-      (setq hydra-posframe-show-params
-            `(:left-fringe 8
-              :right-fringe 8
-              :internal-border-width 3
-              :internal-border-color ,(face-background 'default nil t)
-              :background-color ,(face-background 'default nil t)
-              :foreground-color ,(face-foreground 'default nil t)
-              :lines-truncate t
-              :poshandler posframe-poshandler-frame-bottom-center)))
-    (hydra-set-posframe-show-params)
-    (add-hook 'after-load-theme-hook #'hydra-set-posframe-show-params t)))
+    (with-no-warnings
+      (defun hydra-set-posframe-show-params ()
+        "Set hydra-posframe style."
+        (setq hydra-posframe-show-params
+              `(:left-fringe 8
+                             :right-fringe 8
+                             :internal-border-width 3
+                             :internal-border-color ,(face-background 'default nil t)
+                             :background-color ,(face-background 'default nil t)
+                             :foreground-color ,(face-foreground 'default nil t)
+                             :lines-truncate t
+                             :poshandler posframe-poshandler-frame-bottom-center)))
+      (hydra-set-posframe-show-params)
+      (add-hook 'after-load-theme-hook #'hydra-set-posframe-show-params t))))
 
 (use-package pretty-hydra
+  :functions icons-displayable-p
   :bind ("<f6>" . toggles-hydra/body)
   :hook (emacs-lisp-mode . (lambda ()
                              (add-to-list

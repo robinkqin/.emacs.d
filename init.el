@@ -1,4 +1,4 @@
-;;; init.el --- the entry of emacs config -*- lexical-binding: t -*-
+;;; init.el --- Emacs Configuration.	-*- lexical-binding: t no-byte-compile: t -*-
 
 ;;; Commentary:
 
@@ -12,8 +12,9 @@
 ;; dict: fanyi, go-translate, immersive-translate
 
 ;; tools: git, make, clangd, clang-format, ripgrep, fd, cmake,
-;;        bear, marksman, fzf, shellcheck, translate-shell
-;; pip: epc orjson sexpdata six paramiko requests compiledb cmake-language-server pyflakes autopep8
+;;        bear, marksman, fzf, shellcheck, translate-shell, aspell
+;; pip: epc orjson sexpdata six setuptools paramiko rapidfuzz watchdog packaging
+;;      requests compiledb cmake-language-server pyflakes autopep8
 ;; check: clang++ main.cpp; clang main.c; clang++ -v; libstdc++.a; clang -v
 
 ;; compile_flags.txt, compile_commands.json:
@@ -26,44 +27,43 @@
 ;; export COLORTERM=truecolor
 
 ;;(eglot-upgrade-eglot)
+;;(treesit-auto-install-all)
+;;(devdocs-install)
 
 (when (version< emacs-version "28.1")
   (error "This requires Emacs 28.1 and above!"))
 
-;; Defer garbage collection further back in the startup process
+;; Optimize Garbage Collection for Startup
 (setq gc-cons-threshold most-positive-fixnum)
 
-;; Prevent flashing of unstyled modeline at startup
-;;(setq-default mode-line-format nil)
-
-;; Don't pass case-insensitive to `auto-mode-alist'
+;; Optimize `auto-mode-alist`
 (setq auto-mode-case-fold nil)
 
-;; Load path
-;; Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
+;; Add "lisp" and "site-lisp" to the beginning of `load-path`
 (defun update-load-path (&rest _)
   "Update `load-path'."
   (dolist (dir '("site-lisp" "lisp"))
     (push (expand-file-name dir user-emacs-directory) load-path)))
 
+;; Add subdirectories inside "site-lisp" to `load-path`
 (defun add-subdirs-to-load-path (&rest _)
-  "Add subdirectories to `load-path'.
+  "Recursively add subdirectories in `site-lisp` to `load-path`.
 
-Don't put large files in `site-lisp' directory, e.g. EAF.
-Otherwise the startup will be very slow."
+Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
   (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
     (normal-top-level-add-subdirs-to-load-path)))
 
+;; Ensure these functions are called after `package-initialize`
 (advice-add #'package-initialize :after #'update-load-path)
 (advice-add #'package-initialize :after #'add-subdirs-to-load-path)
 
+;; Initialize load paths explicitly
 (update-load-path)
 
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
-;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 (add-to-list 'initial-frame-alist '(fullscreen . maximized))
 
 (require 'init-const)
@@ -88,8 +88,6 @@ Otherwise the startup will be very slow."
 (require 'init-workspace)
 (require 'init-window)
 
-;;(require 'init-eaf)
-
 ;;(require 'init-markdown)
 ;;(require 'init-org)
 ;;(require 'init-reader)
@@ -105,9 +103,11 @@ Otherwise the startup will be very slow."
 
 (require 'init-program)
 (require 'init-c)
+
+;;(require 'init-matchit)
 ;;(require 'init-citre)
 
-;;(require 'init-elisp)
+(require 'init-elisp)
 (require 'init-python)
 
 ;;(require 'init-eshell)
@@ -115,7 +115,7 @@ Otherwise the startup will be very slow."
 
 (require 'init-misc)
 
-;;(require 'init-ai)
+(require 'init-ai)
 
 (require 'init-functions)
 (require 'init-keymaps)

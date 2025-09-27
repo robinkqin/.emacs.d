@@ -1,4 +1,4 @@
-;;; color-rg.el --- Search and refacotry code with rg
+;;; color-rg.el --- Search and refacotry code with rg	-*- lexical-binding: t -*-
 
 ;; Filename: color-rg.el
 ;; Description: Search and refacotry code with rg
@@ -875,7 +875,7 @@ CASE-SENSITIVE determinies if search is case-sensitive."
       ;; Start command.
       (when (> (length color-rg-command-prefix) 0)
 	    (setq command (concat color-rg-command-prefix " " command)))
-      
+
       (compilation-start command 'color-rg-mode)
 
       ;; Save last search.

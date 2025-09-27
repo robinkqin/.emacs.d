@@ -82,6 +82,10 @@ Native tree-sitter is introduced since 29.1."
   (and (display-graphic-p)
        (featurep 'xwidget-internal)))
 
+(defun font-available-p (font-name)
+  "Check if font with FONT-NAME is available."
+  (find-font (font-spec :name font-name)))
+
 (provide 'init-const)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -68,6 +68,7 @@
 
 ;; Quickly follow links
 (use-package link-hint
+  :functions embark-dwim
   :bind (("M-o" . link-hint-open-link)
          ("C-c l o" . link-hint-open-link)
          ("C-c l c" . link-hint-copy-link))
@@ -103,6 +104,7 @@
 ;; Redefine M-< and M-> for some modes
 (use-package beginend
   :diminish beginend-global-mode
+  :functions diminish
   :hook (after-init . beginend-global-mode)
   :config (mapc (lambda (pair)
                   (diminish (cdr pair)))
@@ -145,6 +147,7 @@
 
 ;;;; Increase selected region by semantic units
 ;;(use-package expand-region
+;;  :functions my/treesit-available-p treesit-buffer-root-node
 ;;  :bind ("C-=" . er/expand-region)
 ;;  :config
 ;;  (when (my/treesit-available-p)
@@ -176,11 +179,12 @@
   :diminish
   :if (executable-find "aspell")
   :hook (((text-mode outline-mode) . flyspell-mode)
-         ;; (prog-mode . flyspell-prog-mode)
+         (prog-mode . flyspell-prog-mode)
          (flyspell-mode . (lambda ()
                             (dolist (key '("C-;" "C-," "C-."))
                               (unbind-key key flyspell-mode-map)))))
   :init (setq flyspell-issue-message-flag nil
+              flyspell-issue-welcome-flag nil
               ispell-program-name "aspell"
               ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 

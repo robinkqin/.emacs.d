@@ -7,6 +7,8 @@
 
 ;;; Code:
 
+(declare-function childframe-completion-workable-p "init-funcs")
+
 ;; Optimization
 (setq idle-update-delay 1.0)
 
@@ -34,32 +36,33 @@
 ;; Theme
 ;;(load-theme 'wombat t)
 (use-package doom-themes
-        :custom
-        (doom-themes-enable-bold t)
-        (doom-themes-enable-italic t)
-        :init (load-theme 'doom-one t)
-        :config
-        ;; Enable flashing mode-line on errors
-        (doom-themes-visual-bell-config)
+  :functions doom-themes-visual-bell-config
+  :custom
+  (doom-themes-enable-bold t)
+  (doom-themes-enable-italic t)
+  :init (load-theme 'doom-one t)
+  :config
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
 
-        ;; WORKAROUND: Visual bell on 29+
-        ;; @see https://github.com/doomemacs/themes/issues/733
-        (with-no-warnings
-          (defun my-doom-themes-visual-bell-fn ()
-            "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
-            (let ((buf (current-buffer))
-                  (cookies (mapcar (lambda (face)
-                                     (face-remap-add-relative face 'doom-themes-visual-bell))
-                                   (if (facep 'mode-line-active)
-                                       '(mode-line-active solaire-mode-line-active-face)
-                                     '(mode-line solaire-mode-line-face)))))
-              (force-mode-line-update)
-              (run-with-timer 0.15 nil
-                              (lambda ()
-                                (with-current-buffer buf
-                                  (mapc #'face-remap-remove-relative cookies)
-                                  (force-mode-line-update))))))
-          (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn)))
+  ;; WORKAROUND: Visual bell on 29+
+  ;; @see https://github.com/doomemacs/themes/issues/733
+  (with-no-warnings
+    (defun my-doom-themes-visual-bell-fn ()
+      "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
+      (let ((buf (current-buffer))
+            (cookies (mapcar (lambda (face)
+                               (face-remap-add-relative face 'doom-themes-visual-bell))
+                             (if (facep 'mode-line-active)
+                                 '(mode-line-active solaire-mode-line-active-face)
+                               '(mode-line solaire-mode-line-face)))))
+        (force-mode-line-update)
+        (run-with-timer 0.15 nil
+                        (lambda ()
+                          (with-current-buffer buf
+                            (mapc #'face-remap-remove-relative cookies)
+                            (force-mode-line-update))))))
+    (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn)))
 
 ;; Mode-line
 (use-package doom-modeline
@@ -70,26 +73,26 @@
         doom-modeline-minor-modes t))
 
 ;;(use-package hide-mode-line
-;;  :hook (((treemacs-mode
+;;  :autoload turn-off-hide-mode-line-mode
+;;  :hook (((eat-mode
 ;;           eshell-mode shell-mode
-;;           term-mode vterm-mode eat-mode
-;;           embark-collect-mode
-;;           lsp-ui-imenu-mode
-;;           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)
-;;         (dired-mode . (lambda()
-;;                         (and (bound-and-true-p hide-mode-line-mode)
-;;                              (turn-off-hide-mode-line-mode))))))
+;;           term-mode vterm-mode
+;;           embark-collect-mode lsp-ui-imenu-mode
+;;           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)))
 
 ;;;; A minor-mode menu for mode-line
 ;;(use-package minions
-;;  :hook (doom-modeline-mode . minions-mode))
+;;  :hook (after-init . minions-mode))
 
 ;;;; Icons
 ;;(use-package nerd-icons
-;;  :when (icons-displayable-p)
+;;  :commands nerd-icons-install-fonts
+;;  :functions font-available-p
 ;;  :config
+;;  ;; Install nerd fonts automatically only in GUI
+;;  ;; For macOS, may install via "brew install font-symbols-only-nerd-font"
 ;;  (when (and (display-graphic-p)
-;;             (not (font-installed-p nerd-icons-font-family)))
+;;             (not (font-available-p nerd-icons-font-family)))
 ;;    (nerd-icons-install-fonts t)))
 
 ;; Show line numbers
@@ -136,13 +139,10 @@
       auto-window-vscroll nil
       scroll-preserve-screen-position t)
 
-;;;; Smooth scrolling
-;;(use-package ultra-scroll
-;;  :when emacs/>=29p
-;;  :ensure nil
-;;  :init (unless (package-installed-p 'ultra-scroll)
-;;          (package-vc-install "https://github.com/jdtsmith/ultra-scroll"))
-;;  :hook (after-init . ultra-scroll-mode))
+;; Smooth scrolling
+(use-package ultra-scroll
+  :when emacs/>=29p
+  :hook (after-init . ultra-scroll-mode))
 
 ;;(when (childframe-completion-workable-p)
 ;;  ;; Display transient in child frame

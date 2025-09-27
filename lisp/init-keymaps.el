@@ -10,8 +10,7 @@
 ;; already use: M-h M-i M-j M-k M-l M-m M-o M-u M-; M-' M-/ M-[ M-]
 ;; keep origin: M-g M-s M-v M-b M-f M-w M-x M-z M-d M-. M-,
 
-;;(require 'init-thing-edit)
-;;(message "init thing-edit done")
+;; Select widnow via `M-1'...`M-9'
 
 (global-set-key (kbd "M-;") 'avy-goto-char-2)
 (global-set-key (kbd "M-s ;") 'avy-goto-char-timer)

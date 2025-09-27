@@ -7,6 +7,8 @@
 
 ;;; Code:
 
+(declare-function my/treesit-available-p "init-const")
+
 ;;(use-package cc-mode
 ;;  :ensure nil
 ;;  :bind (:map c-mode-base-map

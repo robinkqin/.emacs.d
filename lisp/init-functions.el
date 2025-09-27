@@ -32,14 +32,6 @@ Same as '`replace-string' `C-q' `C-m' `RET' `RET''."
       (message "Removed %d " count))
     (widen)))
 
-;; File and buffer
-(defun revert-this-buffer ()
-  "Revert the current buffer."
-  (interactive)
-  (unless (minibuffer-window-active-p (selected-window))
-    (revert-buffer t t)
-    (message "Reverted this buffer")))
-
 (defun delete-this-file ()
   "Delete the current file, and kill the buffer."
   (interactive)
@@ -145,7 +137,7 @@ Interactively, URL defaults to the string looking like a url around point."
 
 (defun my/open-init-file()
   (interactive)
-  (find-file "~/.emacs.d/init.el"))
+  (find-file (expand-file-name "init.el" user-emacs-directory)))
 (global-set-key (kbd "<f12>") 'my/open-init-file)
 
 (defun my/project-root-dir ()

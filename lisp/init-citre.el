@@ -18,9 +18,6 @@
 ;; $ ln -s /usr/src/lib .
 ;; $ ln -s /usr/src/sys .
 
-;;(require 'init-matchit)
-;;(message "init matchit done")
-
 (use-package citre
   :diminish
   :custom

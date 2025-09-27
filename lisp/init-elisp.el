@@ -10,15 +10,7 @@
 ;; Emacs lisp mode
 (use-package elisp-mode
   :ensure nil
-  :bind (:map emacs-lisp-mode-map
-         ("C-c C-x" . ielm)
-         ("C-c C-c" . eval-defun)
-         ("C-c C-b" . eval-buffer))
   :config
-  ;; Syntax highlighting of known Elisp symbols
-  (use-package highlight-defined
-    :hook ((emacs-lisp-mode inferior-emacs-lisp-mode) . highlight-defined-mode))
-
   (with-no-warnings
     ;; Align indent keywords
     ;; @see https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned
@@ -180,6 +172,10 @@ Lisp function does not specify a special indentation."
                 (revert-buffer nil t)))))))
     (bind-key "r" #'remove-hook-at-point help-mode-map)))
 
+;; Syntax highlighting of known Elisp symbols
+(use-package highlight-defined
+  :hook ((emacs-lisp-mode inferior-emacs-lisp-mode) . highlight-defined-mode))
+
 ;; Interactive macro expander
 (use-package macrostep
   :bind (:map emacs-lisp-mode-map
@@ -187,39 +183,35 @@ Lisp function does not specify a special indentation."
          :map lisp-interaction-mode-map
          ("C-c e" . macrostep-expand)))
 
-;; A better *Help* buffer
-(use-package helpful
-  :bind (([remap describe-function] . helpful-callable)
-         ([remap describe-command]  . helpful-command)
-         ([remap describe-variable] . helpful-variable)
-         ([remap describe-key]      . helpful-key)
-         ([remap describe-symbol]   . helpful-symbol)
-         :map emacs-lisp-mode-map
-         ("C-c C-d"                 . helpful-at-point)
-         :map lisp-interaction-mode-map
-         ("C-c C-d"                 . helpful-at-point)
-         :map helpful-mode-map
-         ("r"                       . remove-hook-at-point))
-  :hook (helpful-mode . cursor-sensor-mode) ; for remove-advice button
-  :init
-  (with-no-warnings
-    (with-eval-after-load 'apropos
-      ;; patch apropos buttons to call helpful instead of help
-      (dolist (fun-bt '(apropos-function apropos-macro apropos-command))
-        (button-type-put
-         fun-bt 'action
-         (lambda (button)
-           (helpful-callable (button-get button 'apropos-symbol)))))
-      (dolist (var-bt '(apropos-variable apropos-user-option))
-        (button-type-put
-         var-bt 'action
-         (lambda (button)
-           (helpful-variable (button-get button 'apropos-symbol))))))))
-
-;; Integrate Ert-runner
-(use-package overseer
-  :diminish
-  :hook (emacs-lisp-mode . overseer-mode))
+;;;; FIXME: slow down helper
+;;;; A better *Help* buffer
+;;(use-package helpful
+;;  :bind (([remap describe-function] . helpful-callable)
+;;         ([remap describe-command]  . helpful-command)
+;;         ([remap describe-variable] . helpful-variable)
+;;         ([remap describe-key]      . helpful-key)
+;;         ([remap describe-symbol]   . helpful-symbol)
+;;         :map emacs-lisp-mode-map
+;;         ("C-c C-d"                 . helpful-at-point)
+;;         :map lisp-interaction-mode-map
+;;         ("C-c C-d"                 . helpful-at-point)
+;;         :map helpful-mode-map
+;;         ("r"                       . remove-hook-at-point))
+;;  :hook (helpful-mode . cursor-sensor-mode) ; for remove-advice button
+;;  :init
+;;  (with-no-warnings
+;;    (with-eval-after-load 'apropos
+;;      ;; patch apropos buttons to call helpful instead of help
+;;      (dolist (fun-bt '(apropos-function apropos-macro apropos-command))
+;;        (button-type-put
+;;         fun-bt 'action
+;;         (lambda (button)
+;;           (helpful-callable (button-get button 'apropos-symbol)))))
+;;      (dolist (var-bt '(apropos-variable apropos-user-option))
+;;        (button-type-put
+;;         var-bt 'action
+;;         (lambda (button)
+;;           (helpful-variable (button-get button 'apropos-symbol))))))))
 
 (provide 'init-elisp)
 

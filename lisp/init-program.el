@@ -4,6 +4,9 @@
 
 ;;; Code:
 
+(declare-function my/treesit-available-p "init-const")
+(declare-function childframe-workable-p "init-const")
+
 ;; Tree-sitter support
 (when (my/treesit-available-p)
   (use-package treesit-auto
@@ -23,23 +26,9 @@
   :init
   (setq eldoc-echo-area-use-multiline-p nil))
 
-;; Search tool
-(use-package grep
-  :ensure nil
-  :autoload grep-apply-setting
-  :init
-  (when (executable-find "rg")
-    (grep-apply-setting
-     'grep-command "rg --color=auto --null -nH --no-heading -e ")
-    (grep-apply-setting
-     'grep-template "rg --color=auto --null --no-heading -g '!*/' -e <R> <D>")
-    (grep-apply-setting
-     'grep-find-command '("rg --color=auto --null -nH --no-heading -e ''" . 38))
-    (grep-apply-setting
-     'grep-find-template "rg --color=auto --null -nH --no-heading -e <R> <D>")))
-
 ;; Cross-referencing commands
 (use-package xref
+  :autoload xref-show-definitions-completing-read
   :bind (("M-g ." . xref-find-definitions)
          ("M-g ," . xref-go-back))
   :init
@@ -51,19 +40,20 @@
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read
         xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
-;;;; Code styles
-;;(use-package editorconfig
-;;  :diminish
-;;  :hook (after-init . editorconfig-mode))
+;; Code styles
+(use-package editorconfig
+  :diminish
+  :hook (after-init . editorconfig-mode))
 
-;;;; Run commands quickly
-;;(use-package quickrun
-;;  :bind (("C-<f5>" . quickrun)
-;;         ("C-c X"  . quickrun)))
+;; Run commands quickly
+(use-package quickrun
+  :bind (("C-<f5>" . quickrun)
+         ("C-c X"  . quickrun)))
 
 ;; Browse devdocs.io documents using EWW
 (use-package devdocs
   :autoload (devdocs--installed-docs devdocs--available-docs)
+  :commands (devdocs-install devdocs-lookup)
   :bind (:map prog-mode-map
          ("M-<f1>" . devdocs-dwim)
          ("C-h D"  . devdocs-dwim))
@@ -84,7 +74,6 @@
    devdocs-major-mode-docs-alist)
 
   (setq devdocs-data-dir (expand-file-name "devdocs" user-emacs-directory))
-  (setq devdocs-window-select t)
 
   (defun devdocs-dwim()
     "Look up a DevDocs documentation entry.
@@ -128,24 +117,28 @@ Install the doc if it's not installed."
     (setq dumb-jump-force-searcher 'rg))
   (setq dumb-jump-selector 'completing-read))
 
-;;(use-package csv-mode)
-;;(unless emacs/>=29p
-;;  (use-package csharp-mode))
+(use-package csv-mode)
 (use-package cmake-mode)
 ;;(use-package lua-mode)
 ;;(use-package vimrc-mode)
-;;(use-package yaml-mode)
+(use-package yaml-mode)
 
 ;;(use-package protobuf-mode
 ;;  :hook (protobuf-mode . (lambda ()
 ;;                           (setq imenu-generic-expression
 ;;                                 '((nil "^[[:space:]]*\\(message\\|service\\|enum\\)[[:space:]]+\\([[:alnum:]]+\\)" 2))))))
 
-;;;; Fish shell
+;;;; Fish shell mode and auto-formatting
 ;;(use-package fish-mode
+;;  :commands fish_indent-before-save
+;;  :defines eglot-server-programs
 ;;  :hook (fish-mode . (lambda ()
-;;                       (add-hook 'before-save-hook
-;;                                 #'fish_indent-before-save))))
+;;                       "Integrate `fish_indent` formatting with Fish shell mode."
+;;                       (add-hook 'before-save-hook #'fish_indent-before-save)))
+;;  :config
+;;  (with-eval-after-load 'eglot
+;;    (add-to-list 'eglot-server-programs
+;;                 '(fish-mode . ("fish-lsp" "start")))))
 
 (use-package cuda-mode)
 

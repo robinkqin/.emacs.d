@@ -31,17 +31,17 @@
 
 ;;https://github.com/MatthewZMD/aidermacs
 ;;https://emacs-china.org/t/aidermacs-emacs-ai-emacs-aider/28916
-(use-package aidermacs
-  :bind (("C-c a" . aidermacs-transient-menu))
-  ;;:config
-  ;;;; Set API_KEY in .bashrc, that will automatically picked up by aider or in elisp
-  ;;(setenv "ANTHROPIC_API_KEY" "sk-...")
-  ;;;; defun my-get-openrouter-api-key yourself elsewhere for security reasons
-  ;;(setenv "OPENROUTER_API_KEY" (my-get-openrouter-api-key))
-  :custom
-  ;; See the Configuration section below
-  (aidermacs-use-architect-mode t)
-  (aidermacs-default-model "sonnet"))
+;;(use-package aidermacs
+;;  :bind (("C-c a" . aidermacs-transient-menu))
+;;  ;;:config
+;;  ;;;; Set API_KEY in .bashrc, that will automatically picked up by aider or in elisp
+;;  ;;(setenv "ANTHROPIC_API_KEY" "sk-...")
+;;  ;;;; defun my-get-openrouter-api-key yourself elsewhere for security reasons
+;;  ;;(setenv "OPENROUTER_API_KEY" (my-get-openrouter-api-key))
+;;  :custom
+;;  ;; See the Configuration section below
+;;  (aidermacs-use-architect-mode t)
+;;  (aidermacs-default-model "sonnet"))
 
 
 ;;https://github.com/tninja/aider.el
@@ -84,6 +84,24 @@
 ;;          :key "your-api-key"  ;can be a function that returns the key
 ;;          :models '(deepseek-chat deepseek-coder))))
 
+;;;; Interact with ChatGPT or other LLMs
+;;(use-package gptel
+;;  :functions gptel-make-openai
+;;  :custom
+;;  (gptel-model 'gpt-4o)
+;;  ;; Put the apikey to `auth-sources'
+;;  ;; Format: "machine {HOST} login {USER} password {APIKEY}"
+;;  ;; The LLM host is used as HOST, and "apikey" as USER.
+;;  (gptel-backend (gptel-make-openai "Github Models"
+;;                   :host "models.inference.ai.azure.com"
+;;                   :endpoint "/chat/completions?api-version=2024-05-01-preview"
+;;                   :stream t
+;;                   :key 'gptel-api-key
+;;                   :models '(gpt-4o))))
+;;
+;;;; Generate commit messages for magit
+;;(use-package gptel-magit
+;;  :hook (magit-mode . gptel-magit-install))
 
 (provide 'init-ai)
 

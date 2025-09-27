@@ -7,9 +7,6 @@
 
 ;;; Code:
 
-;;(eval-when-compile
-;;  (require 'init-const))
-
 (when emacs/>=29p
   (use-package dape
     :bind (;;("M-<f5>" . dape-hydra/body)

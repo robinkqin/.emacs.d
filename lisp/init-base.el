@@ -4,8 +4,6 @@
 
 ;;; Code:
 
-(require 'subr-x)
-
 ;; Compatibility
 (use-package compat :demand t)
 
@@ -31,7 +29,7 @@
     (setq command-line-x-option-alist nil))
 
   ;; Increase how much is read from processes in a single chunk (default is 4kb)
-  (setq read-process-output-max #x10000)  ; 64kb
+  (setq read-process-output-max #x100000)  ; 64kb
 
   ;; Don't ping things that look like domain names.
   (setq ffap-machine-p-known 'reject))
@@ -46,8 +44,9 @@
         gcmh-high-cons-threshold #x1000000)) ; 16MB
 
 ;; Environment
-(when (or sys/mac-x-p sys/linux-x-p (daemonp))
+(when (or (memq window-system '(mac ns x)) (daemonp))
   (use-package exec-path-from-shell
+    :commands exec-path-from-shell-initialize
     :custom (exec-path-from-shell-arguments '("-l"))
     :init (exec-path-from-shell-initialize)))
 
