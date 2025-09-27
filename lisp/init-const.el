@@ -53,7 +53,6 @@ Native tree-sitter is introduced since 29.1."
 (defun childframe-workable-p ()
   "Whether childframe is workable."
   (and (>= emacs-major-version 26)
-       nil
        (not noninteractive)
        (not emacs-basic-display)
        (or (display-graphic-p)

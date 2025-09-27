@@ -36,33 +36,14 @@
 ;; Theme
 ;;(load-theme 'wombat t)
 (use-package doom-themes
-  :functions doom-themes-visual-bell-config
-  :custom
-  (doom-themes-enable-bold t)
-  (doom-themes-enable-italic t)
-  :init (load-theme 'doom-one t)
-  :config
-  ;; Enable flashing mode-line on errors
-  (doom-themes-visual-bell-config)
-
-  ;; WORKAROUND: Visual bell on 29+
-  ;; @see https://github.com/doomemacs/themes/issues/733
-  (with-no-warnings
-    (defun my-doom-themes-visual-bell-fn ()
-      "Blink the mode-line red briefly. Set `ring-bell-function' to this to use it."
-      (let ((buf (current-buffer))
-            (cookies (mapcar (lambda (face)
-                               (face-remap-add-relative face 'doom-themes-visual-bell))
-                             (if (facep 'mode-line-active)
-                                 '(mode-line-active solaire-mode-line-active-face)
-                               '(mode-line solaire-mode-line-face)))))
-        (force-mode-line-update)
-        (run-with-timer 0.15 nil
-                        (lambda ()
-                          (with-current-buffer buf
-                            (mapc #'face-remap-remove-relative cookies)
-                            (force-mode-line-update))))))
-    (advice-add #'doom-themes-visual-bell-fn :override #'my-doom-themes-visual-bell-fn)))
+        :functions doom-themes-visual-bell-config
+        :custom
+        (doom-themes-enable-bold t)
+        (doom-themes-enable-italic t)
+        :init (load-theme 'doom-one t)
+        :config
+        ;; Enable flashing mode-line on errors
+        (doom-themes-visual-bell-config))
 
 ;; Mode-line
 (use-package doom-modeline
@@ -116,8 +97,8 @@
 
 ;; Display dividers between windows
 (setq window-divider-default-places t
-      window-divider-default-bottom-width 1
-      window-divider-default-right-width 1)
+      window-divider-default-bottom-width 0
+      window-divider-default-right-width 0)
 (add-hook 'window-setup-hook #'window-divider-mode)
 
 (use-package time
@@ -127,28 +108,38 @@
               display-time-default-load-average nil)
   :hook (after-init . display-time-mode))
 
-;; Mouse & Smooth Scroll
+;; Scrolling
 ;; Scroll one line at a time (less "jumpy" than defaults)
-(when (display-graphic-p)
-  (setq mouse-wheel-scroll-amount '(1 ((shift) . hscroll))
-        mouse-wheel-scroll-amount-horizontal 1
-        mouse-wheel-progressive-speed nil))
-(setq scroll-step 1
+(setq hscroll-step 1
+      hscroll-margin 2
+      scroll-step 1
       scroll-margin 0
       scroll-conservatively 100000
+      scroll-preserve-screen-position t
       auto-window-vscroll nil
-      scroll-preserve-screen-position t)
+      ;; mouse
+      mouse-wheel-scroll-amount-horizontal 1
+      mouse-wheel-progressive-speed nil)
 
 ;; Smooth scrolling
-(use-package ultra-scroll
-  :when emacs/>=29p
-  :hook (after-init . ultra-scroll-mode))
+(when (fboundp 'pixel-scroll-precision-mode) ;; 29+
+  (use-package ultra-scroll
+    :functions (hl-todo-mode diff-hl-flydiff-mode)
+    :hook (after-init . ultra-scroll-mode)
+    :config
+    (add-hook 'ultra-scroll-hide-functions #'diff-hl-flydiff-mode)
+    (add-hook 'ultra-scroll-hide-functions #'hl-todo-mode)
+    (add-hook 'ultra-scroll-hide-functions #'jit-lock-mode)))
 
-;;(when (childframe-completion-workable-p)
-;;  ;; Display transient in child frame
-;;  (use-package transient-posframe
-;;    :diminish
-;;    :hook (after-init . transient-posframe-mode)))
+;; Use fixed pitch where it's sensible
+;;(use-package mixed-pitch :diminish)
+
+;; Transient
+(when (childframe-completion-workable-p)
+  ;; Display transient in child frame
+  (use-package transient-posframe
+    :diminish
+    :hook (after-init . transient-posframe-mode)))
 
 
 (provide 'init-ui)

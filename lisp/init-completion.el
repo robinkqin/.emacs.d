@@ -32,14 +32,14 @@
   :hook ((after-init . vertico-mode)
          (rfn-eshadow-update-overlay . vertico-directory-tidy)))
 
-;;(when (childframe-workable-p)
-;;  (use-package vertico-posframe
-;;    :hook (vertico-mode . vertico-posframe-mode)
-;;    :init (setq vertico-posframe-poshandler
-;;                #'posframe-poshandler-frame-bottom-center
-;;                vertico-posframe-parameters
-;;                '((left-fringe  . 8)
-;;                  (right-fringe . 8)))))
+(when (childframe-workable-p)
+  (use-package vertico-posframe
+    :hook (vertico-mode . vertico-posframe-mode)
+    :init (setq vertico-posframe-poshandler
+                #'posframe-poshandler-frame-bottom-center
+                vertico-posframe-parameters
+                '((left-fringe  . 8)
+                  (right-fringe . 8)))))
 
 (use-package marginalia
   :hook (after-init . marginalia-mode))
@@ -287,8 +287,8 @@ targets."
 
 ;; Auto completion
 (use-package corfu
-  :autoload corfu-quit consult-completion-in-region
-  :functions corfu-move-to-minibuffer
+  :autoload (corfu-quit consult-completion-in-region)
+  :functions (corfu-move-to-minibuffer)
   :custom
   (corfu-auto t)
   (corfu-auto-prefix 2)

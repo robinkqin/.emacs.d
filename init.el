@@ -11,7 +11,7 @@
 ;; refactor: eglot, color-rg, symbol-overlay
 ;; dict: fanyi, go-translate, immersive-translate
 
-;; tools: git, make, clangd, clang-format, ripgrep, fd, cmake,
+;; tools: git, make, clangd, clang-format, ripgrep, fd, cmake, xclip
 ;;        bear, marksman, fzf, shellcheck, translate-shell, aspell
 ;; pip: epc orjson sexpdata six setuptools paramiko rapidfuzz watchdog packaging
 ;;      requests compiledb cmake-language-server pyflakes autopep8

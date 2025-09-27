@@ -23,6 +23,21 @@
 (use-package eldoc
   :ensure nil
   :diminish
+  ;;:config
+  ;;(when (childframe-workable-p)
+  ;;  (use-package eldoc-box
+  ;;    :custom
+  ;;    (eldoc-box-lighter nil)
+  ;;    (eldoc-box-only-multi-line t)
+  ;;    (eldoc-box-clear-with-C-g t)
+  ;;    :custom-face
+  ;;    (eldoc-box-border ((t (:inherit posframe-border :background unspecified))))
+  ;;    (eldoc-box-body ((t (:inherit tooltip))))
+  ;;    :hook ((eglot-managed-mode . eldoc-box-hover-at-point-mode))
+  ;;    :config
+  ;;    ;; Prettify `eldoc-box' frame
+  ;;    (setf (alist-get 'left-fringe eldoc-box-frame-parameters) 8
+  ;;          (alist-get 'right-fringe eldoc-box-frame-parameters) 8)))
   :init
   (setq eldoc-echo-area-use-multiline-p nil))
 
@@ -40,19 +55,19 @@
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read
         xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
-;; Code styles
-(use-package editorconfig
-  :diminish
-  :hook (after-init . editorconfig-mode))
+;;;; Code styles
+;;(use-package editorconfig
+;;  :diminish
+;;  :hook (after-init . editorconfig-mode))
 
-;; Run commands quickly
-(use-package quickrun
-  :bind (("C-<f5>" . quickrun)
-         ("C-c X"  . quickrun)))
+;;;; Run commands quickly
+;;(use-package quickrun
+;;  :bind (("C-<f5>" . quickrun)
+;;         ("C-c X"  . quickrun)))
 
 ;; Browse devdocs.io documents using EWW
 (use-package devdocs
-  :autoload (devdocs--installed-docs devdocs--available-docs)
+  :autoload devdocs--available-docs
   :commands (devdocs-install devdocs-lookup)
   :bind (:map prog-mode-map
          ("M-<f1>" . devdocs-dwim)

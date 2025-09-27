@@ -160,17 +160,19 @@
 (use-package files
   :ensure nil
   :init
-  (setq auto-save-visited-interval 1
+  (setq auto-save-visited-interval 3
         save-silently t
         confirm-kill-processes nil
         confirm-nonexistent-file-or-buffer nil
         large-file-warning-threshold (* 64 1024 1024))
   :hook (after-init . auto-save-visited-mode))
 
-;;;; Child frame
-;;(when (childframe-workable-p)
-;;  (use-package posframe
-;;    :hook (after-load-theme . posframe-delete-all)))
+;; Child frame
+(when (childframe-workable-p)
+  (use-package posframe
+    :hook (after-load-theme . posframe-delete-all)))
+
+(standard-display-unicode-special-glyphs)
 
 (provide 'init-base)
 
