@@ -18,6 +18,7 @@
          ("C-c d G" . gt-translate-prompt)
          ("C-c d p" . gt-speak)
          ("C-c d s" . gt-setup)
+         ("C-c d d" . gt-delete-render-overlays)
          ("C-c d u" . gt-use-text-utility))
   :init
   (setq gt-langs '(en zh)
@@ -29,7 +30,7 @@
 
   ;;(setq gt-pop-posframe-forecolor (face-foreground 'tooltip nil t)
   ;;      gt-pop-posframe-backcolor (face-background 'tooltip nil t)
-  ;;      gt-pin-posframe-bdcolor (face-background 'posframe-border nil t))
+  ;;      gt-pin-posframe-bdcolor (face-background 'region nil t))
   :config
   (with-no-warnings
     (setq gt-preset-translators
@@ -49,23 +50,21 @@
                                           (gt-bing-engine :if 'not-word)
                                           ;;(gt-google-engine :if 'word)
                                           ))
-                         ;;:render  (list (gt-posframe-pop-render
-                         ;;                :if (lambda (translator)
-                         ;;                      (and (display-graphic-p)
-                         ;;                           (not (derived-mode-p 'Info-mode 'help-mode 'helpful-mode 'devdocs-mode))
-                         ;;                           (not (member (buffer-name) '("COMMIT_EDITMSG")))))
-                         ;;                :frame-params (list :accept-focus nil
-                         ;;                                    :width 70
-                         ;;                                    :height 15
-                         ;;                                    :left-fringe 16
-                         ;;                                    :right-fringe 16
-                         ;;                                    :border-width 1
-                         ;;                                    :border-color gt-pin-posframe-bdcolor))
-                         ;;               (gt-overlay-render :if 'read-only)
-                         ;;               (gt-insert-render :if (lambda (translator) (member (buffer-name) '("COMMIT_EDITMSG"))))
-                         ;;               (gt-buffer-render))
-                         :render (gt-buffer-render)
-                         ))
+                         :render  (list (gt-posframe-pop-render
+                                         :if (lambda (translator)
+                                               (and (display-graphic-p)
+                                                    (not (derived-mode-p 'Info-mode 'help-mode 'helpful-mode 'devdocs-mode))
+                                                    (not (member (buffer-name) '("COMMIT_EDITMSG")))))
+                                         :frame-params (list :accept-focus nil
+                                                             :width 70
+                                                             :height 15
+                                                             :left-fringe 16
+                                                             :right-fringe 16
+                                                             :border-width 1
+                                                             :border-color gt-pin-posframe-bdcolor))
+                                        (gt-overlay-render :if 'read-only)
+                                        (gt-insert-render :if (lambda (translator) (member (buffer-name) '("COMMIT_EDITMSG"))))
+                                        (gt-buffer-render))))
             (multi-dict . ,(gt-translator :taker (gt-taker :prompt t)
                                           :engines (list (gt-youdao-dict-engine)
                                                          ;;(gt-youdao-suggest-engine :if 'word)
@@ -107,7 +106,10 @@
   ;;:hook
   ;;(add-hook 'elfeed-show-mode-hook #'immersive-translate-setup)
   ;;(add-hook 'nov-pre-html-render-hook #'immersive-translate-setup)
-  )
+  :bind (("C-c d a" . immersive-translate-abort)
+         ("C-c d b" . immersive-translate-buffer)
+         ("C-c d p" . immersive-translate-paragraph)
+         ("C-c d c" . immersive-translate-clear)))
 
 
 ;;;; OSX dictionary

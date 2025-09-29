@@ -61,10 +61,10 @@
                 avy-background t
                 avy-style 'pre))
 
-;;;; Kill text between the point and the character CHAR
-;;(use-package avy-zap
-;;  :bind (("M-z" . avy-zap-to-char-dwim)
-;;         ("M-Z" . avy-zap-up-to-char-dwim)))
+;; Kill text between the point and the character CHAR
+(use-package avy-zap
+  :bind (("M-z" . avy-zap-to-char-dwim)
+         ("M-Z" . avy-zap-up-to-char-dwim)))
 
 ;; Quickly follow links
 (use-package ace-link

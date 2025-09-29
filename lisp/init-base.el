@@ -172,7 +172,8 @@
   (use-package posframe
     :hook (after-load-theme . posframe-delete-all)))
 
-(standard-display-unicode-special-glyphs)
+;;(when (featurep 'tty-child-frames)
+;;  (standard-display-unicode-special-glyphs))
 
 (provide 'init-base)
 

@@ -66,7 +66,7 @@ Native tree-sitter is introduced since 29.1."
 
 (defun icons-displayable-p ()
   "Return non-nil if icons are displayable."
-  (and nil
+  (and t
        (or (featurep 'nerd-icons)
            (require 'nerd-icons nil t))))
 

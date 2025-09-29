@@ -54,11 +54,11 @@
   (use-package diredfl
     :hook (dired-mode . diredfl-mode))
 
-  ;;;; Shows icons
-  ;;(use-package nerd-icons-dired
-  ;;  :diminish
-  ;;  :when (icons-displayable-p)
-  ;;  :hook (dired-mode . nerd-icons-dired-mode))
+  ;; Shows icons
+  (use-package nerd-icons-dired
+    :diminish
+    :when (icons-displayable-p)
+    :hook (dired-mode . nerd-icons-dired-mode))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)

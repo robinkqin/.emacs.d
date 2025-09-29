@@ -143,17 +143,17 @@ FACE defaults to inheriting from default and highlight."
 ;;  :hook ((prog-mode yaml-mode) . indent-bars-mode)
 ;;  :config (require 'indent-bars-ts))
 
-;;;; Colorize color names in buffers
-;;(use-package colorful-mode
-;;  :diminish
-;;  :hook (after-init . global-colorful-mode)
-;;  :init (setq colorful-use-prefix t)
-;;  :config (dolist (mode '(html-mode php-mode help-mode helpful-mode))
-;;            (add-to-list 'global-colorful-modes mode)))
-;;
-;;;; Highlight brackets according to their depth
-;;(use-package rainbow-delimiters
-;;  :hook (prog-mode . rainbow-delimiters-mode))
+;; Colorize color names in buffers
+(use-package colorful-mode
+  :diminish
+  :hook (after-init . global-colorful-mode)
+  :init (setq colorful-use-prefix t)
+  :config (dolist (mode '(html-mode php-mode help-mode helpful-mode))
+            (add-to-list 'global-colorful-modes mode)))
+
+;; Highlight brackets according to their depth
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; Highlight TODO and similar keywords in comments and strings
 (use-package hl-todo
@@ -252,53 +252,53 @@ FACE defaults to inheriting from default and highlight."
       (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
       (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))))
 
-;;;; Pulse current line
-;;(use-package pulse
-;;  :ensure nil
-;;  :custom-face
-;;  (pulse-highlight-start-face ((t (:inherit region :background unspecified))))
-;;  (pulse-highlight-face ((t (:inherit region :background unspecified :extend t))))
-;;  :hook (((dumb-jump-after-jump imenu-after-jump) . my-recenter-and-pulse)
-;;         ((bookmark-after-jump magit-diff-visit-file next-error) . my-recenter-and-pulse-line))
-;;  :init
-;;  (with-no-warnings
-;;    (defun my-pulse-momentary-line (&rest _)
-;;      "Pulse the current line."
-;;      (pulse-momentary-highlight-one-line (point)))
-;;
-;;    (defun my-pulse-momentary (&rest _)
-;;      "Pulse the region or the current line."
-;;      (if (fboundp 'xref-pulse-momentarily)
-;;          (xref-pulse-momentarily)
-;;        (my-pulse-momentary-line)))
-;;
-;;    (defun my-recenter-and-pulse(&rest _)
-;;      "Recenter and pulse the region or the current line."
-;;      (recenter)
-;;      (my-pulse-momentary))
-;;
-;;    (defun my-recenter-and-pulse-line (&rest _)
-;;      "Recenter and pulse the current line."
-;;      (recenter)
-;;      (my-pulse-momentary-line))
-;;
-;;    (dolist (cmd '(recenter-top-bottom
-;;                   other-window switch-to-buffer
-;;                   aw-select toggle-window-split
-;;                   windmove-do-window-select
-;;                   pager-page-down pager-page-up
-;;                   treemacs-select-window))
-;;      (advice-add cmd :after #'my-pulse-momentary-line))
-;;
-;;    (dolist (cmd '(pop-to-mark-command
-;;                   pop-global-mark
-;;                   goto-last-change))
-;;      (advice-add cmd :after #'my-recenter-and-pulse))))
+;; Pulse current line
+(use-package pulse
+  :ensure nil
+  :custom-face
+  (pulse-highlight-start-face ((t (:inherit region :background unspecified))))
+  (pulse-highlight-face ((t (:inherit region :background unspecified :extend t))))
+  :hook (((dumb-jump-after-jump imenu-after-jump) . my-recenter-and-pulse)
+         ((bookmark-after-jump magit-diff-visit-file next-error) . my-recenter-and-pulse-line))
+  :init
+  (with-no-warnings
+    (defun my-pulse-momentary-line (&rest _)
+      "Pulse the current line."
+      (pulse-momentary-highlight-one-line (point)))
 
-;;;; Pulse modified region
-;;(use-package goggles
-;;  :diminish
-;;  :hook ((prog-mode text-mode conf-mode) . goggles-mode))
+    (defun my-pulse-momentary (&rest _)
+      "Pulse the region or the current line."
+      (if (fboundp 'xref-pulse-momentarily)
+          (xref-pulse-momentarily)
+        (my-pulse-momentary-line)))
+
+    (defun my-recenter-and-pulse(&rest _)
+      "Recenter and pulse the region or the current line."
+      (recenter)
+      (my-pulse-momentary))
+
+    (defun my-recenter-and-pulse-line (&rest _)
+      "Recenter and pulse the current line."
+      (recenter)
+      (my-pulse-momentary-line))
+
+    (dolist (cmd '(recenter-top-bottom
+                   other-window switch-to-buffer
+                   aw-select toggle-window-split
+                   windmove-do-window-select
+                   pager-page-down pager-page-up
+                   treemacs-select-window))
+      (advice-add cmd :after #'my-pulse-momentary-line))
+
+    (dolist (cmd '(pop-to-mark-command
+                   pop-global-mark
+                   goto-last-change))
+      (advice-add cmd :after #'my-recenter-and-pulse))))
+
+;; Pulse modified region
+(use-package goggles
+  :diminish
+  :hook ((prog-mode text-mode conf-mode) . goggles-mode))
 
 (provide 'init-highlight)
 

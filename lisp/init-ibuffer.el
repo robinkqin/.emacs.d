@@ -12,11 +12,11 @@
   :bind ("C-x C-b" . ibuffer)
   :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold))))
 
-;;;; Display icons for buffers
-;;(use-package nerd-icons-ibuffer
-;;  :when (icons-displayable-p)
-;;  :hook (ibuffer-mode . nerd-icons-ibuffer-mode)
-;;  :init (setq nerd-icons-ibuffer-icon t))
+;; Display icons for buffers
+(use-package nerd-icons-ibuffer
+  :when (icons-displayable-p)
+  :hook (ibuffer-mode . nerd-icons-ibuffer-mode)
+  :init (setq nerd-icons-ibuffer-icon t))
 
 ;; Group ibuffer's list by project
 (use-package ibuffer-project
