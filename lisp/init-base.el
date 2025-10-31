@@ -5,7 +5,7 @@
 ;;; Code:
 
 ;; Compatibility
-(use-package compat :demand t)
+;;(use-package compat :demand t)
 
 (with-no-warnings
   ;; Key Modifiers
@@ -163,6 +163,7 @@
   (setq auto-save-visited-interval 3
         save-silently t
         confirm-kill-processes nil
+        confirm-kill-emacs 'y-or-n-p
         confirm-nonexistent-file-or-buffer nil
         large-file-warning-threshold (* 64 1024 1024))
   :hook (after-init . auto-save-visited-mode))

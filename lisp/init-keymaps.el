@@ -40,6 +40,8 @@
 (global-set-key (kbd "M-s ]") 'diff-hl-next-hunk) ;FIXME: for windows
 (global-set-key (kbd "M-s [") 'diff-hl-previous-hunk)
 
+(global-set-key (kbd "C-x _") 'split-window-vertically-instead)
+(global-set-key (kbd "C-x |") 'split-window-horizontally-instead)
 
 (provide 'init-keymaps)
 

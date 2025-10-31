@@ -143,13 +143,13 @@ FACE defaults to inheriting from default and highlight."
 ;;  :hook ((prog-mode yaml-mode) . indent-bars-mode)
 ;;  :config (require 'indent-bars-ts))
 
-;; Colorize color names in buffers
-(use-package colorful-mode
-  :diminish
-  :hook (after-init . global-colorful-mode)
-  :init (setq colorful-use-prefix t)
-  :config (dolist (mode '(html-mode php-mode help-mode helpful-mode))
-            (add-to-list 'global-colorful-modes mode)))
+;;;; Colorize color names in buffers
+;;(use-package colorful-mode
+;;  :diminish
+;;  :hook (after-init . global-colorful-mode)
+;;  :init (setq colorful-use-prefix t)
+;;  :config (dolist (mode '(html-mode php-mode help-mode helpful-mode))
+;;            (add-to-list 'global-colorful-modes mode)))
 
 ;; Highlight brackets according to their depth
 (use-package rainbow-delimiters

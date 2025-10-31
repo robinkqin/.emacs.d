@@ -60,7 +60,7 @@
          ("C-c M-x" . consult-mode-command)
          ("C-c h"   . consult-history)
          ("C-c k"   . consult-kmacro)
-         ("C-c m"   . consult-man)
+         ;;("C-c m"   . consult-man)
          ("C-c i"   . consult-info)
          ("C-c r"   . consult-ripgrep)
          ("C-c T"   . consult-theme)
