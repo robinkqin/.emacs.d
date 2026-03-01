@@ -66,41 +66,10 @@
   :bind (("M-z" . avy-zap-to-char-dwim)
          ("M-Z" . avy-zap-up-to-char-dwim)))
 
-;; Quickly follow links
-(use-package ace-link
-  :bind ("M-o" . ace-link-addr)
-  :hook (after-init . ace-link-setup-default)
-  :config
-  (with-no-warnings
-    (bind-keys
-     :map package-menu-mode-map
-     ("o" . ace-link-help)
-     :map process-menu-mode-map
-     ("o" . ace-link-help))
-
-    (with-eval-after-load 'org
-      (bind-key "M-o" #'ace-link-org org-mode-map))
-
-    (with-eval-after-load 'gnus
-      (bind-keys
-       :map gnus-summary-mode-map
-       ("M-o" . ace-link-gnus)
-       :map gnus-article-mode-map
-       ("M-o" . ace-link-gnus)))
-
-    (with-eval-after-load 'ert
-      (bind-key "o" #'ace-link-help ert-results-mode-map))
-
-    (with-eval-after-load 'elfeed
-      (bind-key "o" #'ace-link elfeed-show-mode-map))))
-
 ;; Jump to Chinese characters
 (use-package ace-pinyin
   :diminish
   :hook (after-init . ace-pinyin-global-mode))
-
-;; Minor mode to aggressively keep your code always indented
-;;(use-package aggressive-indent)
 
 ;; Show number of matches in mode-line while searching
 (use-package anzu
@@ -135,7 +104,6 @@
 
 ;; Automatic parenthesis pairing
 (use-package elec-pair
-  :ensure nil
   :hook (after-init . electric-pair-mode)
   :init (setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
 
@@ -189,11 +157,12 @@
   :ensure nil
   :diminish
   :if (executable-find "aspell")
-  :hook (((text-mode outline-mode) . flyspell-mode)
-         (prog-mode . flyspell-prog-mode)
-         (flyspell-mode . (lambda ()
-                            (dolist (key '("C-;" "C-," "C-."))
-                              (unbind-key key flyspell-mode-map)))))
+  :bind (:map flyspell-mode-map
+         ("C-;" . nil)
+         ("C-," . nil)
+         ("C-." . nil))
+  :hook ((text-mode outline-mode)
+         (prog-mode . flyspell-prog-mode))
   :init (setq flyspell-issue-message-flag nil
               flyspell-issue-welcome-flag nil
               ispell-program-name "aspell"
@@ -226,8 +195,7 @@
 ;;(use-package subword
 ;;  :ensure nil
 ;;  :diminish
-;;  :hook ((prog-mode . subword-mode)
-;;         (minibuffer-setup . subword-mode)))
+;;  :hook (prog-mode minibuffer-setup))
 
 (use-package hideshow
   :ensure nil

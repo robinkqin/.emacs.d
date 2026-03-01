@@ -25,7 +25,7 @@
   (package-initialize))
 
 ;; More options
-(setq package-install-upgrade-built-in t)
+;;(setq package-install-upgrade-built-in t)
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)
@@ -49,10 +49,11 @@
 ;;;; Update packages
 ;;(unless (fboundp 'package-upgrade-all)
 ;;  (use-package auto-package-update
-;;    :init
-;;    (setq auto-package-update-delete-old-versions t
-;;          auto-package-update-hide-results t)
-;;    (defalias 'package-upgrade-all #'auto-package-update-now)))
+;;    :autoload auto-package-update-now
+;;    :custom
+;;    (auto-package-update-delete-old-versions t)
+;;    (auto-package-update-hide-results t)
+;;    :init (defalias 'package-upgrade-all #'auto-package-update-now)))
 
 (provide 'init-package)
 

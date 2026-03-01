@@ -1,4 +1,4 @@
-;;; init.el --- Emacs Configuration.	-*- lexical-binding: t no-byte-compile: t -*-
+;;; init.el --- Emacs Configs.	-*- lexical-binding: t no-byte-compile: t -*-
 
 ;;; Commentary:
 
@@ -41,9 +41,12 @@
 
 ;; Add "lisp" and "site-lisp" to the beginning of `load-path`
 (defun update-load-path (&rest _)
-  "Update `load-path'."
+  "Update the `load-path` to prioritize personal configurations."
   (dolist (dir '("site-lisp" "lisp"))
     (push (expand-file-name dir user-emacs-directory) load-path)))
+
+;; Initialize load paths explicitly
+(update-load-path)
 
 ;; Add subdirectories inside "site-lisp" to `load-path`
 (defun add-subdirs-to-load-path (&rest _)
@@ -54,11 +57,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
     (normal-top-level-add-subdirs-to-load-path)))
 
 ;; Ensure these functions are called after `package-initialize`
-(advice-add #'package-initialize :after #'update-load-path)
 (advice-add #'package-initialize :after #'add-subdirs-to-load-path)
-
-;; Initialize load paths explicitly
-(update-load-path)
 
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -104,9 +103,6 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-program)
 (require 'init-c)
 
-;;(require 'init-matchit)
-;;(require 'init-citre)
-
 (require 'init-elisp)
 (require 'init-python)
 
@@ -117,11 +113,11 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 
 (require 'init-ai)
 
-(require 'init-functions)
+(require 'init-funcs)
 (require 'init-keymaps)
 
 ;; Load `custom-file'
-(setq custom-file (locate-user-emacs-file "custom.el"))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
 

@@ -14,15 +14,20 @@
                                  'ron-mode)
                           (eglot-ensure))))
          ((markdown-mode yaml-mode yaml-ts-mode) . eglot-ensure))
-  :init
-  (setq eglot-autoshutdown t
-        eglot-events-buffer-size 0
-        eglot-send-changes-idle-time 0.5))
+  :init (setq eglot-autoshutdown t
+              eglot-events-buffer-config '(:size 0 :format 'short)
+              eglot-send-changes-idle-time 0.5))
+
+;;(setq eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider))
+;;;;(setq eglot-ignored-server-capabilities
+;;;;      '(:documentOnTypeFormattingProvider
+;;;;        :documentFormattingProvider
+;;;;        :documentRangeFormattingProvider))
 
 (use-package consult-eglot
   :after consult eglot
   :bind (:map eglot-mode-map
-              ("C-M-." . consult-eglot-symbols)))
+         ("C-M-." . consult-eglot-symbols)))
 
 (provide 'init-eglot)
 

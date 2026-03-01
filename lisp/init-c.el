@@ -9,37 +9,27 @@
 
 (declare-function my/treesit-available-p "init-const")
 
-;;(use-package cc-mode
-;;  :ensure nil
-;;  :bind (:map c-mode-base-map
-;;			  ("C-c c" . compile))
-;;  :init
-;;  (setq-default indent-tabs-mode nil
-;;                tab-width 4
-;;                c-basic-offset 4
-;;                c-default-style "linux"))
-;;
-;;(defun my/c-hook ()
-;;  (setq indent-tabs-mode nil))
-;;(add-hook 'c-mode-hook #'my/c-hook)
-;;(add-hook 'c++-mode-hook #'my/c-hook)
-
 ;; C/C++ Mode
 (use-package cc-mode
   :ensure nil
-  ;;:bind (:map c-mode-base-map
-  ;;       ("<f12>" . compile))
   :init (setq-default c-basic-offset 4))
 
 (when (my/treesit-available-p)
   (use-package c-ts-mode
-    :init (setq c-ts-mode-indent-offset 4)))
+    :functions my/treesit-available-p
+    :init
+    (setq c-ts-mode-indent-offset 4)
 
-;;(add-to-list 'auto-mode-alist '("\.cu$" . c++-ts-mode))
-;;(add-to-list 'auto-mode-alist '("\.cuh$" . c++-ts-mode))
+    (when (boundp 'major-mode-remap-alist)
+      (add-to-list 'major-mode-remap-alist '(c-mode . c-ts-mode))
+      (add-to-list 'major-mode-remap-alist '(c++-mode . c++-ts-mode))
+      (add-to-list 'major-mode-remap-alist
+                   '(c-or-c++-mode . c-or-c++-ts-mode)))))
 
-(add-to-list 'auto-mode-alist '("\.mu$" . c++-ts-mode))
-(add-to-list 'auto-mode-alist '("\.muh$" . c++-ts-mode))
+;;(defun my/c-hook ()
+;;  (setq indent-tabs-mode nil))
+;;(add-hook 'c-mode-hook #'my/c-hook)
+;;(add-hook 'c++-mode-hook #'my/c-hook)
 
 (provide 'init-c)
 

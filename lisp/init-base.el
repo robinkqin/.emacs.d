@@ -38,10 +38,9 @@
 (use-package gcmh
   :diminish
   :hook (emacs-startup . gcmh-mode)
-  :init
-  (setq gcmh-idle-delay 'auto
+  :init (setq gcmh-idle-delay 'auto
         gcmh-auto-idle-delay-factor 10
-        gcmh-high-cons-threshold #x1000000)) ; 16MB
+        gcmh-high-cons-threshold #x4000000)) ; 64MB
 
 ;; Environment
 (when (or (memq window-system '(mac ns x)) (daemonp))
@@ -55,8 +54,7 @@
 ;;  :hook (after-init . server-mode))
 
 (use-package saveplace
-  :init
-  (setq save-place-forget-unreadable-files t)
+  :init (setq save-place-forget-unreadable-files t)
   :hook (after-init . save-place-mode))
 
 ;; History
@@ -87,6 +85,7 @@
 
 ;; Misc.
 (use-package simple
+  :diminish visual-line-mode
   :ensure nil
   :hook ((after-init . size-indication-mode)
          (text-mode . visual-line-mode)
@@ -163,15 +162,21 @@
   (setq auto-save-visited-interval 3
         save-silently t
         confirm-kill-processes nil
-        confirm-kill-emacs 'y-or-n-p
+        ;;confirm-kill-emacs 'y-or-n-p
         confirm-nonexistent-file-or-buffer nil
         large-file-warning-threshold (* 64 1024 1024))
   :hook (after-init . auto-save-visited-mode))
 
 ;; Child frame
-(when (childframe-workable-p)
-  (use-package posframe
-    :hook (after-load-theme . posframe-delete-all)))
+(use-package posframe
+  :hook (after-load-theme . posframe-delete-all)
+  :init
+  (defface posframe-border
+    `((t (:inherit region)))
+    "Face used by the `posframe' border."
+    :group 'posframe)
+  (defvar posframe-border-width 2
+    "Default posframe border width."))
 
 ;;(when (featurep 'tty-child-frames)
 ;;  (standard-display-unicode-special-glyphs))

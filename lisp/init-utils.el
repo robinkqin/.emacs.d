@@ -10,7 +10,6 @@
 ;; Display available keybindings in popup
 (use-package which-key
   :diminish
-  :functions childframe-completion-workable-p
   :bind ("C-h M-m" . which-key-show-major-mode)
   :hook (after-init . which-key-mode)
   :init (setq which-key-max-description-length 30
@@ -26,7 +25,9 @@
   (which-key-add-key-based-replacements "C-c d" "dict")
   (which-key-add-key-based-replacements "C-c l" "link-hint")
   (which-key-add-key-based-replacements "C-c n" "org-roam")
+  (which-key-add-key-based-replacements "C-c o" "org")
   (which-key-add-key-based-replacements "C-c t" "hl-todo")
+  (which-key-add-key-based-replacements "C-c C-a" "activities")
   (which-key-add-key-based-replacements "C-c C-z" "browse")
 
   (which-key-add-key-based-replacements "C-x 8" "unicode")
@@ -40,10 +41,12 @@
   (which-key-add-key-based-replacements "C-x t" "tab & treemacs")
   (which-key-add-key-based-replacements "C-x w" "window & highlight")
   (which-key-add-key-based-replacements "C-x w ^" "window")
-  (which-key-add-key-based-replacements "C-x x" "buffer")
+
   (which-key-add-key-based-replacements "C-x C-a" "edebug")
   (which-key-add-key-based-replacements "C-x RET" "coding-system")
   (which-key-add-key-based-replacements "C-x X" "edebug")
+  (which-key-add-key-based-replacements "C-x v b" "vc-branch")
+  (which-key-add-key-based-replacements "C-x v M" "vc-mergebase")
 
   (which-key-add-major-mode-key-based-replacements 'org-mode
     "C-c \"" "org-plot")
@@ -52,8 +55,6 @@
   (which-key-add-major-mode-key-based-replacements 'org-mode
     "C-c C-x" "org-misc")
 
-  (which-key-add-major-mode-key-based-replacements 'emacs-lisp-mode
-    "C-c ," "overseer")
   (which-key-add-major-mode-key-based-replacements 'python-mode
     "C-c C-t" "python-skeleton")
 
@@ -77,21 +78,20 @@
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
     "C-c C-t" "markdown-header")
   (which-key-add-major-mode-key-based-replacements 'gfm-mode
-    "C-c C-x" "markdown-toggle")
+    "C-c C-x" "markdown-toggle"))
 
-  (when (childframe-completion-workable-p)
-    (use-package which-key-posframe
-      :diminish
-      :autoload which-key-posframe-mode
-      :custom-face
-      (which-key-posframe ((t (:inherit tooltip))))
-      (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
-      :init
-      (setq which-key-posframe-border-width 2
-            which-key-posframe-poshandler #'posframe-poshandler-frame-bottom-center
-            which-key-posframe-parameters '((left-fringe . 8)
-                                            (right-fringe . 8)))
-      (which-key-posframe-mode 1))))
+(use-package which-key-posframe
+  :diminish
+  :functions childframe-completion-workable-p
+  :commands which-key-posframe-mode
+  :custom-face
+  (which-key-posframe ((t (:inherit tooltip))))
+  (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
+  :init
+  (setq which-key-posframe-border-width 2
+        which-key-posframe-poshandler #'posframe-poshandler-frame-bottom-center
+        which-key-posframe-parameters '((left-fringe . 8)
+                                        (right-fringe . 8))))
 
 ;;;; Persistent the scratch buffer
 ;;(use-package persistent-scratch
@@ -100,7 +100,8 @@
 ;;         ([remap kill-buffer] . (lambda (&rest _)
 ;;                                  (interactive)
 ;;                                  (user-error "Scratch buffer cannot be killed")))
-;;         ([remap revert-buffer] . persistent-scratch-restore))
+;;         ([remap revert-buffer] . persistent-scratch-restore)
+;;         ([remap revert-buffer-quick] . persistent-scratch-restore))
 ;;  :hook ((after-init . persistent-scratch-autosave-mode)
 ;;         (lisp-interaction-mode . persistent-scratch-mode))
 ;;  :init (setq persistent-scratch-backup-file-name-format "%Y-%m-%d"
@@ -124,9 +125,8 @@
 
 ;; Writable `grep' buffer
 (use-package wgrep
-  :init
-  (setq wgrep-auto-save-buffer t
-        wgrep-change-readonly-file t))
+  :init (setq wgrep-auto-save-buffer t
+              wgrep-change-readonly-file t))
 
 ;; Fast search tool `ripgrep'
 (use-package rg
@@ -177,43 +177,9 @@
                 ("Wikipedia" .
                  [simple-query "wikipedia.org" "wikipedia.org/wiki/" ""]))))
 
-;; A suite of opinionated Transient UIs
-(when emacs/>=29p
-  (use-package casual-suite
-    :bind ((:map global-map
-            ("C-'" . casual-avy-tmenu)
-            ("C-o" . casual-editkit-main-tmenu))
-           (:map bookmark-bmenu-mode-map
-            ("C-o" . casual-bookmarks-tmenu))
-           (:map calc-mode-map
-            ("C-o" . casual-calc-tmenu))
-           (:map dired-mode-map
-            ("C-o" . casual-dired-tmenu))
-           (:map isearch-mode-map
-            ("C-o" . casual-isearch-tmenu))
-           (:map Info-mode-map
-            ("C-o" . casual-info-tmenu)))
-    :init
-    (with-no-warnings
-      (with-eval-after-load 'ibuffer
-        (bind-keys :map ibuffer-mode-map
-          ("C-o" . casual-ibuffer-tmenu)
-          ("F" . casual-ibuffer-filter-tmenu)
-          ("s" . casual-ibuffer-sortby-tmenu)))
+;;(use-package file-info
+;;  :bind ("C-c c i" . file-info-show))
 
-      (with-eval-after-load 're-builder
-        (bind-keys :map reb-mode-map
-          ("C-o" . casual-re-builder-tmenu))
-        (bind-keys :map reb-lisp-mode-map
-          ("C-o" . casual-re-builder-tmenu)))
-
-      (with-eval-after-load 'symbol-overlay
-        (bind-keys :map symbol-overlay-map
-          ("C-o" . casual-symbol-overlay-tmenu)))
-
-      (with-eval-after-load 'org-agenda
-        (bind-keys :map org-agenda-mode-map
-          ("C-o" . casual-agenda-tmenu))))))
 ;;(use-package keyfreq
 ;;  :init
 ;;  (keyfreq-mode)

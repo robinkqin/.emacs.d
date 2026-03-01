@@ -4,38 +4,33 @@
 
 ;;; Code:
 
-;;(use-package flymake
-;;  :ensure nil
-;;  :hook (prog-mode . flymake-mode)
-;;  :bind (("M-n" . #'flymake-goto-next-error)
-;;         ("M-p" . #'flymake-goto-prev-error)))
-
 (use-package flymake
   :diminish
-  :functions my-elisp-flymake-byte-compile
+  :functions my/elisp-flymake-byte-compile
   :bind ("C-c f" . flymake-show-buffer-diagnostics)
-  :hook (prog-mode . flymake-mode)
-  :init (setq flymake-no-changes-timeout nil
-              flymake-fringe-indicator-position 'right-fringe
-              flymake-margin-indicator-position 'right-margin)
+  :hook prog-mode
+  :custom
+  (flymake-no-changes-timeout nil)
+  (flymake-fringe-indicator-position 'right-fringe)
+  (flymake-margin-indicator-position 'right-margin)
   :config
   ;; Check elisp with `load-path'
-  (defun my-elisp-flymake-byte-compile (fn &rest args)
+  (defun my/elisp-flymake-byte-compile (fn &rest args)
     "Wrapper for `elisp-flymake-byte-compile'."
     (let ((elisp-flymake-byte-compile-load-path
            (append elisp-flymake-byte-compile-load-path load-path)))
       (apply fn args)))
-  (advice-add 'elisp-flymake-byte-compile :around #'my-elisp-flymake-byte-compile))
+  (advice-add 'elisp-flymake-byte-compile :around #'my/elisp-flymake-byte-compile))
 
-(when (childframe-workable-p)
-  (use-package flymake-popon
-    :diminish
-    :custom-face
-    (flymake-popon ((t :inherit default :height 0.85)))
-    ;;(flymake-popon-posframe-border ((t :foreground ,(face-background 'posframe-border nil t))))
-    (flymake-popon-posframe-border ((t :foreground ,(face-background 'region))))
-    :hook (flymake-mode . flymake-popon-mode)
-    :init (setq flymake-popon-width 80)))
+;; Display Flymake errors with overlays
+(use-package flyover
+  :diminish
+  :custom
+  (flyover-checkers '(flymake))
+  (flyover-background-lightness 60)
+  (flyover-icon-background-tint-percent 50)
+  (flyover-display-mode 'hide-on-same-line)
+  :hook flymake-mode)
 
 (provide 'init-check)
 

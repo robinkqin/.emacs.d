@@ -33,6 +33,7 @@
     (use-package saveplace-pdf-view
       :when (ignore-errors (pdf-info-check-epdfinfo) t)
       :autoload (saveplace-pdf-view-find-file-advice saveplace-pdf-view-to-alist-advice)
+      :functions pdf-info-check-epdfinfo
       :init
       (advice-add 'save-place-find-file-hook :around #'saveplace-pdf-view-find-file-advice)
       (advice-add 'save-place-to-alist :around #'saveplace-pdf-view-to-alist-advice))))
@@ -40,9 +41,9 @@
 ;; Epub reader
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode)
-  :hook (nov-mode . my-nov-setup)
+  :hook (nov-mode . my/nov-setup))
   :init
-  (defun my-nov-setup ()
+  (defun my/nov-setup ()
     "Setup `nov-mode' for better reading experience."
     (visual-line-mode 1)
     (face-remap-add-relative 'variable-pitch :family "Times New Roman" :height 1.5))
@@ -50,14 +51,14 @@
   (with-no-warnings
     ;; WORKAROUND: errors while opening `nov' files with Unicode characters
     ;; @see https://github.com/wasamasa/nov.el/issues/63
-    (defun my-nov-content-unique-identifier (content)
+    (defun my/nov-content-unique-identifier (content)
       "Return the the unique identifier for CONTENT."
       (let* ((name (nov-content-unique-identifier-name content))
              (selector (format "package>metadata>identifier[id='%s']"
                                (regexp-quote name)))
              (id (car (esxml-node-children (esxml-query selector content)))))
         (and id (intern id))))
-    (advice-add #'nov-content-unique-identifier :override #'my-nov-content-unique-identifier))
+    (advice-add #'nov-content-unique-identifier :override #'my/nov-content-unique-identifier))
 
   ;; Fix encoding issue on Windows
   (when sys/win32p

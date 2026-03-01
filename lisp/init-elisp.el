@@ -11,10 +11,16 @@
 (use-package elisp-mode
   :ensure nil
   :config
+  ;; Syntax highlighting of known Elisp symbols
+  (if (boundp 'elisp-fontify-semantically)
+      (setq elisp-fontify-semantically t)
+    (use-package highlight-defined
+      :hook (emacs-lisp-mode inferior-emacs-lisp-mode)))
+
   (with-no-warnings
     ;; Align indent keywords
     ;; @see https://emacs.stackexchange.com/questions/10230/how-to-indent-keywords-aligned
-    (defun my-lisp-indent-function (indent-point state)
+    (defun my/lisp-indent-function (indent-point state)
       "This function is the normal value of the variable `lisp-indent-function'.
 The function `calculate-lisp-indent' calls this to determine
 if the arguments of a Lisp function call should be indented specially.
@@ -89,12 +95,24 @@ Lisp function does not specify a special indentation."
                                          indent-point normal-indent))
                   (method
                    (funcall method indent-point state))))))))
-    (add-hook 'emacs-lisp-mode-hook
-              (lambda () (setq-local lisp-indent-function #'my-lisp-indent-function)))
 
+    (setq lisp-indent-function #'my/lisp-indent-function)))
+
+;; Interactive macro expander
+(use-package macrostep
+  :bind (:map emacs-lisp-mode-map
+         ("C-c e" . macrostep-expand)
+         :map lisp-interaction-mode-map
+         ("C-c e" . macrostep-expand)))
+
+(use-package help-mode
+  :ensure nil
+  :hook (help-mode . cursor-sensor-mode)
+  :bind (:map help-mode-map
+         ("r" . remove-hook-at-point))
+  :config
+  (with-no-warnings
     ;; Add remove buttons for advices
-    (add-hook 'help-mode-hook 'cursor-sensor-mode)
-
     (defun function-advices (function)
       "Return FUNCTION's advices."
       (let ((flist (indirect-function function)) advices)
@@ -102,6 +120,12 @@ Lisp function does not specify a special indentation."
           (setq advices `(,@advices ,(advice--car flist)))
           (setq flist (advice--cdr flist)))
         advices))
+
+    (defun help--update ()
+      "Update the help buffer."
+      (if (eq major-mode 'helpful-mode)
+          (helpful-update)
+        (revert-buffer nil t)))
 
     (defun add-remove-advice-button (advice function)
       (when (and (functionp advice) (functionp function))
@@ -117,9 +141,7 @@ Lisp function does not specify a special indentation."
                      (when (yes-or-no-p msg)
                        (message "%s from function `%s'" msg function)
                        (advice-remove function advice)
-                       (if (eq major-mode 'helpful-mode)
-                           (helpful-update)
-                         (revert-buffer nil t))))
+                       (help--update)))
            'follow-link t))))
 
     (defun add-button-to-remove-advice (buffer-or-name function)
@@ -154,8 +176,8 @@ Lisp function does not specify a special indentation."
                (func (when (and
                             (or (re-search-forward (format "^Value:?[\s|\n]") nil t)
                                 (goto-char orig-point))
-                            (sexp-at-point))
-                       (end-of-sexp)
+                            (thing-at-point 'sexp))
+                       (thing-at-point--end-of-sexp)
                        (backward-char 1)
                        (catch 'break
                          (while t
@@ -164,26 +186,10 @@ Lisp function does not specify a special indentation."
                              (scan-error (throw 'break nil)))
                            (let ((bounds (bounds-of-thing-at-point 'sexp)))
                              (when (<= (car bounds) orig-point (cdr bounds))
-                               (throw 'break (sexp-at-point)))))))))
+                               (throw 'break (thing-at-point 'sexp)))))))))
             (when (yes-or-no-p (format "Remove %s from %s? " func hook))
-              (remove-hook hook func)
-              (if (eq major-mode 'helpful-mode)
-                  (helpful-update)
-                (revert-buffer nil t)))))))
-    (bind-key "r" #'remove-hook-at-point help-mode-map)))
-
-;; Syntax highlighting of known Elisp symbols
-(if (boundp 'elisp-fontify-semantically)
-    (setq elisp-fontify-semantically t)
-  (use-package highlight-defined
-    :hook ((emacs-lisp-mode inferior-emacs-lisp-mode) . highlight-defined-mode)))
-
-;; Interactive macro expander
-(use-package macrostep
-  :bind (:map emacs-lisp-mode-map
-         ("C-c e" . macrostep-expand)
-         :map lisp-interaction-mode-map
-         ("C-c e" . macrostep-expand)))
+              (remove-hook hook (intern func))
+              (help--update))))))))
 
 ;;;; FIXME: slow down helper
 ;;;; A better *Help* buffer

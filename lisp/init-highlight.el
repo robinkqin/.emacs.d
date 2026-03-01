@@ -24,10 +24,11 @@
                      (((class color) (background dark))
                       (:box (:line-width (-1 . -1) :color "gray56")))))
   :hook (after-init . show-paren-mode)
-  :init (setq show-paren-when-point-inside-paren t
-              show-paren-when-point-in-periphery t)
+  :custom
+  (show-paren-when-point-inside-paren t)
+  (show-paren-when-point-in-periphery t)
   :config
-  (if emacs/>=29p
+  (if (boundp 'show-paren-context-when-offscreen)
       (setq blink-matching-paren-highlight-offscreen t
             show-paren-context-when-offscreen
             (if (childframe-workable-p) 'child-frame 'overlay))
@@ -79,6 +80,7 @@ FACE defaults to inheriting from default and highlight."
 ;; Highlight symbols
 (use-package symbol-overlay
   :diminish
+  :functions (easy-kill easy-kill-destroy-candidate)
   :custom-face
   (symbol-overlay-default-face ((t (:inherit region :background unspecified :foreground unspecified))))
   (symbol-overlay-face-1 ((t (:inherit nerd-icons-blue :background unspecified :foreground unspecified :inverse-video t))))
@@ -89,47 +91,46 @@ FACE defaults to inheriting from default and highlight."
   (symbol-overlay-face-6 ((t (:inherit nerd-icons-orange :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-7 ((t (:inherit nerd-icons-green :background unspecified :foreground unspecified :inverse-video t))))
   (symbol-overlay-face-8 ((t (:inherit nerd-icons-cyan :background unspecified :foreground unspecified :inverse-video t))))
-  :bind (("M-i" . symbol-overlay-put)
-         ("M-n" . symbol-overlay-jump-next)
-         ("M-p" . symbol-overlay-jump-prev)
-         ("M-N" . symbol-overlay-switch-forward)
-         ("M-P" . symbol-overlay-switch-backward)
-         ("M-C" . symbol-overlay-remove-all)
+  :bind (("M-i"  . symbol-overlay-put)
+         ("M-n"  . symbol-overlay-jump-next)
+         ("M-p"  . symbol-overlay-jump-prev)
+         ("M-N"  . symbol-overlay-switch-forward)
+         ("M-P"  . symbol-overlay-switch-backward)
+         ("M-C"  . symbol-overlay-remove-all)
          ([M-f2] . symbol-overlay-mode)
          ([M-f3] . symbol-overlay-put)
          ([M-f4] . symbol-overlay-remove-all))
   :bind-keymap ("M-s s"  . symbol-overlay-map)
-  :hook (((prog-mode yaml-mode yaml-ts-mode) . symbol-overlay-mode)
+  :hook ((prog-mode yaml-mode yaml-ts-mode)
          (iedit-mode     . turn-off-symbol-overlay)
          (iedit-mode-end . turn-on-symbol-overlay))
-  :init (setq symbol-overlay-idle-time 0.3)
+  :custom (symbol-overlay-idle-time 0.3)
   :config
-  (with-no-warnings
-    ;; Disable symbol highlighting while selecting
-    (defun turn-off-symbol-overlay (&rest _)
-      "Turn off symbol highlighting."
-      (interactive)
-      (symbol-overlay-mode -1))
+  ;; Disable symbol highlighting while selecting
+  (defun turn-off-symbol-overlay (&rest _)
+    "Turn off symbol highlighting."
+    (interactive)
+    (symbol-overlay-mode -1))
 
-    (defun turn-on-symbol-overlay (&rest _)
-      "Turn on symbol highlighting."
-      (interactive)
-      (when (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
-        (symbol-overlay-mode 1)))
+  (defun turn-on-symbol-overlay (&rest _)
+    "Turn on symbol highlighting."
+    (interactive)
+    (when (derived-mode-p 'prog-mode 'yaml-mode 'yaml-ts-mode)
+      (symbol-overlay-mode 1)))
 
-    (advice-add #'activate-mark :after #'turn-off-symbol-overlay)
-    (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)
-    (advice-add #'easy-kill :after #'turn-off-symbol-overlay)
-    (advice-add #'easy-kill-destroy-candidate :after #'turn-on-symbol-overlay)))
+  (advice-add #'activate-mark :after #'turn-off-symbol-overlay)
+  (advice-add #'deactivate-mark :after #'turn-on-symbol-overlay)
+  (advice-add #'easy-kill :after #'turn-off-symbol-overlay)
+  (advice-add #'easy-kill-destroy-candidate :after #'turn-on-symbol-overlay))
 ;;(global-set-key (kbd "M-s m") symbol-overlay-map)
 
-;;;; Mark occurrences of current region (selection)
-;;(use-package region-occurrences-highlighter
-;;  :diminish
-;;  :bind (:map region-occurrences-highlighter-nav-mode-map
-;;         ("M-n" . region-occurrences-highlighter-next)
-;;         ("M-p" . region-occurrences-highlighter-prev))
-;;  :hook (after-init . global-region-occurrences-highlighter-mode))
+;; Mark occurrences of current region (selection)
+(use-package region-occurrences-highlighter
+  :diminish
+  :bind (:map region-occurrences-highlighter-nav-mode-map
+         ("M-n" . region-occurrences-highlighter-next)
+         ("M-p" . region-occurrences-highlighter-prev))
+  :hook (after-init . global-region-occurrences-highlighter-mode))
 
 ;;;; Highlight indentions
 ;;(use-package indent-bars
@@ -186,10 +187,8 @@ FACE defaults to inheriting from default and highlight."
 
   ;; Integrate into magit
   (with-eval-after-load 'magit
-    (add-hook 'magit-log-wash-summary-hook
-              #'hl-todo-search-and-highlight t)
-    (add-hook 'magit-revision-wash-message-hook
-              #'hl-todo-search-and-highlight t))
+    (add-hook 'magit-log-wash-summary-hook #'hl-todo-search-and-highlight t)
+    (add-hook 'magit-revision-wash-message-hook #'hl-todo-search-and-highlight t))
 
   (defun hl-todo-rg (regexp &optional files dir)
     "Use `rg' to find all TODO or similar keywords."
@@ -197,7 +196,7 @@ FACE defaults to inheriting from default and highlight."
      (progn
        (unless (require 'rg nil t)
          (error "`rg' is not installed"))
-       (let ((regexp (replace-regexp-in-string "\\\\[<>]*" "" (hl-todo--regexp))))
+       (let ((regexp (replace-regexp-in-string "\\\\[_<>]*" "" (hl-todo--regexp))))
          (list regexp
                (rg-read-files)
                (read-directory-name "Base directory: " nil default-directory t)))))
@@ -208,12 +207,12 @@ FACE defaults to inheriting from default and highlight."
     (interactive)
     (unless (require 'rg nil t)
       (error "`rg' is not installed"))
-    (rg-project (replace-regexp-in-string "\\\\[<>]*" "" (hl-todo--regexp)) "everything")))
+    (rg-project (replace-regexp-in-string "\\\\[_<>]*" "" (hl-todo--regexp)) "everything")))
 
 ;; Highlight uncommitted changes using VC
 (use-package diff-hl
-  :custom (diff-hl-draw-borders nil)
-  :autoload diff-hl-flydiff-mode ;; FIXME: remove ?
+  :defines diff-hl-show-hunk-function diff-hl-show-hunk-posframe-internal-border-color
+  :commands (diff-hl-flydiff-mode diff-hl-margin-mode)
   :custom-face
   (diff-hl-change ((t (:inherit custom-changed :foreground unspecified :background unspecified))))
   (diff-hl-insert ((t (:inherit diff-added :background unspecified))))
@@ -222,83 +221,48 @@ FACE defaults to inheriting from default and highlight."
          ("SPC" . diff-hl-mark-hunk))
   :hook ((after-init . global-diff-hl-mode)
          (after-init . global-diff-hl-show-hunk-mouse-mode)
-         (dired-mode . diff-hl-dired-mode))
+         (dired-mode . diff-hl-dired-mode)
+         (magit-post-refresh . diff-hl-magit-post-refresh)
+         ((after-init after-load-theme server-after-make-frame) . diff-hl-set-posframe))
+  :custom
+  (diff-hl-draw-borders nil)
+  (diff-hl-update-async t)
+  (diff-hl-global-modes '(not image-mode pdf-view-mode))
+  :init
+  (defun diff-hl-set-posframe ()
+    "Set display type and appearance of `diff-hl.'"
+    (setq diff-hl-show-hunk-function (if (childframe-workable-p)
+                                         'diff-hl-show-hunk-posframe
+                                       'diff-hl-show-hunk-inline)
+          diff-hl-show-hunk-posframe-internal-border-color
+          (face-background 'posframe-border nil t)))
   :config
-  ;; Highlight on-the-fly
-  (diff-hl-flydiff-mode 1) ;; FIXME: remove ?
-
   ;; Set fringe style
   (setq-default fringes-outside-margins t)
 
-  (with-no-warnings
-    (defun my-diff-hl-fringe-bmp-function (_type _pos)
-      "Fringe bitmap function for use as `diff-hl-fringe-bmp-function'."
-      (define-fringe-bitmap 'my-diff-hl-bmp
-        (vector (if sys/linuxp #b11111100 #b11100000))
-        1 8
-        '(center t)))
-    (setq diff-hl-fringe-bmp-function #'my-diff-hl-fringe-bmp-function)
+  ;; Thin indicators on fringe
+  (defun my/diff-hl-fringe-bmp-function (_type _pos)
+    "Fringe bitmap function for use as `diff-hl-fringe-bmp-function'."
+    (define-fringe-bitmap 'my/diff-hl-bmp
+      (vector (if sys/linuxp #b11111100 #b11100000))
+      1 8
+      '(center t)))
+  (setq diff-hl-fringe-bmp-function 'my/diff-hl-fringe-bmp-function)
 
-    (unless (display-graphic-p)
-      ;; Fall back to the display margin since the fringe is unavailable in tty
-      (diff-hl-margin-mode 1)
-      ;; Avoid restoring `diff-hl-margin-mode'
-      (with-eval-after-load 'desktop
-        (add-to-list 'desktop-minor-mode-table
-                     '(diff-hl-margin-mode nil))))
-
-    ;; Integration with magit
-    (with-eval-after-load 'magit
-      (add-hook 'magit-pre-refresh-hook #'diff-hl-magit-pre-refresh)
-      (add-hook 'magit-post-refresh-hook #'diff-hl-magit-post-refresh))))
+  ;; Highlight on-the-fly
+  (diff-hl-flydiff-mode 1))
 
 ;; Pulse current line
-(use-package pulse
-  :ensure nil
+(use-package pulsar
   :custom-face
-  (pulse-highlight-start-face ((t (:inherit region :background unspecified))))
-  (pulse-highlight-face ((t (:inherit region :background unspecified :extend t))))
-  :hook (((dumb-jump-after-jump imenu-after-jump) . my-recenter-and-pulse)
-         ((bookmark-after-jump magit-diff-visit-file next-error) . my-recenter-and-pulse-line))
-  :init
-  (with-no-warnings
-    (defun my-pulse-momentary-line (&rest _)
-      "Pulse the current line."
-      (pulse-momentary-highlight-one-line (point)))
-
-    (defun my-pulse-momentary (&rest _)
-      "Pulse the region or the current line."
-      (if (fboundp 'xref-pulse-momentarily)
-          (xref-pulse-momentarily)
-        (my-pulse-momentary-line)))
-
-    (defun my-recenter-and-pulse(&rest _)
-      "Recenter and pulse the region or the current line."
-      (recenter)
-      (my-pulse-momentary))
-
-    (defun my-recenter-and-pulse-line (&rest _)
-      "Recenter and pulse the current line."
-      (recenter)
-      (my-pulse-momentary-line))
-
-    (dolist (cmd '(recenter-top-bottom
-                   other-window switch-to-buffer
-                   aw-select toggle-window-split
-                   windmove-do-window-select
-                   pager-page-down pager-page-up
-                   treemacs-select-window))
-      (advice-add cmd :after #'my-pulse-momentary-line))
-
-    (dolist (cmd '(pop-to-mark-command
-                   pop-global-mark
-                   goto-last-change))
-      (advice-add cmd :after #'my-recenter-and-pulse))))
+  (pulsar-generic ((t :inherit region :extend t)))
+  :custom (pulsar-delay pulse-delay)
+  :hook (emacs-startup . pulsar-global-mode))
 
 ;; Pulse modified region
 (use-package goggles
   :diminish
-  :hook ((prog-mode text-mode conf-mode) . goggles-mode))
+  :hook (prog-mode text-mode conf-mode))
 
 (provide 'init-highlight)
 

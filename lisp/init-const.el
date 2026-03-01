@@ -34,7 +34,7 @@
 
 (defconst emacs/>=29p
   (>= emacs-major-version 29)
-  "Emacs is 29 or above?")
+  "Emacs is 29 or above.")
 
 (defconst emacs/>=30p
   (>= emacs-major-version 30)

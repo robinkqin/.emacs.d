@@ -60,7 +60,6 @@
          ("C-c M-x" . consult-mode-command)
          ("C-c h"   . consult-history)
          ("C-c k"   . consult-kmacro)
-         ;;("C-c m"   . consult-man)
          ("C-c i"   . consult-info)
          ("C-c r"   . consult-ripgrep)
          ("C-c T"   . consult-theme)
@@ -282,8 +281,7 @@ targets."
 
 (use-package embark-consult
   :bind (:map minibuffer-mode-map
-         ("C-c C-o" . embark-export))
-  :hook (embark-collect-mode . consult-preview-at-point-mode))
+         ("C-c C-o" . embark-export)))
 
 ;; Auto completion
 (use-package corfu
@@ -357,7 +355,7 @@ targets."
 (use-package cape
   :commands (cape-file cape-elisp-block cape-keyword)
   :autoload (cape-wrap-noninterruptible cape-wrap-nonexclusive cape-wrap-buster)
-  :autoload (cape-wrap-silent cape-wrap-purify)
+  :autoload (cape-wrap-silent)
   :init
   ;;(add-to-list 'completion-at-point-functions #'cape-dabbrev)
   (add-to-list 'completion-at-point-functions #'cape-file)
@@ -371,27 +369,11 @@ targets."
   (advice-add 'comint-completion-at-point :around #'cape-wrap-nonexclusive)
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-nonexclusive)
-  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-nonexclusive)
-
-  ;; Sanitize the `pcomplete-completions-at-point' Capf.  The Capf has undesired
-  ;; side effects on Emacs 28.  These advices are not needed on Emacs 29 and newer.
-  (unless emacs/>=29p
-    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-silent)
-    (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-purify)))
+  (advice-add 'pcomplete-completions-at-point :around #'cape-wrap-nonexclusive))
 
 (require 'vertico-repeat)
-;;(global-set-key (kbd "C-c C-r") 'vertico-repeat)
 (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
-
-;;;; Use `consult-completion-in-region' if Vertico is enabled.
-;;;; Otherwise use the default `completion--in-region' function.
-;;(setq completion-in-region-function
-;;      (lambda (&rest args)
-;;        (apply (if vertico-mode
-;;                   #'consult-completion-in-region
-;;                 #'completion--in-region)
-;;               args)))
-;;
+;;(global-set-key (kbd "C-c C-r") 'vertico-repeat)
 
 (provide 'init-completion)
 
