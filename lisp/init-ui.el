@@ -7,7 +7,7 @@
 
 ;;; Code:
 
-(declare-function childframe-completion-workable-p "init-funcs")
+(declare-function childframe-completion-workable-p "init-const")
 
 ;; Optimization
 ;;(setq idle-update-delay 1.0)
@@ -47,16 +47,16 @@
         doom-modeline-time-icon nil
         doom-modeline-minor-modes t))
 
-(use-package hide-mode-line
-  :hook (((eat-mode
-           eshell-mode shell-mode
-           term-mode vterm-mode
-           embark-collect-mode lsp-ui-imenu-mode
-           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)))
+;;(use-package hide-mode-line
+;;  :hook (((eat-mode
+;;           eshell-mode shell-mode
+;;           term-mode vterm-mode
+;;           embark-collect-mode lsp-ui-imenu-mode
+;;           pdf-annot-list-mode) . turn-on-hide-mode-line-mode)))
 
-;; A minor-mode menu for mode-line
-(use-package minions
-  :hook after-init)
+;;;; A minor-mode menu for mode-line
+;;(use-package minions
+;;  :hook after-init)
 
 ;; Icons
 (use-package nerd-icons

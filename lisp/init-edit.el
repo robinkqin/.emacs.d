@@ -61,25 +61,25 @@
                 avy-background t
                 avy-style 'pre))
 
-;; Kill text between the point and the character CHAR
-(use-package avy-zap
-  :bind (("M-z" . avy-zap-to-char-dwim)
-         ("M-Z" . avy-zap-up-to-char-dwim)))
+;;;; Kill text between the point and the character CHAR
+;;(use-package avy-zap
+;;  :bind (("M-z" . avy-zap-to-char-dwim)
+;;         ("M-Z" . avy-zap-up-to-char-dwim)))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
   :diminish
   :hook (after-init . ace-pinyin-global-mode))
 
-;; Show number of matches in mode-line while searching
-(use-package anzu
-  :diminish
-  :bind (([remap query-replace] . anzu-query-replace)
-         ([remap query-replace-regexp] . anzu-query-replace-regexp)
-         :map isearch-mode-map
-         ([remap isearch-query-replace] . anzu-isearch-query-replace)
-         ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
-  :hook (after-init . global-anzu-mode))
+;;;; Show number of matches in mode-line while searching
+;;(use-package anzu
+;;  :diminish
+;;  :bind (([remap query-replace] . anzu-query-replace)
+;;         ([remap query-replace-regexp] . anzu-query-replace-regexp)
+;;         :map isearch-mode-map
+;;         ([remap isearch-query-replace] . anzu-isearch-query-replace)
+;;         ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
+;;  :hook (after-init . global-anzu-mode))
 
 ;; Redefine M-< and M-> for some modes
 (use-package beginend
@@ -168,13 +168,13 @@
               ispell-program-name "aspell"
               ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
-;; Hungry deletion
-(use-package hungry-delete
-  :diminish
-  :hook (after-init . global-hungry-delete-mode)
-  :init (setq hungry-delete-chars-to-skip " \t\f\v"
-              hungry-delete-except-modes
-              '(help-mode minibuffer-mode minibuffer-inactive-mode calc-mode)))
+;;;; Hungry deletion
+;;(use-package hungry-delete
+;;  :diminish
+;;  :hook (after-init . global-hungry-delete-mode)
+;;  :init (setq hungry-delete-chars-to-skip " \t\f\v"
+;;              hungry-delete-except-modes
+;;              '(help-mode minibuffer-mode minibuffer-inactive-mode calc-mode)))
 
 ;; Move to the beginning/end of line or code
 (use-package mwim
@@ -189,7 +189,7 @@
 
 ;; Goto last change
 (use-package goto-chg
-  :bind ("C-," . goto-last-change))
+  :bind ("C-c ," . goto-last-change))
 
 ;;;; Handling capitalized subwords in a nomenclature
 ;;(use-package subword

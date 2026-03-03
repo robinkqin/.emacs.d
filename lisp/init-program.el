@@ -118,7 +118,7 @@ Install the doc if it's not installed."
 
 (use-package csv-mode)
 (use-package cmake-mode)
-(use-package lua-mode)
+;;(use-package lua-mode)
 (use-package yaml-mode)
 
 (use-package cuda-mode)

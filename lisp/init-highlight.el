@@ -259,10 +259,10 @@ FACE defaults to inheriting from default and highlight."
   :custom (pulsar-delay pulse-delay)
   :hook (emacs-startup . pulsar-global-mode))
 
-;; Pulse modified region
-(use-package goggles
-  :diminish
-  :hook (prog-mode text-mode conf-mode))
+;;;; Pulse modified region
+;;(use-package goggles
+;;  :diminish
+;;  :hook (prog-mode text-mode conf-mode))
 
 (provide 'init-highlight)
 

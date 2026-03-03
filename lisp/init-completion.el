@@ -44,10 +44,10 @@
 (use-package marginalia
   :hook (after-init . marginalia-mode))
 
-;; Add icons to completion candidates
-(use-package nerd-icons-completion
-  :when (icons-displayable-p)
-  :hook (marginalia-mode . nerd-icons-completion-marginalia-setup))
+;;;; Add icons to completion candidates
+;;(use-package nerd-icons-completion
+;;  :when (icons-displayable-p)
+;;  :hook (marginalia-mode . nerd-icons-completion-marginalia-setup))
 
 (use-package consult
   :defines (xref-show-xrefs-function xref-show-definitions-function)
@@ -206,8 +206,8 @@ value of the selected COLOR."
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help))
 
-(use-package consult-flyspell
-  :bind ("M-g s" . consult-flyspell))
+;;(use-package consult-flyspell
+;;  :bind ("M-g s" . consult-flyspell))
 
 ;;(use-package consult-yasnippet
 ;;  :bind ("M-g y" . consult-yasnippet))
@@ -346,10 +346,10 @@ targets."
   ;; setting is useful beyond Corfu.
   (read-extended-command-predicate #'command-completion-default-include-p))
 
-(use-package nerd-icons-corfu
-  :autoload nerd-icons-corfu-formatter
-  :after corfu
-  :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+;;(use-package nerd-icons-corfu
+;;  :autoload nerd-icons-corfu-formatter
+;;  :after corfu
+;;  :init (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
 ;; Add extensions
 (use-package cape

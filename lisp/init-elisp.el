@@ -98,12 +98,12 @@ Lisp function does not specify a special indentation."
 
     (setq lisp-indent-function #'my/lisp-indent-function)))
 
-;; Interactive macro expander
-(use-package macrostep
-  :bind (:map emacs-lisp-mode-map
-         ("C-c e" . macrostep-expand)
-         :map lisp-interaction-mode-map
-         ("C-c e" . macrostep-expand)))
+;;;; Interactive macro expander
+;;(use-package macrostep
+;;  :bind (:map emacs-lisp-mode-map
+;;         ("C-c e" . macrostep-expand)
+;;         :map lisp-interaction-mode-map
+;;         ("C-c e" . macrostep-expand)))
 
 (use-package help-mode
   :ensure nil

@@ -87,7 +87,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-workspace)
 (require 'init-window)
 
-;;(require 'init-markdown)
+(require 'init-markdown)
 ;;(require 'init-org)
 ;;(require 'init-reader)
 
@@ -98,7 +98,6 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 ;;(require 'init-check)
 (require 'init-eglot)
 (require 'init-gdb)
-;;(require 'init-dap)
 
 (require 'init-program)
 (require 'init-c)
@@ -106,7 +105,7 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-elisp)
 (require 'init-python)
 
-;;(require 'init-eshell)
+(require 'init-eshell)
 (require 'init-shell)
 
 (require 'init-misc)

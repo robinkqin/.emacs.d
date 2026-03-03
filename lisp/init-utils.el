@@ -85,8 +85,13 @@
   :functions childframe-completion-workable-p
   :commands which-key-posframe-mode
   :custom-face
-  (which-key-posframe ((t (:inherit tooltip))))
   (which-key-posframe-border ((t (:inherit posframe-border :background unspecified))))
+  :hook ((which-key-mode server-after-make-frame)
+         .
+         (lambda ()
+           (if (childframe-completion-workable-p)
+               (which-key-posframe-mode 1)
+             (which-key-posframe-mode -1))))
   :init
   (setq which-key-posframe-border-width 2
         which-key-posframe-poshandler #'posframe-poshandler-frame-bottom-center

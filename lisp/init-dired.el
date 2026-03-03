@@ -37,28 +37,28 @@
         (setq dired-use-ls-dired nil)
         (setq dired-listing-switches "-alh"))))
 
-  ;; Quick sort dired buffers
-  (use-package dired-quick-sort)
+  ;;;; Quick sort dired buffers
+  ;;(use-package dired-quick-sort)
 
-  ;; Show git info in dired
-  (use-package dired-git-info
-    :bind (:map dired-mode-map
-           (")" . dired-git-info-mode)))
+  ;;;; Show git info in dired
+  ;;(use-package dired-git-info
+  ;;  :bind (:map dired-mode-map
+  ;;         (")" . dired-git-info-mode)))
 
-  ;; Allow rsync from dired buffers
-  (use-package dired-rsync
-    :bind (:map dired-mode-map
-           ("C-c C-r" . dired-rsync)))
+  ;;;; Allow rsync from dired buffers
+  ;;(use-package dired-rsync
+  ;;  :bind (:map dired-mode-map
+  ;;         ("C-c C-r" . dired-rsync)))
 
-  ;; Colorful dired
-  (use-package diredfl
-    :hook (dired-mode . diredfl-mode))
+  ;;;; Colorful dired
+  ;;(use-package diredfl
+  ;;  :hook (dired-mode . diredfl-mode))
 
-  ;; Shows icons
-  (use-package nerd-icons-dired
-    :diminish
-    :when (icons-displayable-p)
-    :hook (dired-mode . nerd-icons-dired-mode))
+  ;;;; Shows icons
+  ;;(use-package nerd-icons-dired
+  ;;  :diminish
+  ;;  :when (icons-displayable-p)
+  ;;  :hook (dired-mode . nerd-icons-dired-mode))
 
   ;; Extra Dired functionality
   (use-package dired-aux :ensure nil)
