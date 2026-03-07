@@ -1,4 +1,4 @@
-;;; init-package.el --- Initialize package configurations.	-*- lexical-binding: t -*-
+;;; init-package.el --- Initialize package config.	-*- lexical-binding: t -*-
 
 ;;; Commentary:
 
@@ -23,9 +23,6 @@
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
-
-;; More options
-;;(setq package-install-upgrade-built-in t)
 
 ;; Setup `use-package'
 (unless (package-installed-p 'use-package)

@@ -34,7 +34,14 @@
 
 (when (childframe-workable-p)
   (use-package vertico-posframe
-    :hook (vertico-mode . vertico-posframe-mode)
+    :functions childframe-completion-workable-p
+    :commands vertico-posframe-mode
+    :hook ((server-after-make-frame vertico-mode)
+           .
+           (lambda ()
+             "Handle vertico child frame."
+             (and (childframe-completion-workable-p)
+                  (vertico-posframe-mode 1))))
     :init (setq vertico-posframe-poshandler
                 #'posframe-poshandler-frame-bottom-center
                 vertico-posframe-parameters
@@ -121,11 +128,6 @@
          ("M-s" . consult-history)                 ;; orig. next-matching-history-element
          ("M-r" . consult-history))                ;; orig. previous-matching-history-element
 
-  ;; Enable automatic preview at point in the *Completions* buffer. This is
-  ;; relevant when you use the default completion UI.
-  :hook (completion-list-mode . consult-preview-at-point-mode)
-
-  ;; The :init configuration is always executed (Not lazy)
   :init
   ;; Optionally configure the register formatting. This improves the register
   ;; preview for `consult-register', `consult-register-load',
@@ -206,8 +208,8 @@ value of the selected COLOR."
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
   (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help))
 
-;;(use-package consult-flyspell
-;;  :bind ("M-g s" . consult-flyspell))
+(use-package consult-flyspell
+  :bind ("M-g s" . consult-flyspell))
 
 ;;(use-package consult-yasnippet
 ;;  :bind ("M-g y" . consult-yasnippet))
@@ -219,13 +221,13 @@ value of the selected COLOR."
          ("M-."   . embark-dwim)        ; overrides `xref-find-definitions'
          ([remap describe-bindings] . embark-bindings)
          :map minibuffer-local-map
-         ("M-." . my-embark-preview))
+         ("M-." . my/embark-preview))
   :init
   ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
   ;; Manual preview for non-Consult commands using Embark
-  (defun my-embark-preview ()
+  (defun my/embark-preview ()
     "Previews candidate in vertico buffer, unless it's a consult command."
     (interactive)
     (unless (bound-and-true-p consult--preview-function)
@@ -364,8 +366,6 @@ targets."
   ;;(add-to-list 'completion-at-point-functions #'cape-abbrev)
 
   ;; Make these capfs composable.
-  (advice-add 'lsp-completion-at-point :around #'cape-wrap-noninterruptible)
-  (advice-add 'lsp-completion-at-point :around #'cape-wrap-nonexclusive)
   (advice-add 'comint-completion-at-point :around #'cape-wrap-nonexclusive)
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-buster)
   (advice-add 'eglot-completion-at-point :around #'cape-wrap-nonexclusive)
@@ -373,7 +373,7 @@ targets."
 
 (require 'vertico-repeat)
 (add-hook 'minibuffer-setup-hook #'vertico-repeat-save)
-;;(global-set-key (kbd "C-c C-r") 'vertico-repeat)
+(global-set-key (kbd "C-c C-r") 'vertico-repeat)
 
 (provide 'init-completion)
 

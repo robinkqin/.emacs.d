@@ -26,9 +26,9 @@
 ;; export TERM=xterm-256color
 ;; export COLORTERM=truecolor
 
-;;(eglot-upgrade-eglot)
-;;(treesit-auto-install-all)
-;;(devdocs-install)
+;; (treesit-auto-install-all)
+;; (eglot-upgrade-eglot)
+;; (devdocs-install)
 
 (when (version< emacs-version "28.1")
   (error "This requires Emacs 28.1 and above!"))
@@ -99,13 +99,13 @@ Avoid placing large files like EAF in `site-lisp` to prevent slow startup."
 (require 'init-eglot)
 (require 'init-gdb)
 
-(require 'init-program)
+(require 'init-prog)
 (require 'init-c)
 
 (require 'init-elisp)
 (require 'init-python)
 
-(require 'init-eshell)
+;;(require 'init-eshell)
 (require 'init-shell)
 
 (require 'init-misc)

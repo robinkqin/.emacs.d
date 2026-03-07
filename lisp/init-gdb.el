@@ -34,7 +34,7 @@
 
 ;;;; customize the gdb multi-windows
 (defadvice gdb-setup-windows (after my/setup-gdb-windows activate)
-  "MY GDB UI"
+  "MY GDB UI."
   (gdb-get-buffer-create 'gdb-stack-buffer)
   (set-window-dedicated-p (selected-window) nil)
   (switch-to-buffer gud-comint-buffer)
@@ -59,7 +59,6 @@
       (gdb-set-window-buffer (gdb-get-buffer-create 'gdb-inferior-io) nil win3))
     (select-window win0)
     ))
-
 
 (provide 'init-gdb)
 

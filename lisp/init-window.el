@@ -1,4 +1,4 @@
-;; init-window.el --- Initialize window configurations.	-*- lexical-binding: t -*-
+;; init-window.el --- Initialize window config.	-*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;
@@ -10,8 +10,8 @@
 ;; Directional window-selection routines
 (use-package windmove
   :ensure nil
-  :hook (after-init . (lambda ()
-                        (windmove-default-keybindings 'super))))
+  :hook (window-setup . (lambda ()
+                          (windmove-default-keybindings 'super))))
 
 ;; Restore old window configurations
 (use-package winner

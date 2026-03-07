@@ -15,7 +15,19 @@
     ;; (setq w32-pass-lwindow-to-system nil)
     (setq w32-lwindow-modifier 'super     ; Left Windows key
           w32-apps-modifier 'hyper)       ; Menu/App key
-    (w32-register-hot-key [s-t])))
+    (w32-register-hot-key [s-t]))
+   (sys/mac-port-p
+    ;; Compatible with Emacs Mac port
+    (setq mac-option-modifier 'meta
+          mac-command-modifier 'super)
+    (bind-keys ([(super a)] . mark-whole-buffer)
+               ([(super c)] . kill-ring-save)
+               ([(super l)] . goto-line)
+               ([(super q)] . save-buffers-kill-emacs)
+               ([(super s)] . save-buffer)
+               ([(super v)] . yank)
+               ([(super w)] . delete-frame)
+               ([(super z)] . undo))))
 
   ;; Optimization
   (when sys/win32p
@@ -39,8 +51,8 @@
   :diminish
   :hook (emacs-startup . gcmh-mode)
   :init (setq gcmh-idle-delay 'auto
-        gcmh-auto-idle-delay-factor 10
-        gcmh-high-cons-threshold #x4000000)) ; 64MB
+              gcmh-auto-idle-delay-factor 10
+              gcmh-high-cons-threshold #x4000000)) ; 64MB
 
 ;; Environment
 (when (or (memq window-system '(mac ns x)) (daemonp))
@@ -50,8 +62,10 @@
     :init (exec-path-from-shell-initialize)))
 
 ;;;; Start server
-;;(use-package server
-;;  :hook (after-init . server-mode))
+(use-package server
+  :hook (emacs-startup . (lambda ()
+			               (unless server-mode
+                             (server-mode 1)))))
 
 (use-package saveplace
   :init (setq save-place-forget-unreadable-files t)
@@ -107,7 +121,7 @@
 
   ;; Prettify the process list
   (with-no-warnings
-    (defun my-list-processes--prettify ()
+    (defun my/list-processes--prettify ()
       "Prettify process list."
       (when-let* ((entries tabulated-list-entries))
         (setq tabulated-list-entries nil)
@@ -127,7 +141,7 @@
                       (cmd (list (aref val 6) 'face 'completions-annotations)))
             (push (list p (vector name pid status buf-label tty thread cmd))
 		          tabulated-list-entries)))))
-    (advice-add #'list-processes--refresh :after #'my-list-processes--prettify)))
+    (advice-add #'list-processes--refresh :after #'my/list-processes--prettify)))
 
 ;; Misc
 (if (boundp 'use-short-answers)
@@ -150,6 +164,13 @@
       sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*"
       sentence-end-double-space nil
       word-wrap-by-category t)
+
+;; Asynchronous processing
+(use-package async
+  :diminish (async-bytecomp-package-mode dired-async-mode)
+  :functions async-bytecomp-package-mode
+  :hook (after-init . dired-async-mode)
+  :init (unless sys/win32p (async-bytecomp-package-mode 1)))
 
 (use-package help
   :ensure nil

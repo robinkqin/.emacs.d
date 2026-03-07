@@ -1,4 +1,4 @@
-;; init-dired.el --- Initialize dired configurations.	-*- lexical-binding: t -*-
+;; init-dired.el --- Initialize dired config.	-*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;
@@ -14,9 +14,8 @@
          ("C-c C-p" . wdired-change-to-wdired-mode))
   :config
   ;; Guess a default target directory
-  (setq dired-dwim-target t)
-
-  (setq dired-kill-when-opening-new-dired-buffer t)
+  (setq dired-dwim-target t
+        dired-kill-when-opening-new-dired-buffer t)
 
   ;; Always delete and copy recursively
   (setq dired-recursive-deletes 'always
@@ -37,22 +36,22 @@
         (setq dired-use-ls-dired nil)
         (setq dired-listing-switches "-alh"))))
 
-  ;;;; Quick sort dired buffers
-  ;;(use-package dired-quick-sort)
+  ;; Quick sort dired buffers
+  (use-package dired-quick-sort)
 
-  ;;;; Show git info in dired
-  ;;(use-package dired-git-info
-  ;;  :bind (:map dired-mode-map
-  ;;         (")" . dired-git-info-mode)))
+  ;; Show git info in dired
+  (use-package dired-git-info
+    :bind (:map dired-mode-map
+           (")" . dired-git-info-mode)))
 
-  ;;;; Allow rsync from dired buffers
-  ;;(use-package dired-rsync
-  ;;  :bind (:map dired-mode-map
-  ;;         ("C-c C-r" . dired-rsync)))
+  ;; Allow rsync from dired buffers
+  (use-package dired-rsync
+    :bind (:map dired-mode-map
+           ("C-c C-r" . dired-rsync)))
 
-  ;;;; Colorful dired
-  ;;(use-package diredfl
-  ;;  :hook (dired-mode . diredfl-mode))
+  ;; Colorful dired
+  (use-package diredfl
+    :hook (dired-mode . diredfl-mode))
 
   ;;;; Shows icons
   ;;(use-package nerd-icons-dired

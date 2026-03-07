@@ -27,7 +27,7 @@
 (global-set-key (kbd "M-s ;") 'my/consult-line-other-window)
 (global-set-key (kbd "M-s '") 'my/consult-grep-other-window-project)
 
-(global-set-key (kbd "M-s ]") 'diff-hl-next-hunk) ;FIXME: for windows
+(global-set-key (kbd "M-s ]") 'diff-hl-next-hunk)
 (global-set-key (kbd "M-s [") 'diff-hl-previous-hunk)
 
 (global-set-key (kbd "C-x _") 'split-window-vertically-instead)

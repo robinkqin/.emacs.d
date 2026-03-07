@@ -162,7 +162,7 @@ interactively.  Turn the filename into a URL with function
     (when other-buffer
       (set-window-buffer (next-window) other-buffer))))
 
-(defun my/open-init-file()
+(defun my/open-init-file ()
   "Open init file."
   (interactive)
   (find-file (expand-file-name "init.el" user-emacs-directory)))
@@ -262,10 +262,10 @@ DIRECTORY-FN is a function to get the directory (for project search)."
 (defun my/consult-grep-other-window-project ()
   "Search symbol at point in current project using 'consult-ripgrep'.
 Gets the project root from the target window to ensure correct project detection."
-   (interactive)
-   (my/dwim-other-window
-    #'consult-ripgrep
-    nil
+  (interactive)
+  (my/dwim-other-window
+   #'consult-ripgrep
+   nil
    (lambda ()
      ;; Determine the target window (current or next)
      (let ((target-window (if (one-window-p) (selected-window) (next-window))))
@@ -309,7 +309,7 @@ If 'kill-ring' is empty, signal an error."
 
 
 (require 'xref)
-(defun my--push-point-to-xref-marker-stack (&rest r)
+(defun my/push-point-to-xref-marker-stack (&rest r)
   "Push R to stack."
   (xref-push-marker-stack (point-marker)))
 (dolist (func '(find-function
@@ -327,7 +327,7 @@ If 'kill-ring' is empty, signal an error."
                 embark-act keyboard-escape-quit
                 embark-next-symbol embark-previous-symbol
                 dumb-jump-go))
-  (advice-add func :before 'my--push-point-to-xref-marker-stack))
+  (advice-add func :before 'my/push-point-to-xref-marker-stack))
 
 (defun my/xref-find-references-at-point ()
   "Find references at point."
@@ -339,12 +339,12 @@ If 'kill-ring' is empty, signal an error."
   (interactive)
   (xref-find-references (substring-no-properties (car kill-ring))))
 
-;;(defun my--pop-xref-marker-stack (&rest r)
+;;(defun my/pop-xref-marker-stack (&rest r)
 ;;  ;;(xref-pop-marker-stack)
 ;;  (message "xref go back"))
 ;;(dolist (func '(gud-break
 ;;                gud-remove))
-;;  (advice-add func :after 'my--pop-xref-marker-stack))
+;;  (advice-add func :after 'my/pop-xref-marker-stack))
 
 ;; https://emacs-china.org/t/xxx-thing-at-point/18047
 (defvar my/fly-commands
@@ -388,7 +388,6 @@ If 'kill-ring' is empty, signal an error."
         (insert (propertize pre-insert-string 'face 'shadow))))
     (add-hook 'pre-command-hook 'my/fly-back-to-present nil t)))
 (add-hook 'minibuffer-setup-hook #'my/fly-time-travel)
-
 
 (provide 'init-funcs)
 

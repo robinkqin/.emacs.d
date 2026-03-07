@@ -41,7 +41,7 @@
 ;; Epub reader
 (use-package nov
   :mode ("\\.epub\\'" . nov-mode)
-  :hook (nov-mode . my/nov-setup))
+  :hook (nov-mode . my/nov-setup)
   :init
   (defun my/nov-setup ()
     "Setup `nov-mode' for better reading experience."

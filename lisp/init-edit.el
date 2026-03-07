@@ -61,25 +61,70 @@
                 avy-background t
                 avy-style 'pre))
 
-;;;; Kill text between the point and the character CHAR
-;;(use-package avy-zap
-;;  :bind (("M-z" . avy-zap-to-char-dwim)
-;;         ("M-Z" . avy-zap-up-to-char-dwim)))
+;; Kill text between the point and the character CHAR
+(use-package avy-zap
+  :bind (("M-z" . avy-zap-to-char-dwim)
+         ("M-Z" . avy-zap-up-to-char-dwim)))
+
+;; Quickly follow links
+(use-package link-hint
+  :defines (Info-mode-map
+            compilation-mode-map custom-mode-map
+            devdocs-mode-map elfeed-show-mode-map eww-mode-map
+            help-mode-map helpful-mode-map nov-mode-map
+            woman-mode-map xref--xref-buffer-mode-map)
+  :functions embark-dwim
+  :bind (("M-o"     . link-hint-open-link)
+         ("C-c l o" . link-hint-open-link)
+         ("C-c l c" . link-hint-copy-link))
+  :init
+  (with-eval-after-load 'compile
+    (bind-key "o" #'link-hint-open-link compilation-mode-map))
+  (with-eval-after-load 'cus-edit
+    (bind-key "o" #'link-hint-open-link custom-mode-map))
+  (with-eval-after-load 'devdocs
+    (bind-key "o" #'link-hint-open-link devdocs-mode-map))
+  (with-eval-after-load 'elfeed-show
+    (bind-key "o" #'link-hint-open-link elfeed-show-mode-map))
+  (with-eval-after-load 'eww
+    (bind-key "o" #'link-hint-open-link eww-mode-map))
+  (with-eval-after-load 'help
+    (bind-key "o" #'link-hint-open-link help-mode-map))
+  (with-eval-after-load 'helpful
+    (bind-key "o" #'link-hint-open-link helpful-mode-map))
+  (with-eval-after-load 'info
+    (bind-key "o" #'link-hint-open-link Info-mode-map))
+  (with-eval-after-load 'nov
+    (bind-key "o" #'link-hint-open-link nov-mode-map))
+  (with-eval-after-load 'woman
+    (bind-key "o" #'link-hint-open-link woman-mode-map))
+  (with-eval-after-load 'xref
+    (bind-key "o" #'link-hint-open-link xref--xref-buffer-mode-map))
+
+  (with-eval-after-load 'embark
+    (setq link-hint-action-fallback-commands
+          (list :open (lambda ()
+                        (condition-case _
+                            (progn
+                              (embark-dwim)
+                              t)
+                          (error
+                           nil)))))))
 
 ;; Jump to Chinese characters
 (use-package ace-pinyin
   :diminish
   :hook (after-init . ace-pinyin-global-mode))
 
-;;;; Show number of matches in mode-line while searching
-;;(use-package anzu
-;;  :diminish
-;;  :bind (([remap query-replace] . anzu-query-replace)
-;;         ([remap query-replace-regexp] . anzu-query-replace-regexp)
-;;         :map isearch-mode-map
-;;         ([remap isearch-query-replace] . anzu-isearch-query-replace)
-;;         ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
-;;  :hook (after-init . global-anzu-mode))
+;; Show number of matches in mode-line while searching
+(use-package anzu
+  :diminish
+  :bind (([remap query-replace] . anzu-query-replace)
+         ([remap query-replace-regexp] . anzu-query-replace-regexp)
+         :map isearch-mode-map
+         ([remap isearch-query-replace] . anzu-isearch-query-replace)
+         ([remap isearch-query-replace-regexp] . anzu-isearch-query-replace-regexp))
+  :hook (after-init . global-anzu-mode))
 
 ;; Redefine M-< and M-> for some modes
 (use-package beginend
@@ -96,7 +141,7 @@
   :hook(;; show org ediffs unfolded
         (ediff-prepare-buffer . outline-show-all)
         ;; restore window layout when done
-        (ediff-quit . winner-undo))
+        (ediff-quit . tab-bar-history-back))
   :config
   (setq ediff-window-setup-function 'ediff-setup-windows-plain
         ediff-split-window-function 'split-window-horizontally
@@ -125,25 +170,25 @@
 ;;                 '(iedit-mode nil))))
 
 ;;;; Increase selected region by semantic units
-;;(use-package expand-region
-;;  :functions my/treesit-available-p treesit-buffer-root-node
-;;  :bind ("C-=" . er/expand-region)
-;;  :config
-;;  (when (my/treesit-available-p)
-;;    (defun treesit-mark-bigger-node ()
-;;      "Use tree-sitter to mark regions."
-;;      (let* ((root (treesit-buffer-root-node))
-;;             (node (treesit-node-descendant-for-range root (region-beginning) (region-end)))
-;;             (node-start (treesit-node-start node))
-;;             (node-end (treesit-node-end node)))
-;;        ;; Node fits the region exactly. Try its parent node instead.
-;;        (when (and (= (region-beginning) node-start) (= (region-end) node-end))
-;;          (when-let* ((node (treesit-node-parent node)))
-;;            (setq node-start (treesit-node-start node)
-;;                  node-end (treesit-node-end node))))
-;;        (set-mark node-end)
-;;        (goto-char node-start)))
-;;    (add-to-list 'er/try-expand-list 'treesit-mark-bigger-node)))
+(use-package expand-region
+  :functions my/treesit-available-p treesit-buffer-root-node
+  :bind ("C-=" . er/expand-region)
+  :config
+  (when (my/treesit-available-p)
+    (defun treesit-mark-bigger-node ()
+      "Use tree-sitter to mark regions."
+      (let* ((root (treesit-buffer-root-node))
+             (node (treesit-node-descendant-for-range root (region-beginning) (region-end)))
+             (node-start (treesit-node-start node))
+             (node-end (treesit-node-end node)))
+        ;; Node fits the region exactly. Try its parent node instead.
+        (when (and (= (region-beginning) node-start) (= (region-end) node-end))
+          (when-let* ((node (treesit-node-parent node)))
+            (setq node-start (treesit-node-start node)
+                  node-end (treesit-node-end node))))
+        (set-mark node-end)
+        (goto-char node-start)))
+    (add-to-list 'er/try-expand-list 'treesit-mark-bigger-node)))
 
 ;; Multiple cursors
 ;;(use-package multiple-cursors)
@@ -168,13 +213,13 @@
               ispell-program-name "aspell"
               ispell-extra-args '("--sug-mode=ultra" "--lang=en_US" "--run-together")))
 
-;;;; Hungry deletion
-;;(use-package hungry-delete
-;;  :diminish
-;;  :hook (after-init . global-hungry-delete-mode)
-;;  :init (setq hungry-delete-chars-to-skip " \t\f\v"
-;;              hungry-delete-except-modes
-;;              '(help-mode minibuffer-mode minibuffer-inactive-mode calc-mode)))
+;;Hungry deletion
+(use-package hungry-delete
+  :diminish
+  :hook (after-init . global-hungry-delete-mode)
+  :init (setq hungry-delete-chars-to-skip " \t\f\v"
+              hungry-delete-except-modes
+              '(help-mode minibuffer-mode minibuffer-inactive-mode calc-mode)))
 
 ;; Move to the beginning/end of line or code
 (use-package mwim
@@ -303,21 +348,23 @@
 (use-package so-long
   :hook (after-init . global-so-long-mode))
 
+;; Better performance via tramp
+(use-package tramp-hlo
+  :hook (after-init . tramp-hlo-setup))
+
 (use-package isearch
   :ensure nil
   :bind (:map isearch-mode-map
-              ([remap isearch-delete-char] . isearch-del-char))
+         ([remap isearch-delete-char] . isearch-del-char))
   :custom
   (isearch-lazy-count t)
   (isearch-allow-motion t)
-  (isearch-lazy-count t)
   (lazy-count-prefix-format "%s/%s ")
   (lazy-highlight-cleanup nil))
 
 ;;(defun read-only-setup ()
 ;;  (read-only-mode))
 ;;(add-hook 'find-file-hook #'read-only-setup)
-
 
 (provide 'init-edit)
 

@@ -1,4 +1,4 @@
-;;; init-program.el --- program configurations.	-*- lexical-binding: t -*-
+;;; init-prog.el --- program configurations.	-*- lexical-binding: t -*-
 
 ;;; Commentary:
 
@@ -9,6 +9,20 @@
 
 ;; Tree-sitter support
 (when (my/treesit-available-p)
+
+  ;; (setq treesit-language-source-alist
+  ;;       '((c "https://github.com/tree-sitter/tree-sitter-c" "v0.23.6")
+  ;;         (cpp "https://github.com/tree-sitter/tree-sitter-cpp" "v0.23.4")
+  ;;         (bash "https://github.com/tree-sitter/tree-sitter-bash" "v0.23.3")
+  ;;         (json "https://github.com/tree-sitter/tree-sitter-json" "v0.24.8")
+  ;;         (python "https://github.com/tree-sitter/tree-sitter-python" "v0.23.6")
+  ;;         (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown" "v0.5.0")
+  ;;         (make "https://github.com/tree-sitter-grammars/tree-sitter-make" "v1.1.1")
+  ;;         (yaml "https://github.com/tree-sitter-grammars/tree-sitter-yaml" "v0.7.1")
+  ;;         (csv "https://github.com/tree-sitter-grammars/tree-sitter-csv" "v1.2.0")
+  ;;         (cuda "https://github.com/tree-sitter-grammars/tree-sitter-cuda" "v0.21.0")
+  ;;         (commonlisp "https://github.com/tree-sitter-grammars/tree-sitter-commonlisp" "v0.4.0")))
+
   ;; Automatic Tree-sitter grammar management
   (use-package treesit-auto
     :functions my/treesit-available-p
@@ -36,15 +50,15 @@
   (setq xref-show-definitions-function #'xref-show-definitions-completing-read
         xref-show-xrefs-function #'xref-show-definitions-completing-read))
 
-;;;; Code styles
-;;(use-package editorconfig
-;;  :diminish
-;;  :hook after-init)
+;; Code styles
+(use-package editorconfig
+  :diminish
+  :hook after-init)
 
-;;;; Run commands quickly
-;;(use-package quickrun
-;;  :bind (("C-<f5>" . quickrun)
-;;         ("C-c X"  . quickrun)))
+;; Run commands quickly
+(use-package quickrun
+  :bind (("C-<f5>" . quickrun)
+         ("C-c X"  . quickrun)))
 
 ;; Browse devdocs.io documents using EWW
 (use-package devdocs
@@ -116,9 +130,9 @@ Install the doc if it's not installed."
     (setq dumb-jump-force-searcher 'rg))
   (setq dumb-jump-selector 'completing-read))
 
-(use-package csv-mode)
 (use-package cmake-mode)
-;;(use-package lua-mode)
+(use-package csv-mode)
+(use-package lua-mode)
 (use-package yaml-mode)
 
 (use-package cuda-mode)
@@ -129,10 +143,9 @@ Install the doc if it's not installed."
 (add-to-list 'auto-mode-alist '("\.muh$" . c++-ts-mode))
 
 (use-package format-all
-  ;;:bind ("C-c f" . #'format-all-region-or-buffer)
   :diminish format-all-mode)
 
-(provide 'init-program)
+(provide 'init-prog)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; init-program.el ends here
+;;; init-prog.el ends here

@@ -1,4 +1,4 @@
-;;; init-workspace.el --- Initialize workspace configurations.	-*- lexical-binding: t -*-
+;;; init-workspace.el --- Initialize workspace config.	-*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;

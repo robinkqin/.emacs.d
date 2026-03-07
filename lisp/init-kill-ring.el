@@ -1,4 +1,4 @@
-;; init-kill-ring.el --- Initialize kill-ring configurations.	-*- lexical-binding: t -*-
+;; init-kill-ring.el --- Initialize kill-ring config.	-*- lexical-binding: t -*-
 
 ;;; Commentary:
 ;;

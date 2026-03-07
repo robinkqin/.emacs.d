@@ -10,7 +10,6 @@
 (declare-function childframe-completion-workable-p "init-const")
 
 ;; Optimization
-;;(setq idle-update-delay 1.0)
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
 
@@ -21,13 +20,6 @@
 (setq frame-inhibit-implied-resize t
       frame-resize-pixelwise t)
 
-;;;; Initial frame
-;;(setq initial-frame-alist '((top . 0.5)
-;;                            (left . 0.5)
-;;                            (width . 0.628)
-;;                            (height . 0.8)
-;;                            (fullscreen)))
-
 ;; Title
 (setq frame-title-format '("%b")
       icon-title-format frame-title-format)
@@ -35,16 +27,16 @@
 ;; Theme
 ;;(load-theme 'wombat t)
 (use-package doom-themes
-        :functions doom-themes-visual-bell-config
-        :init (load-theme 'doom-one t)
-        :config (doom-themes-visual-bell-config))
+  :functions doom-themes-visual-bell-config
+  :init (load-theme 'doom-one t)
+  :config (doom-themes-visual-bell-config))
 
 ;; Mode-line
 (use-package doom-modeline
   :hook after-init
   :init
-  (setq doom-modeline-icon t
-        doom-modeline-time-icon nil
+  (setq doom-modeline-icon (icons-displayable-p)
+        doom-modeline-time-icon (icons-displayable-p)
         doom-modeline-minor-modes t))
 
 ;;(use-package hide-mode-line
@@ -60,6 +52,7 @@
 
 ;; Icons
 (use-package nerd-icons
+  :when (icons-displayable-p)
   :commands nerd-icons-install-fonts
   :functions font-available-p
   :config
@@ -115,15 +108,20 @@
       mouse-wheel-progressive-speed nil)
 
 ;; Use fixed pitch where it's sensible
-;;(use-package mixed-pitch :diminish)
+(use-package mixed-pitch :diminish)
 
-;; Transient
-(when (childframe-completion-workable-p)
-  ;; Display transient in child frame
-  (use-package transient-posframe
-    :diminish
-    :hook (after-init . transient-posframe-mode)))
-
+;; Display transient in child frame
+(use-package transient-posframe
+  :diminish
+  :functions childframe-completion-workable-p
+  :commands transient-posframe-mode
+  :hook ((after-init server-after-make-frame)
+         .
+         (lambda ()
+           "Display transient in child frames if applicable."
+           (if (childframe-completion-workable-p)
+               (transient-posframe-mode 1)
+             (transient-posframe-mode -1)))))
 
 (provide 'init-ui)
 

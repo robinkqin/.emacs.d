@@ -34,7 +34,6 @@
 ;;;;;;(defun narrow-to-region-pop-mark (_ _) (pop-mark))
 ;;;;;;(advice-add #'narrow-to-region :after #'narrow-to-region-pop-mark)
 
-
 (provide 'init-misc)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -11,7 +11,6 @@
 
 ;; C/C++ Mode
 (use-package cc-mode
-  :ensure nil
   :init (setq-default c-basic-offset 4))
 
 (when (my/treesit-available-p)
